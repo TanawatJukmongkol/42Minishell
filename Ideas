@@ -1,0 +1,19 @@
+
+-- Lexer pipeline --
+
+  .----------------------> ( Start )
+  |                            |
+  |	            (consume)      V
+  |-- [ env ] <- yes -- < token exists >
+  |                            | no
+  |                            V
+  |-- [ str ] <- yes -- < token exists >
+  |                            | no
+  |                            V
+  |-- [ meta ] <- yes - < token exists >
+  |                            | no
+  |                            V
+  |- [ space ] <- yes - < token exists >
+  							   | no
+							   V
+							( End )
