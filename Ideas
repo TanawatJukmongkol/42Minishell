@@ -1,3 +1,19 @@
+Pun's part:
+	TUI
+	Lexer / Parser
+	Library
+
+Tun's part:
+	Signal handeling
+	Executor
+	Builtins
+
+TODO:
+	1) Write specifications + docs.
+	2) Write impl ft_getenv, ft_setenv, ft_unsetenv, etc.
+
+
+
 
 -- Lexer pipeline --
 
@@ -17,3 +33,6 @@
   							   | no
 							   V
 							( End )
+
+
+

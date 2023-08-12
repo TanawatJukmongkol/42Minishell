@@ -6,7 +6,7 @@
 #    By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 06:32:57 by tjukmong          #+#    #+#              #
-#    Updated: 2023/07/16 11:41:55 by tjukmong         ###   ########.fr        #
+#    Updated: 2023/08/12 13:09:43 by Tanawat J.       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME		= minishell
 SRCS		= minishell.c
 # SRCS_BONUS	= 
 
-SRC_DIR		= ./src/
+SRC_PUN		= ./src_pun/
+SRC_TUN		= ./src_tun/
+SRC_DIT		= ${SRC_PUN} ${SRC_TUN}
 LIB_DIR		= ./lib/
 BUILD_DIR	= ./build/
 

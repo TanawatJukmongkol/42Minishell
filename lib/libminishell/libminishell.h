@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/20 18:01:01 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/08/12 21:35:19 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,15 @@ typedef struct s_token_stream
 	t_token	*last;
 }				t_token_stream;
 
-/*
-	Creates a new memory allocated token and then join to the token stream.
-	returns the created node, and NULL on failure
-*/
-t_token			*ft_token(t_token_stream *stream, t_token_type type);
+/** env **/
+typedef struct s_envp
+{
+	char	**envp;
+}				t_envp;
 
-//	Consumes the token stream, with void (*fn)(t_token *t) as the iterator.
-void			ft_token_consume(t_token_stream *dst, \
-	t_token_stream *src, void (*fn)(t_token_stream *stream, t_token *t));
-
-//	Pushes token to the stream.
-void			ft_stream_join(t_token_stream *dst, t_token_stream *src);
+t_token	*ft_token(t_token_stream *stream, t_token_type type);
+void	ft_token_consume(t_token_stream *dst,
+			t_token_stream *src, void (*fn)(t_token_stream *s, t_token *t));
+void	ft_tokenfree(t_token_stream *s);
 
 #endif

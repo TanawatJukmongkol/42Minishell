@@ -6,40 +6,41 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/20 18:16:45 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:23:18 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-void	ittr(t_token_stream *s, t_token *t)
+void fn(t_token_stream *s, t_token *t)
 {
-	(void)(t);
-	// ft_token(s, __none)->value = ft_strjoin("replaced -> ", t->value);
-	ft_token(s, __pipe)->value = ft_strdup("replaced!");
+	ft_token(s, t->type)->value = ft_substr(t->value, 0,
+		ft_strchr(t->value, ' ') - t->value
+	);
 }
 
 int	main(void)
 {
-	t_token_stream	stream;
-	t_token_stream	stream2;
-	// t_token_stream	stream3;
+	t_token_stream	stage1;
+	t_token_stream	stage2;
 
-	stream.begin = NULL;
-	stream2.begin = NULL;
-	ft_token(&stream, __none)->value = ft_strdup("This node will be replaced!");
-	ft_token(&stream, __none)->value = ft_strdup("Hello, world!");
-	ft_token(&stream, __none)->value = ft_strdup("why?");
-	ft_token_consume(&stream2, &stream, ittr);
-	// ft_token(&stream3, __none)->value = ft_strdup("lol");
+	stage1.begin = NULL;
+	stage2.begin = NULL;
+	ft_token(&stage1, __none)->value = ft_strdup("This node will be replaced!");
+	ft_token(&stage1, __none)->value = ft_strdup("Hello,world!");
+	ft_token(&stage1, __none)->value = ft_strdup("why?");
+	ft_token_consume(&stage2, &stage1, fn);
+	ft_token_consume(&stage2, &stage1, fn);
 
-	t_token *tmp;
-	for (t_token *t = stream.begin; t != NULL; t = tmp)
-	{
-		tmp = t->next;
-		printf("[%p:%s]->[%p]\n", t, t->value, t->next);
-		// free(t->value);
-		// free(t);
-	}
+	printf("---[ stage 1 ]---\n");
+	for (t_token *t = stage1.begin; t; t = t->next)
+		printf("[%p] token: \"%s\"\n", t, t->value);
+	printf("---[ stage 2 ]---\n");
+	for (t_token *t = stage2.begin; t; t = t->next)
+		printf("[%p] token: \"%s\"\n", t, t->value);
+
+	ft_tokenfree(&stage1);
+	ft_tokenfree(&stage2);
+
 	return (0);
 }
