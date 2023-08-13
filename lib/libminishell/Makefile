@@ -6,7 +6,7 @@
 #    By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 21:14:32 by tjukmong          #+#    #+#              #
-#    Updated: 2023/08/09 14:50:18 by tjukmong         ###   ########.fr        #
+#    Updated: 2023/08/13 06:39:46 by tjukmong         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ LOGFILE		= ${TESTFILE:.c=.log}
 DIRSRC		= ./
 
 # Source files.
-SRC			= ft_chdir.c ft_realpath.c ft_token.c ft_token_consume.c ft_tokenfree.c
+SRC			=	ft_chdir.c ft_realpath.c \
+				ft_initenv.c ft_genenv.c \
+				ft_token.c ft_token_consume.c ft_tokenfree.c
 
 BONUS	= 
 

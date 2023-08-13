@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/12 21:35:19 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/08/13 06:38:58 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,26 @@ typedef struct s_token_stream
 }				t_token_stream;
 
 /** env **/
+typedef struct s_envnode
+{
+	char				*key;
+	char				*value;
+	struct s_envnode	*next;
+}				t_envnode;
+
 typedef struct s_envp
 {
-	char	**envp;
+	char		**cache;
+	t_envnode	*begin;
+	t_envnode	*last;
+	size_t		len;
 }				t_envp;
 
+/** env **/
+void	ft_initenv(t_envp *_envp, char **envp);
+void	ft_genenv(t_envp *envp);
+
+/** token **/
 t_token	*ft_token(t_token_stream *stream, t_token_type type);
 void	ft_token_consume(t_token_stream *dst,
 			t_token_stream *src, void (*fn)(t_token_stream *s, t_token *t));

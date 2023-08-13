@@ -7,4 +7,3 @@ void	heap_init(t_stackheap *stack)
 	stack->last = NULL;
 	stack->id = 0;
 }
-
