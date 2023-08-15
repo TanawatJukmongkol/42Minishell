@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/15 07:08:13 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/16 04:54:37 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+void	*ft_malloc(size_t nmemb, size_t size, t_stackheap *stack, size_t *id);
+void	*ft_zeros(size_t nmemb, size_t size, t_stackheap *stack, size_t *id);
 
 /*		CHAR CONDITION		*/
 int		ft_isalpha(int c);
@@ -62,6 +64,7 @@ int		ft_tolower(int c);
 
 /*		UNALLOCATED STRING FUNCTION		*/
 size_t	ft_strlen(const char *s);
+size_t	ft_strclen(const char *s, int c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -94,7 +97,7 @@ void	ft_putnbr_fd(int n, int fd);
 
 2.) heap_push
 	- description : Push data & its free function to last of t_stackheap
-	- return : Nothing
+	- return : id of node, -1 if allocation fail
 
 3.) heap_pop
 	- description : Pop out last of t_stackheap and using destruct to free data

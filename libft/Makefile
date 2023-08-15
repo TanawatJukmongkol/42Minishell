@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 21:14:32 by tjukmong          #+#    #+#              #
-#    Updated: 2023/08/15 06:46:48 by tponutha         ###   ########.fr        #
+#    Updated: 2023/08/16 04:36:35 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,38 +33,28 @@ MAN_SRC		= ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c\
 			ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c\
 			ft_putendl_fd.c ft_putnbr_fd.c ft_striteri.c
 
-ADD_SRC		= heap_init.c heap_get.c heap_push.c heap_pop.c \
+HEAP_SRC	= heap_init.c heap_get.c heap_push.c heap_pop.c \
 			heap_free.c heap_remove.c heap_purge.c
 
-SRC = $(MAN_SRC) $(ADD_SRC)
+ADD_SRC		= ft_malloc.c ft_zeros.c ft_strclen.c
+
+SRC			= $(MAN_SRC) $(HEAP_SRC) $(ADD_SRC)
 
 # Path to object files
 SRCS		= ${addprefix ${DIRSRC}, ${SRC}}
-
-# Source objects (replaces .c with .o).
 SRCOBJ		= ${SRCS:.c=.o}
 
-# Link sources, if not specified (default).
+# Failsafe
 .PHONY:	all test clean fclean re
 
+# Make Rule
 all:	${NAME}
 
 ${NAME}:	$(SRCOBJ) $(HEADER)
 	ar rc ${NAME} ${SRCOBJ}
 
-clean:
-	${RM} ${SRCOBJ} ${BONUSOBJ}
-
-fclean:	clean
-	${RM} ${NAME} ${TESTFILE:.c=.out} ${LOGFILE}
-
-re:	fclean all
-
-# Additional Rule
-norm:
-	@norminette -R CheckForbiddenSourceHeader $(SRCS) $(HEADER)
-
-test:			all
+# Debug Rule
+test:	all
 	${CC} ${CFLAGS} ${TESTFILE} ${NAME} -o ${TESTFILE:.c=.out}
 	@ echo "\033[1;36m========-[ Execution output ]-========\033[0;37m"	   > ${LOGFILE}
 	@ exec ${DIRSRC}${TESTFILE:.c=.out} | cat -e						  >> ${LOGFILE}
@@ -74,6 +64,20 @@ test:			all
 	@ norminette ${DIRSRC} | grep "Error" | cat							  >> ${LOGFILE}
 	@ echo "\033[1;32m======================================\033[0;37m"	  >> ${LOGFILE}
 	@ less -R ${LOGFILE}
+
+# Clean Rule
+clean:
+	${RM} ${SRCOBJ} ${BONUSOBJ}
+
+fclean:	clean
+	${RM} ${NAME} ${TESTFILE:.c=.out} ${LOGFILE}
+
+# Remake Rule
+re:	fclean all
+
+# Additional Rule
+norm:
+	@norminette -R CheckForbiddenSourceHeader $(SRCS) $(HEADER)
 
 readlog:
 	less -R ${LOGFILE}
