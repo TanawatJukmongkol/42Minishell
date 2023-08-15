@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+         #
+#    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 21:14:32 by tjukmong          #+#    #+#              #
-#    Updated: 2023/08/13 06:39:46 by tjukmong         ###   ########.fr        #
+#    Updated: 2023/08/16 06:11:29 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME		= libminishell.a
 
 # Header file include dirrectory.
 HEAD		= .
+HEADER		= libminishell.h
 
 # To test the libaray, create a file with the same name as TESTFILE and play
 # arround with it :D (output executable will be named after this option with
@@ -50,6 +51,8 @@ CFLAGS			= -Wall -Wextra -Werror
 RM				= rm -f
 
 # Link sources, if not specified (default).
+.PHONY:			all test clean fclean re
+
 all:			${NAME}
 
 bonus:			all
@@ -84,4 +87,5 @@ fclean:			clean
 
 re:				fclean all
 
-.PHONY:			all test clean fclean re
+norm:
+	@norminette -R CheckForbiddenSourceHeader $(SRCS) $(HEADER)

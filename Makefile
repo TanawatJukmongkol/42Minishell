@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 06:32:57 by tjukmong          #+#    #+#              #
-#    Updated: 2023/08/16 06:07:30 by tponutha         ###   ########.fr        #
+#    Updated: 2023/08/16 06:09:26 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,11 @@ ${BUILD_DIR}:
 ${BUILD_DIR}%.o:${SRC_DIR}%.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
-
+# Additional Rule
+norm:
+	make -C $(LIBFT_DIR) norm
+	make -C $(LIBMS_DIR) norm
+	@norminette -R CheckForbiddenSourceHeader $(SRC) $(HEADER)
 
 # bonus: library ${BUILD_DIR} ${OBJ_BONUS}
 # 	$(CC) ${OBJ_BONUS} ${wildcard ${LIB_DIR}/*/*.a} -o ${NAME} $(CFLAGS)
