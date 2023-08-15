@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/16 04:54:37 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/16 05:31:46 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ typedef struct s_stackheap
 	size_t		id;
 }				t_stackheap;
 
+typedef unsigned int	t_uint;
+typedef t_stackheap		t_mem;
+
 /*		MEMORY FUNCTION		*/
 void	*ft_memset(void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
@@ -76,12 +79,20 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 
 /*		ALLOCATED STRING FUNCTION		*/
 char	*ft_strdup(const char *s);
+char	*ft_strdup_heap(const char *s, t_stackheap *stack);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
+char	*ft_substr_heap(const char *s, t_uint start, size_t len, t_mem *stack);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin_heap(char const *s1, char const *s2, t_stackheap *stack);
 char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strtrim_heap(char const *s1, char const *set, t_stackheap *stack);
 char	**ft_split(char const *s, char c);
+void	ft_free_split(void *box);
+char	**ft_split_heap(char const *s, char c, t_stackheap *stack);
 char	*ft_itoa(int n);
+char	*ft_itoa_heap(int n, t_stackheap *stack);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+char	*ft_strmapi_heap(char const *s, char (*f)(t_uint, char), t_mem *st);
 
 /*		FILE DESRIPTOR WRITING FUNCTION		*/
 void	ft_putchar_fd(char c, int fd);

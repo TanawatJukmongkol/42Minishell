@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 11:23:53 by tjukmong          #+#    #+#             */
-/*   Updated: 2022/09/13 22:35:34 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/08/16 05:30:46 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,16 @@ char	*ft_itoa(int n)
 	res[len] = '\0';
 	ft_setchr(res, n, len);
 	return (res);
+}
+
+char	*ft_itoa_heap(int n, t_stackheap *stack)
+{
+	char	*str;
+
+	str = ft_itoa(n);
+	if (str == NULL)
+		return (NULL);
+	if (heap_push(stack, str, free) == -1)
+		return (NULL);
+	return (str);
 }

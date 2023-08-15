@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 20:32:00 by tjukmong          #+#    #+#             */
-/*   Updated: 2022/09/13 21:46:05 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/08/16 05:11:33 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <string.h>
 
 // Finds the substring of *s. Returns the pointer to malloc'd string,
 // with the content of *s, starting from start, and end at pointer
@@ -46,4 +45,16 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 		return (NULL);
 	ft_strlcpy(res, s + start, len + 1);
 	return (res);
+}
+
+char	*ft_substr_heap(const char *s, t_uint start, size_t len, t_mem *stack)
+{
+	char	*str;
+
+	str = ft_substr(s, start, len);
+	if (str == NULL)
+		return (NULL);
+	if (heap_push(stack, str, free) == -1)
+		return (NULL);
+	return (str);
 }

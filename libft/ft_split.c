@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 20:32:06 by tjukmong          #+#    #+#             */
-/*   Updated: 2022/08/30 17:48:32 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/08/16 05:29:44 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,19 @@ static int	ft_splitlen(char const *s, char c)
 }
 
 // Free the whole 2D array if failed to malloc.
-static char	**ft_free_arr(char **s)
+void	ft_free_split(void *box)
 {
-	int	i;
+	int		i;
+	char	**s;
 
 	i = 0;
+	s = (char **)box;
 	while (s[i])
 	{
 		free(s[i]);
 		i++;
 	}
 	free(s);
-	return (NULL);
 }
 
 // Malloc and sets the 2d array's value, if fails free all.
@@ -68,7 +69,7 @@ static char	**ft_put_table(char **res, char *str, char c, int len)
 		{
 			res[a] = malloc((b + 1) * sizeof(char));
 			if (!res[a])
-				return (ft_free_arr(res));
+				return (ft_free_split(res), NULL);
 			ft_memcpy(res[a], str - b, b);
 			res[a][b] = '\0';
 			a++;
@@ -95,4 +96,18 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	res[len] = NULL;
 	return (ft_put_table(res, str, c, len));
+}
+
+// TODO : Might be somewhat unstable, Can you check here?
+
+char	**ft_split_heap(char const *s, char c, t_stackheap *stack)
+{
+	char	**box;
+
+	box = ft_split(s, c);
+	if (box == NULL)
+		return (NULL);
+	if (heap_push(stack, box, ft_free_split) == -1)
+		return (NULL);
+	return (box);
 }
