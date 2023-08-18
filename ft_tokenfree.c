@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_tokenfree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/19 02:34:50 by tponutha         ###   ########.fr       */
+/*   Created: 2023/08/09 14:48:03 by tjukmong          #+#    #+#             */
+/*   Updated: 2023/08/09 14:48:36 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include "libminishell.h"
-# include "src_pun/pun.h"
-# include "src_tun/tun.h"
+#include "libminishell.h"
 
+void	ft_tokenfree(t_token_stream *s)
+{
+	t_token	*tmp;
 
-
-#endif
+	while (s->begin)
+	{
+		tmp = s->begin->next;
+		free(s->begin->value);
+		free(s->begin);
+		s->begin = tmp;
+	}
+}
