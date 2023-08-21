@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 06:32:57 by tjukmong          #+#    #+#              #
-#    Updated: 2023/08/16 06:09:26 by tponutha         ###   ########.fr        #
+#    Updated: 2023/08/19 02:34:21 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,63 +15,65 @@ NAME		= minishell
 
 # Complier Properties
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -O3 -lreadline
+CFLAGS		= -Wall -Werror -Wextra -O3
 RM			= rm -f
 
-# Source
-SRCS		= minishell.c
-HEADER		= ./minishell.h
-SRC_PUN		= ./src_pun/
-SRC_TUN		= ./src_tun/
-SRC_DIR		= ${SRC_PUN} ${SRC_TUN}
-LIBFT_DIR	= ./libft/
-LIBMS_DIR	= ./libminishell/
-BUILD_DIR	= ./build/
+# Man Source
+MAN_DIR			= ./
+MAN_HEADER		= ./minishell.h ./libminishell.h
+SRC_MAN			= minishell.c
+SRCS_MAN		= ${addprefix ${MAN_DIR},${SRC_MAN}}
 
-# Library Flag
-LIBINCFLAG	= -L$(LIBFT_DIR) -L$(LIBMS_DIR)
-LIBFLAG		= -lft -lminishell
+# Pun Source
+PUN_DIR		= ./src_pun/
+PUN_HEADER	= ${addprefix ${PUN_DIR},pun.h}
+SRC_PUN		= 
+SRCS_PUN	= ${addprefix ${PUN_DIR},${SRC_PUN}}
+
+# Tun Source
+TUN_DIR		= ./src_tun/
+TUN_HEADER	= ${addprefix ${TUN_DIR},tun.h}
+SRC_TUN		= 
+SRCS_TUN	= ${addprefix ${TUN_DIR},${SRC_TUN}}
+
+# Library Flag & directory
+LIBFT_DIR	= ./libft/
+LIBINCFLAG	= -L$(LIBFT_DIR)
+LIBFLAG		= -lft -lreadline
 
 # Object
-SRC			= ${addprefix ${BUILD_DIR},${SRCS}}
-SRC_BONUS	= ${addprefix ${BUILD_DIR},${SRCS_BONUS}}
+HEADER		= $(MAN_HEADER) $(PUN_HEADER) $(TUN_HEADER)
+SRC			= $(SRC_MAN) $(SRC_PUN) $(SRC_TUN)
 OBJ			= ${SRC:.c=.o}
-OBJ_BONUS	= ${SRC_BONUS:.c=.o}
+
+# Build Rule
+%.o:%.c
+	$(CC) $(CFLAGS) -c -o $@ $^
 
 # Main Rule
 .PHONY:	all library clean fclean re
 
-all: library ${BUILD_DIR} ${NAME}
+all: library ${NAME}
 
 library:
 	make -C $(LIBFT_DIR)
-	make -C $(LIBMS_DIR)
 
 ${NAME}: ${OBJ} $(HEADER)
 	$(CC) $(CFLAGS) ${OBJ} $(LIBINCFLAG) $(LIBFLAG) -o ${NAME}
 
 clean:
 	make -C $(LIBFT_DIR) clean
-	make -C $(LIBMS_DIR) clean
 	$(RM) $(OBJ)
 
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
-	make -C $(LIBMS_DIR) fclean
 	$(RM) ${NAME}
 
 re: fclean all
 
-${BUILD_DIR}:
-	mkdir -p ${BUILD_DIR}
-
-${BUILD_DIR}%.o:${SRC_DIR}%.c
-	$(CC) $(CFLAGS) -c -o $@ $^
-
 # Additional Rule
 norm:
 	make -C $(LIBFT_DIR) norm
-	make -C $(LIBMS_DIR) norm
 	@norminette -R CheckForbiddenSourceHeader $(SRC) $(HEADER)
 
 # bonus: library ${BUILD_DIR} ${OBJ_BONUS}

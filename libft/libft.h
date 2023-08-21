@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/16 05:31:46 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/21 23:31:49 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_malloc(size_t nmemb, size_t size, t_stackheap *stack, size_t *id);
 void	*ft_zeros(size_t nmemb, size_t size, t_stackheap *stack, size_t *id);
 
-/*		CHAR CONDITION		*/
+/*		CONDITION		*/
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
@@ -64,6 +64,7 @@ int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
+int		ft_ternary(int condition, int val1, int val2);
 
 /*		UNALLOCATED STRING FUNCTION		*/
 size_t	ft_strlen(const char *s);

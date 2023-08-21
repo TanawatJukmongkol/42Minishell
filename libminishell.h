@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/19 01:50:45 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/22 00:07:08 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 # define LIBMINISHELL_H
 # include <string.h>
 # include <stdio.h>
+# include <limits.h>
+# include <signal.h>
+# include <sys/errno.h>
 # include "./libft/libft.h"
 
 /** Token stream **/
 
 /* token type enum */
-enum e_token_type
+typedef enum e_token_type
 {
 	// Not defined
 	__none,
@@ -32,8 +35,7 @@ enum e_token_type
 	__here_doc,
 	__redirr_override,
 	__redirr_append
-};
-typedef enum e_token_type	t_token_type;
+}	t_token_type;
 
 /* token node */
 typedef struct s_token
@@ -75,5 +77,8 @@ t_token	*ft_token(t_token_stream *stream, t_token_type type);
 void	ft_token_consume(t_token_stream *dst,
 			t_token_stream *src, void (*fn)(t_token_stream *s, t_token *t));
 void	ft_tokenfree(t_token_stream *s);
+
+/** utilities **/
+void	ft_exit(t_stackheap *mem ,int status);
 
 #endif

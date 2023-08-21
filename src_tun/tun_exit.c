@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tun.h                                              :+:      :+:    :+:   */
+/*   tun_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/22 00:05:02 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/21 23:16:58 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TUN_H
-# define TUN_H
-# include "../libminishell.h"
+#include "tun.h"
 
-typedef struct	s_exec
+void	tun_exit(t_stackheap *mem, int isexe)
 {
-	char			*current_path;
-	t_envp			*env;
-	t_token_stream	*stream;
-	t_mem			*mem;
-}	t_exec;
-
-int		tun_builin_handler(char *cmd, char **av, t_exec *info);
-
-void	tun_exit(t_stackheap *mem, int isexe);
-
-# endif
+	if (errno == ENOENT)
+		ft_exit(mem, 127);
+	if (errno == EACCES)
+	{
+		if (isexe != -1)
+			ft_exit(mem, 126);
+		ft_exit(mem, 1);
+	}
+	ft_exit(mem, 0);
+}
