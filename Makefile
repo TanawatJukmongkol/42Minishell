@@ -19,7 +19,7 @@ CFLAGS		= -Wall -Werror -Wextra -O3
 RM			= rm -f
 
 # Man Source
-MAN_DIR			= ./
+MAN_DIR			= ./src_share
 MAN_HEADER		= ./minishell.h ./libminishell.h
 SRC_MAN			= minishell.c
 SRCS_MAN		= ${addprefix ${MAN_DIR},${SRC_MAN}}
@@ -51,8 +51,6 @@ OBJ			= ${SRC:.c=.o}
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 # Main Rule
-.PHONY:	all library clean fclean re
-
 all: library ${NAME}
 
 library:
@@ -78,3 +76,5 @@ norm:
 
 # bonus: library ${BUILD_DIR} ${OBJ_BONUS}
 # 	$(CC) ${OBJ_BONUS} ${wildcard ${LIB_DIR}/*/*.a} -o ${NAME} $(CFLAGS)
+
+.PHONY:	all library clean fclean re norm

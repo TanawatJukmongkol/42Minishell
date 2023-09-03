@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/19 02:50:09 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/22 00:10:41 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@
 
 int	ft_chdir(char *path)
 {
-	(void)(path);
-	
+	(void)path;
 	return (0);
 }
+
+// int main()
+// {
+// 	ft_chdir("");
+// }
