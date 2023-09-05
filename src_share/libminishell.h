@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/22 00:07:08 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/04 01:37:10 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <limits.h>
 # include <signal.h>
 # include <sys/errno.h>
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 
 /** Token stream **/
 
@@ -67,6 +67,15 @@ typedef struct s_envp
 	t_envnode	*last;
 	size_t		len;
 }				t_envp;
+
+/** main **/
+typedef struct s_main
+{
+	char			*_path;
+	t_envp			*_envp;
+	t_token_stream	*_token;
+	t_stackheap		*_mem;
+}				t_main;
 
 /** env **/
 void	ft_initenv(t_envp *_envp, char **envp);
