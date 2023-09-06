@@ -6,13 +6,13 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/06 18:27:47 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/07 03:40:13 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-char	*get_next_qoute(char *str, char *match)
+char	*get_next_qoute(char *str, char *match, int single)
 {
 	int		q;
 	int		dbq;
@@ -21,106 +21,159 @@ char	*get_next_qoute(char *str, char *match)
 	dbq = 0;
 	while (*str)
 	{
-		if (*str == '\"' && *str != '\'')
+		if (single && *str == '\"' && *str != '\'')
 			dbq = !dbq;
 		if (*str == '\'' && *str != '\"')
 			q = !q;
-		str++;
 		if (!ft_strncmp(str, match, ft_strlen(
 						match)) && !q && !dbq)
 			break ;
+		str++;
 	}
 	return (str);
 }
 
-void white_space(t_token_stream *s, t_token *t)
+void	white_space(t_token_stream *s, t_token *t)
 {
 	char	*ptr;
-	char	*next_space;
+	char	*next_match;
 	size_t	len;
 
 	ptr = t->value;
-	next_space = ptr;
-	len = 0;
-	while (*next_space)
+	next_match = ptr;
+	while (1)
 	{
-		next_space = get_next_qoute(next_space, " ");
-		len = next_space - ptr;
+		next_match = get_next_qoute(next_match, " ", 1);
+		len = next_match - ptr;
 		if (len)
 			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
-		ptr = next_space + 1;
+		if (!*next_match)
+			break ;
+		ptr = ++next_match;
 	}
 }
 
-void meta_redirr_in_append(t_token_stream *s, t_token *t)
+void	meta_heredoc(t_token_stream *s, t_token *t)
 {
 	char	*ptr;
-	char	*next_redirr;
+	char	*next_match;
 	size_t	len;
 
 	ptr = t->value;
-	next_redirr = ptr;
-	len = 0;
-	while (*next_redirr)
+	next_match = ptr;
+	while (1)
 	{
-		next_redirr = get_next_qoute(next_redirr, "<<");
-		len = next_redirr - ptr;
+		next_match = get_next_qoute(next_match, "<<", 1);
+		len = next_match - ptr;
 		if (len)
+			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
+		if (*next_match)
+			ft_token(s, __here_doc)->value = ft_strdup("<<");
+		if (!*next_match)
+			break ;
+		next_match += 2;
+		ptr = next_match;
+	}
+}
+
+void	meta_redirr_out_append(t_token_stream *s, t_token *t)
+{
+	char	*ptr;
+	char	*next_match;
+	size_t	len;
+
+	ptr = t->value;
+	next_match = ptr;
+	while (1)
+	{
+		next_match = get_next_qoute(next_match, ">>", 1);
+		len = next_match - ptr;
+		if (len)
+			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
+		if (*next_match)
+			ft_token(s, __redirr_append)->value = ft_strdup(">>");
+		if (!*next_match)
+			break ;
+		next_match += 2;
+		ptr = next_match;
+	}
+}
+
+void	meta_pipe(t_token_stream *s, t_token *t)
+{
+	char	*ptr;
+	char	*next_match;
+	size_t	len;
+
+	ptr = t->value;
+	next_match = ptr;
+	while (1)
+	{
+		next_match = get_next_qoute(next_match, "|", 1);
+		len = next_match - ptr;
+		if (len)
+			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
+		if (*next_match)
+			ft_token(s, __pipe)->value = ft_strdup("|");
+		if (!*next_match)
+			break ;
+		ptr = ++next_match;
+	}
+}
+
+void	meta_redirr_in(t_token_stream *s, t_token *t)
+{
+	char	*ptr;
+	char	*next_match;
+	size_t	len;
+
+	if (t->type == __here_doc)
+		ft_token(s, t->type)->value = ft_strdup("<<");
+	else
+	{
+		ptr = t->value;
+		next_match = ptr;
+		while (1)
 		{
-			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
-			if (*next_redirr)
-				ft_token(s, __pipe)->value = ft_strdup("<<");
+			next_match = get_next_qoute(next_match, "<", 1);
+			len = next_match - ptr;
+			if (len)
+				ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
+			if (*next_match)
+				ft_token(s, __redirr_in)->value = ft_strdup("<");
+			if (!*next_match)
+				break ;
+			ptr = ++next_match;
 		}
-		ptr = next_redirr + 2;
 	}
 }
 
-void meta_pipe(t_token_stream *s, t_token *t)
+void	meta_redirr_out_trunc(t_token_stream *s, t_token *t)
 {
 	char	*ptr;
-	char	*next_pipe;
+	char	*next_match;
 	size_t	len;
 
-	ptr = t->value;
-	next_pipe = ptr;
-	len = 0;
-	while (*next_pipe)
+	if (t->type == __redirr_append)
+		ft_token(s, t->type)->value = ft_strdup(">>");
+	else
 	{
-		next_pipe = get_next_qoute(next_pipe, "|");
-		len = next_pipe - ptr;
-		if (len)
+		ptr = t->value;
+		next_match = ptr;
+		while (1)
 		{
-			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
-			if (*next_pipe)
-				ft_token(s, __pipe)->value = ft_strdup("|");
+			next_match = get_next_qoute(next_match, ">", 1);
+			len = next_match - ptr;
+			if (len)
+				ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
+			if (*next_match)
+				ft_token(s, __redirr_trunc)->value = ft_strdup(">");
+			if (!*next_match)
+				break ;
+			ptr = ++next_match;
 		}
-		ptr = next_pipe + 1;
 	}
 }
-
-void meta_redirr_in_trunc(t_token_stream *s, t_token *t)
-{
-	char	*ptr;
-	char	*next_redirr;
-	size_t	len;
-
-	ptr = t->value;
-	next_redirr = ptr;
-	len = 0;
-	while (*next_redirr)
-	{
-		next_redirr = get_next_qoute(next_redirr, "<");
-		len = next_redirr - ptr;
-		if (len)
-		{
-			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
-			if (*next_redirr)
-				ft_token(s, __pipe)->value = ft_strdup("<");
-		}
-		ptr = next_redirr + 1;
-	}
-}
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -143,13 +196,17 @@ int	main(int argc, char **argv, char **envp)
 	ft_token(&stage1, __none)->value = line;
 	ft_token_consume(&stage2, &stage1, white_space);
 	while(stage2.begin)
-		ft_token_consume(&tmp, &stage2, meta_redirr_in_append);
+		ft_token_consume(&tmp, &stage2, meta_heredoc);
 	while(tmp.begin)
-		ft_token_consume(&stage2, &tmp, meta_pipe);
+		ft_token_consume(&stage2, &tmp, meta_redirr_out_append);
 	while(stage2.begin)
-		ft_token_consume(&tmp, &stage2, meta_redirr_in_trunc);
+		ft_token_consume(&tmp, &stage2, meta_pipe);
+	while(tmp.begin)
+		ft_token_consume(&stage2, &tmp, meta_redirr_in);
+	while(stage2.begin)
+		ft_token_consume(&tmp, &stage2, meta_redirr_out_trunc);
 	output = tmp;
 	for (t_token *i=output.begin; i; i = i->next)
-		printf("%s\n", i->value);
+		printf("%d:%s\n", i->type, i->value);
 	return (0);
 }

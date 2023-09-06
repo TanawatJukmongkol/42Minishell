@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/06 18:00:51 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/07 03:33:55 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ enum e_token_type
 	// Pipes
 	__pipe,
 	// C standard out file operations
-	__redir_in,
+	__redirr_in,
 	__here_doc,
-	__redirr_override,
+	__redirr_trunc,
 	__redirr_append,
 	// cmd & argv
 	__cmd,
