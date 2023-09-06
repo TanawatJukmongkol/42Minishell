@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/05 22:39:35 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/06 18:27:47 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,76 @@ void white_space(t_token_stream *s, t_token *t)
 	}
 }
 
+void meta_redirr_in_append(t_token_stream *s, t_token *t)
+{
+	char	*ptr;
+	char	*next_redirr;
+	size_t	len;
+
+	ptr = t->value;
+	next_redirr = ptr;
+	len = 0;
+	while (*next_redirr)
+	{
+		next_redirr = get_next_qoute(next_redirr, "<<");
+		len = next_redirr - ptr;
+		if (len)
+		{
+			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
+			if (*next_redirr)
+				ft_token(s, __pipe)->value = ft_strdup("<<");
+		}
+		ptr = next_redirr + 2;
+	}
+}
+
+void meta_pipe(t_token_stream *s, t_token *t)
+{
+	char	*ptr;
+	char	*next_pipe;
+	size_t	len;
+
+	ptr = t->value;
+	next_pipe = ptr;
+	len = 0;
+	while (*next_pipe)
+	{
+		next_pipe = get_next_qoute(next_pipe, "|");
+		len = next_pipe - ptr;
+		if (len)
+		{
+			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
+			if (*next_pipe)
+				ft_token(s, __pipe)->value = ft_strdup("|");
+		}
+		ptr = next_pipe + 1;
+	}
+}
+
+void meta_redirr_in_trunc(t_token_stream *s, t_token *t)
+{
+	char	*ptr;
+	char	*next_redirr;
+	size_t	len;
+
+	ptr = t->value;
+	next_redirr = ptr;
+	len = 0;
+	while (*next_redirr)
+	{
+		next_redirr = get_next_qoute(next_redirr, "<");
+		len = next_redirr - ptr;
+		if (len)
+		{
+			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
+			if (*next_redirr)
+				ft_token(s, __pipe)->value = ft_strdup("<");
+		}
+		ptr = next_redirr + 1;
+	}
+}
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void)(argc);
@@ -59,6 +129,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)(envp);
 	char			*prompt;
 	char			*line;
+	t_token_stream	tmp;
 	t_token_stream	stage1;
 	t_token_stream	stage2;
 	t_token_stream	output;
@@ -70,7 +141,14 @@ int	main(int argc, char **argv, char **envp)
 	if (!prompt)
 		return (0);
 	ft_token(&stage1, __none)->value = line;
-	ft_token_consume(&output, &stage1, white_space);
+	ft_token_consume(&stage2, &stage1, white_space);
+	while(stage2.begin)
+		ft_token_consume(&tmp, &stage2, meta_redirr_in_append);
+	while(tmp.begin)
+		ft_token_consume(&stage2, &tmp, meta_pipe);
+	while(stage2.begin)
+		ft_token_consume(&tmp, &stage2, meta_redirr_in_trunc);
+	output = tmp;
 	for (t_token *i=output.begin; i; i = i->next)
 		printf("%s\n", i->value);
 	return (0);

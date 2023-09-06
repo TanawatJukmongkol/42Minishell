@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/24 17:31:42 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/06 18:00:51 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 
-# ifdef linux
+# ifdef __linux
 #  include <readline/readline.h>
 #  include <readline/history.h>
 # endif
@@ -33,7 +33,10 @@ enum e_token_type
 	__redir_in,
 	__here_doc,
 	__redirr_override,
-	__redirr_append
+	__redirr_append,
+	// cmd & argv
+	__cmd,
+	__argv
 };
 typedef enum e_token_type	t_token_type;
 
