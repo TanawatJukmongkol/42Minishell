@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/07 03:40:13 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/07 05:14:42 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,38 +175,54 @@ void	meta_redirr_out_trunc(t_token_stream *s, t_token *t)
 	}
 }
 
+void	stage2_tokenizer(t_token_stream *dst, t_token_stream *stage2)
+{
+	while(stage2->begin)
+		ft_token_consume(dst, stage2, meta_heredoc);
+	while(dst->begin)
+		ft_token_consume(stage2, dst, meta_redirr_out_append);
+	while(stage2->begin)
+		ft_token_consume(dst, stage2, meta_pipe);
+	while(dst->begin)
+		ft_token_consume(stage2, dst, meta_redirr_in);
+	while(stage2->begin)
+		ft_token_consume(dst, stage2, meta_redirr_out_trunc);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void)(argc);
 	(void)(argv);
 	(void)(envp);
-	char			*prompt;
-	char			*line;
-	t_token_stream	tmp;
+	// char			*prompt;
+	char			*line = ft_strdup("<file echo \"hello, world!\"|cat>outfile");
 	t_token_stream	stage1;
 	t_token_stream	stage2;
+	t_token_stream	stage3;
 	t_token_stream	output;
 
 	stage1.begin = NULL;
-	prompt = ft_strjoin(ft_getcwd(), "> ");
+	stage2.begin = NULL;
+	stage3.begin = NULL;
+	/*char	*cwd = ft_getcwd();
+	prompt = ft_strjoin(cwd, "> ");
+	free(cwd);
 	line = ft_readline(prompt);
-	free(prompt);
-	if (!prompt)
-		return (0);
+	free(prompt);*/
+	/*if (!prompt)
+		return (0);*/
 	ft_token(&stage1, __none)->value = line;
-	ft_token_consume(&stage2, &stage1, white_space);
-	while(stage2.begin)
-		ft_token_consume(&tmp, &stage2, meta_heredoc);
-	while(tmp.begin)
-		ft_token_consume(&stage2, &tmp, meta_redirr_out_append);
-	while(stage2.begin)
-		ft_token_consume(&tmp, &stage2, meta_pipe);
-	while(tmp.begin)
-		ft_token_consume(&stage2, &tmp, meta_redirr_in);
-	while(stage2.begin)
-		ft_token_consume(&tmp, &stage2, meta_redirr_out_trunc);
-	output = tmp;
-	for (t_token *i=output.begin; i; i = i->next)
+	ft_token_consume(&stage2, &stage1, white_space); // Split space
+	stage2_tokenizer(&stage3, &stage2); // Split 
+	output = stage3;
+	
+	t_token	*tmp;
+	for (t_token *i=output.begin; i; i = tmp)
+	{
+		tmp = i->next;
 		printf("%d:%s\n", i->type, i->value);
+		free(i->value);
+		free(i);
+	}
 	return (0);
 }
