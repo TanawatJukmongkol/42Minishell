@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/07 10:54:02 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/07 10:59:48 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,14 +188,14 @@ void	env_replace(t_token_stream *s, t_token *t)
 	{
 		next_match = get_next_qoute(next_match, "$", 0);
 		len = next_match - ptr;
-		tmp = res;
 		if (len)
 		{
+			tmp = res;
 			tmp2 = ft_substr(ptr, 0, len);
 			res = ft_strjoin(tmp, tmp2);
 			free(tmp2);
+			free(tmp);
 		}
-		free(tmp);
 		if (*next_match)
 		{
 			next_nonchar = next_match + 1;
@@ -230,7 +230,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)(argv);
 	(void)(envp);
 	// char			*prompt;
-	char			*line = ft_strdup("echo \"$HOME-$ENV\"");
+	char			*line = ft_strdup("echo \"$HOME$ENV\"");
 	t_token_stream	stage1;
 	t_token_stream	stage2;
 	t_token_stream	stage3;
