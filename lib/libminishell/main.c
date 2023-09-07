@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/07 10:39:11 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/07 10:54:02 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,9 +193,9 @@ void	env_replace(t_token_stream *s, t_token *t)
 		{
 			tmp2 = ft_substr(ptr, 0, len);
 			res = ft_strjoin(tmp, tmp2);
+			free(tmp2);
 		}
 		free(tmp);
-		free(tmp2);
 		if (*next_match)
 		{
 			next_nonchar = next_match + 1;
@@ -204,9 +204,11 @@ void	env_replace(t_token_stream *s, t_token *t)
 			env = ft_substr(next_match, 1, next_nonchar - next_match - 1);
 			tmp = res;
 			if (getenv(env))
-				res = ft_strjoin(res, getenv(env));
+			{
+				res = ft_strjoin(tmp, getenv(env));
+				free(tmp);
+			}
 			free(env);
-			free(tmp);
 		}
 		if (!*next_match)
 			break ;
@@ -228,7 +230,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)(argv);
 	(void)(envp);
 	// char			*prompt;
-	char			*line = ft_strdup("echo \"$KUY\"");
+	char			*line = ft_strdup("echo \"$HOME-$ENV\"");
 	t_token_stream	stage1;
 	t_token_stream	stage2;
 	t_token_stream	stage3;
