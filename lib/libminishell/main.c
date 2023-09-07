@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/07 08:12:45 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/07 10:24:25 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,17 +174,20 @@ void	env_replace(t_token_stream *s, t_token *t)
 	char	*ptr;
 	char	*next_match;
 	char	*next_nonchar;
+	char	*res;
 	char	*env;
 	size_t	len;
 
+	(void)(s);
 	ptr = t->value;
 	next_match = ptr;
+	res = ft_strdup("");
 	while (1)
 	{
 		next_match = get_next_qoute(next_match, "$", 0);
 		len = next_match - ptr;
 		if (len)
-			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
+			res = ft_strjoin(res, ft_substr(ptr, 0, len));
 		if (*next_match)
 		{
 			next_nonchar = next_match + 1;
@@ -192,14 +195,15 @@ void	env_replace(t_token_stream *s, t_token *t)
 				next_nonchar++;
 			env = ft_substr(next_match, 1, next_nonchar - next_match - 1);
 			if (getenv(env))
-				ft_token(s, t->type)->value = ft_strdup(getenv(env));
+				res = ft_strjoin(res, ft_strdup(getenv(env)));
+			free(env);
 		}
 		if (!*next_match)
 			break ;
 		next_match += next_nonchar - next_match;
 		ptr = next_match;
 	}
-
+	ft_token(s, t->type) -> value = res;
 }
 
 void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3)
@@ -214,7 +218,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)(argv);
 	(void)(envp);
 	// char			*prompt;
-	char			*line = ft_strdup("<file echo \"hello, world! var:$HOME\"|cat>outfile");
+	char			*line = ft_strdup("echo \"$SHELL-$HOME\"");
 	t_token_stream	stage1;
 	t_token_stream	stage2;
 	t_token_stream	stage3;
@@ -224,6 +228,7 @@ int	main(int argc, char **argv, char **envp)
 	stage1.begin = NULL;
 	stage2.begin = NULL;
 	stage3.begin = NULL;
+	stage4.begin = NULL;
 	/*char	*cwd = ft_getcwd();
 	prompt = ft_strjoin(cwd, "> ");
 	free(cwd);

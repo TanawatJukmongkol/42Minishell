@@ -1,52 +1,30 @@
 [1;36m========-[ Execution output ]-========[0;37m
-2:<$
-0:file$
 0:echo$
-0:"hello, world! var:$
-0:/home/arch$
-0:"$
-1:|$
-0:cat$
-4:>$
-0:outfile$
+0:"/bin/zsh-/home/arch"$
 
 [1;35m============-[ Valgrind ]-============[0;37m
-==360010== Memcheck, a memory error detector
-==360010== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==360010== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info
-==360010== Command: ./main.out -qs --leak-check=full
-==360010== 
-==360010== Conditional jump or move depends on uninitialised value(s)
-==360010==    at 0x109BF3: ft_token_consume (in /home/arch/Projects/Cadet42/minishell/lib/libminishell/main.out)
-==360010==    by 0x109950: stage3_tokenizer (in /home/arch/Projects/Cadet42/minishell/lib/libminishell/main.out)
-==360010==    by 0x109A12: main (in /home/arch/Projects/Cadet42/minishell/lib/libminishell/main.out)
-==360010== 
-2:<
-0:file
+==439552== Memcheck, a memory error detector
+==439552== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==439552== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info
+==439552== Command: ./main.out -qs --leak-check=full
+==439552== 
 0:echo
-0:"hello, world! var:
-0:/home/arch
-0:"
-1:|
-0:cat
-4:>
-0:outfile
-==360010== 
-==360010== HEAP SUMMARY:
-==360010==     in use at exit: 5 bytes in 1 blocks
-==360010==   total heap usage: 80 allocs, 79 frees, 5,451 bytes allocated
-==360010== 
-==360010== LEAK SUMMARY:
-==360010==    definitely lost: 5 bytes in 1 blocks
-==360010==    indirectly lost: 0 bytes in 0 blocks
-==360010==      possibly lost: 0 bytes in 0 blocks
-==360010==    still reachable: 0 bytes in 0 blocks
-==360010==         suppressed: 0 bytes in 0 blocks
-==360010== Rerun with --leak-check=full to see details of leaked memory
-==360010== 
-==360010== Use --track-origins=yes to see where uninitialised values come from
-==360010== For lists of detected and suppressed errors, rerun with: -s
-==360010== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+0:"/bin/zsh-/home/arch"
+==439552== 
+==439552== HEAP SUMMARY:
+==439552==     in use at exit: 77 bytes in 12 blocks
+==439552==   total heap usage: 45 allocs, 33 frees, 4,711 bytes allocated
+==439552== 
+==439552== LEAK SUMMARY:
+==439552==    definitely lost: 77 bytes in 12 blocks
+==439552==    indirectly lost: 0 bytes in 0 blocks
+==439552==      possibly lost: 0 bytes in 0 blocks
+==439552==    still reachable: 0 bytes in 0 blocks
+==439552==         suppressed: 0 bytes in 0 blocks
+==439552== Rerun with --leak-check=full to see details of leaked memory
+==439552== 
+==439552== For lists of detected and suppressed errors, rerun with: -s
+==439552== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [1;32m===========-[ Norm errors ]-==========[0;37m
 ./ft_realpath.c: Error!
 Error: WRONG_SCOPE_COMMENT  (line:  66, col:   9):	Comment is invalid in this scope
