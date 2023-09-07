@@ -6,32 +6,12 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/07 05:14:42 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/07 08:12:45 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
-
-char	*get_next_qoute(char *str, char *match, int single)
-{
-	int		q;
-	int		dbq;
-
-	q = 0;
-	dbq = 0;
-	while (*str)
-	{
-		if (single && *str == '\"' && *str != '\'')
-			dbq = !dbq;
-		if (*str == '\'' && *str != '\"')
-			q = !q;
-		if (!ft_strncmp(str, match, ft_strlen(
-						match)) && !q && !dbq)
-			break ;
-		str++;
-	}
-	return (str);
-}
+#include <stdlib.h>
 
 void	white_space(t_token_stream *s, t_token *t)
 {
@@ -189,16 +169,56 @@ void	stage2_tokenizer(t_token_stream *dst, t_token_stream *stage2)
 		ft_token_consume(dst, stage2, meta_redirr_out_trunc);
 }
 
+void	env_replace(t_token_stream *s, t_token *t)
+{
+	char	*ptr;
+	char	*next_match;
+	char	*next_nonchar;
+	char	*env;
+	size_t	len;
+
+	ptr = t->value;
+	next_match = ptr;
+	while (1)
+	{
+		next_match = get_next_qoute(next_match, "$", 0);
+		len = next_match - ptr;
+		if (len)
+			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
+		if (*next_match)
+		{
+			next_nonchar = next_match + 1;
+			while (*next_nonchar && ft_isalpha(*next_nonchar))
+				next_nonchar++;
+			env = ft_substr(next_match, 1, next_nonchar - next_match - 1);
+			if (getenv(env))
+				ft_token(s, t->type)->value = ft_strdup(getenv(env));
+		}
+		if (!*next_match)
+			break ;
+		next_match += next_nonchar - next_match;
+		ptr = next_match;
+	}
+
+}
+
+void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3)
+{
+	while(stage3->begin)
+		ft_token_consume(dst, stage3, env_replace);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void)(argc);
 	(void)(argv);
 	(void)(envp);
 	// char			*prompt;
-	char			*line = ft_strdup("<file echo \"hello, world!\"|cat>outfile");
+	char			*line = ft_strdup("<file echo \"hello, world! var:$HOME\"|cat>outfile");
 	t_token_stream	stage1;
 	t_token_stream	stage2;
 	t_token_stream	stage3;
+	t_token_stream	stage4;
 	t_token_stream	output;
 
 	stage1.begin = NULL;
@@ -213,9 +233,10 @@ int	main(int argc, char **argv, char **envp)
 		return (0);*/
 	ft_token(&stage1, __none)->value = line;
 	ft_token_consume(&stage2, &stage1, white_space); // Split space
-	stage2_tokenizer(&stage3, &stage2); // Split 
-	output = stage3;
-	
+	stage2_tokenizer(&stage3, &stage2); // Split Metachar
+	stage3_tokenizer(&stage4, &stage3); // Split Metachar
+	output = stage4;
+
 	t_token	*tmp;
 	for (t_token *i=output.begin; i; i = tmp)
 	{

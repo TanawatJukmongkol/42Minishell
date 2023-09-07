@@ -6,7 +6,7 @@
 #    By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 21:14:32 by tjukmong          #+#    #+#              #
-#    Updated: 2023/09/05 18:54:23 by Tanawat J.       ###   ########.fr        #
+#    Updated: 2023/09/07 07:41:01 by Tanawat J.       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ DIRSRC		= ./
 SRC			=	ft_readline.c \
 				ft_chdir.c ft_realpath.c ft_getcwd.c\
 				ft_initenv.c ft_genenv.c \
-				ft_token.c ft_token_consume.c ft_tokenfree.c
+				ft_token.c ft_token_consume.c ft_tokenfree.c get_next_quote.c
 
 BONUS	= 
 

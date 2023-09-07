@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/07 03:33:55 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/07 07:22:02 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*ft_readline(const char *prompt);
 char	*ft_realpath(char *re_path, char **envp);
 char	*ft_getcwd(void);
 char	*ft_chdir(char *path);
+char	*get_next_qoute(char *str, char *match, int single);
 
 /** env **/
 void	ft_initenv(t_envp *_envp, char **envp);
