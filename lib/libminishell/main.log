@@ -1,30 +1,24 @@
 [1;36m========-[ Execution output ]-========[0;37m
 0:echo$
-0:"/bin/zsh-/home/arch"$
+0:"POOMKUY"$
 
 [1;35m============-[ Valgrind ]-============[0;37m
-==439552== Memcheck, a memory error detector
-==439552== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==439552== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info
-==439552== Command: ./main.out -qs --leak-check=full
-==439552== 
+==448583== Memcheck, a memory error detector
+==448583== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==448583== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info
+==448583== Command: ./main.out -qs --leak-check=full
+==448583== 
 0:echo
-0:"/bin/zsh-/home/arch"
-==439552== 
-==439552== HEAP SUMMARY:
-==439552==     in use at exit: 77 bytes in 12 blocks
-==439552==   total heap usage: 45 allocs, 33 frees, 4,711 bytes allocated
-==439552== 
-==439552== LEAK SUMMARY:
-==439552==    definitely lost: 77 bytes in 12 blocks
-==439552==    indirectly lost: 0 bytes in 0 blocks
-==439552==      possibly lost: 0 bytes in 0 blocks
-==439552==    still reachable: 0 bytes in 0 blocks
-==439552==         suppressed: 0 bytes in 0 blocks
-==439552== Rerun with --leak-check=full to see details of leaked memory
-==439552== 
-==439552== For lists of detected and suppressed errors, rerun with: -s
-==439552== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+0:"POOMKUY"
+==448583== 
+==448583== HEAP SUMMARY:
+==448583==     in use at exit: 0 bytes in 0 blocks
+==448583==   total heap usage: 39 allocs, 39 frees, 4,581 bytes allocated
+==448583== 
+==448583== All heap blocks were freed -- no leaks are possible
+==448583== 
+==448583== For lists of detected and suppressed errors, rerun with: -s
+==448583== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [1;32m===========-[ Norm errors ]-==========[0;37m
 ./ft_realpath.c: Error!
 Error: WRONG_SCOPE_COMMENT  (line:  66, col:   9):	Comment is invalid in this scope

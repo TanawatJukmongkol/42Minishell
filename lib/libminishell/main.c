@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/07 10:24:25 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/07 10:39:11 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,8 @@ void	env_replace(t_token_stream *s, t_token *t)
 	char	*ptr;
 	char	*next_match;
 	char	*next_nonchar;
+	char	*tmp;
+	char	*tmp2;
 	char	*res;
 	char	*env;
 	size_t	len;
@@ -186,24 +188,32 @@ void	env_replace(t_token_stream *s, t_token *t)
 	{
 		next_match = get_next_qoute(next_match, "$", 0);
 		len = next_match - ptr;
+		tmp = res;
 		if (len)
-			res = ft_strjoin(res, ft_substr(ptr, 0, len));
+		{
+			tmp2 = ft_substr(ptr, 0, len);
+			res = ft_strjoin(tmp, tmp2);
+		}
+		free(tmp);
+		free(tmp2);
 		if (*next_match)
 		{
 			next_nonchar = next_match + 1;
 			while (*next_nonchar && ft_isalpha(*next_nonchar))
 				next_nonchar++;
 			env = ft_substr(next_match, 1, next_nonchar - next_match - 1);
+			tmp = res;
 			if (getenv(env))
-				res = ft_strjoin(res, ft_strdup(getenv(env)));
+				res = ft_strjoin(res, getenv(env));
 			free(env);
+			free(tmp);
 		}
 		if (!*next_match)
 			break ;
 		next_match += next_nonchar - next_match;
 		ptr = next_match;
 	}
-	ft_token(s, t->type) -> value = res;
+	ft_token(s, t->type)->value = res;
 }
 
 void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3)
@@ -218,7 +228,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)(argv);
 	(void)(envp);
 	// char			*prompt;
-	char			*line = ft_strdup("echo \"$SHELL-$HOME\"");
+	char			*line = ft_strdup("echo \"$KUY\"");
 	t_token_stream	stage1;
 	t_token_stream	stage2;
 	t_token_stream	stage3;
