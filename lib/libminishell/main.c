@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/07 10:59:48 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/08 11:20:58 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,15 @@ void	stage2_tokenizer(t_token_stream *dst, t_token_stream *stage2)
 		ft_token_consume(dst, stage2, meta_redirr_out_trunc);
 }
 
+int	ft_isenv(int c)
+{
+	if (ft_isalnum(c))
+		return (1);
+	if (c == '_')
+		return (1);
+	return (0);
+}
+
 void	env_replace(t_token_stream *s, t_token *t)
 {
 	char	*ptr;
@@ -199,16 +208,24 @@ void	env_replace(t_token_stream *s, t_token *t)
 		if (*next_match)
 		{
 			next_nonchar = next_match + 1;
-			while (*next_nonchar && ft_isalpha(*next_nonchar))
+			while (*next_nonchar && ft_isenv(*next_nonchar))
 				next_nonchar++;
-			env = ft_substr(next_match, 1, next_nonchar - next_match - 1);
-			tmp = res;
-			if (getenv(env))
+			if (next_nonchar > next_match + 1)
 			{
-				res = ft_strjoin(tmp, getenv(env));
-				free(tmp);
+				env = ft_substr(next_match, 1, next_nonchar - next_match - 1);
+				tmp = res;
+				if (getenv(env))
+				{
+					res = ft_strjoin(tmp, getenv(env));
+					free(tmp);
+				}
+				free(env);
 			}
-			free(env);
+			else
+			{
+				tmp = res;
+				res = ft_strjoin(tmp, "$");
+			}
 		}
 		if (!*next_match)
 			break ;
@@ -224,13 +241,45 @@ void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3)
 		ft_token_consume(dst, stage3, env_replace);
 }
 
+void	quote_remove(t_token_stream *s, t_token *t)
+{
+	int		q;
+	int		dbq;
+	char	*res;
+	size_t	indx;
+	size_t	indx_res;
+
+	q = 0;
+	dbq = 0;
+	indx = 0;
+	indx_res = 0;
+	res = ft_calloc(ft_strlen(t->value) + 1, 1);
+	while (t->value[indx])
+	{
+		if (!q && t->value[indx] == '\"')
+			dbq = !dbq;
+		else if (!dbq && t->value[indx] == '\'')
+			q = !q;
+		else
+			res[indx_res++] = t->value[indx];
+		indx++;
+	}
+	ft_token(s, t->type) -> value = res;
+}
+
+void	stage4_tokenizer(t_token_stream *dst, t_token_stream *stage4)
+{
+	while(stage4->begin)
+		ft_token_consume(dst, stage4, quote_remove);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void)(argc);
 	(void)(argv);
 	(void)(envp);
-	// char			*prompt;
-	char			*line = ft_strdup("echo \"$HOME$ENV\"");
+	char			*prompt;
+	char			*line;
 	t_token_stream	stage1;
 	t_token_stream	stage2;
 	t_token_stream	stage3;
@@ -241,18 +290,18 @@ int	main(int argc, char **argv, char **envp)
 	stage2.begin = NULL;
 	stage3.begin = NULL;
 	stage4.begin = NULL;
-	/*char	*cwd = ft_getcwd();
+	char	*cwd = ft_getcwd();
 	prompt = ft_strjoin(cwd, "> ");
 	free(cwd);
 	line = ft_readline(prompt);
-	free(prompt);*/
-	/*if (!prompt)
-		return (0);*/
+	free(prompt);
+	if (!prompt)
+		return (0);
 	ft_token(&stage1, __none)->value = line;
 	ft_token_consume(&stage2, &stage1, white_space); // Split space
 	stage2_tokenizer(&stage3, &stage2); // Split Metachar
-	stage3_tokenizer(&stage4, &stage3); // Split Metachar
-	output = stage4;
+	stage3_tokenizer(&stage4, &stage3); // Replace $ENV
+	stage4_tokenizer(&output, &stage4); // Remove quotes
 
 	t_token	*tmp;
 	for (t_token *i=output.begin; i; i = tmp)

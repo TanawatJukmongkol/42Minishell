@@ -10,9 +10,9 @@ char	*get_next_qoute(char *str, char *match, int single)
 	dbq = 0;
 	while (*str)
 	{
-		if (single && *str == '\"' && *str != '\'')
+		if (single && !q && *str == '\"')
 			dbq = !dbq;
-		if (*str == '\'' && *str != '\"')
+		if (!dbq && *str == '\'')
 			q = !q;
 		if (!ft_strncmp(str, match, ft_strlen(
 						match)) && !q && !dbq)
