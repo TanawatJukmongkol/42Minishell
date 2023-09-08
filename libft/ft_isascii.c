@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/08 17:55:03 by tponutha         ###   ########.fr       */
+/*   Created: 2022/07/23 03:24:04 by tjukmong          #+#    #+#             */
+/*   Updated: 2022/07/23 03:34:19 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
-
-void	ft_unsetenv()
+int	ft_isascii(int c)
 {
-	//
+	if (c >= '\0' && c <= 127)
+		return (1);
+	return (0);
 }

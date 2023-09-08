@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/08 17:55:03 by tponutha         ###   ########.fr       */
+/*   Created: 2022/07/23 01:34:36 by tjukmong          #+#    #+#             */
+/*   Updated: 2022/07/23 03:16:31 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
-
-void	ft_unsetenv()
+int	ft_isalpha(int c)
 {
-	//
+	if (
+		(c >= 'A' && c <= 'Z')
+		|| (c >= 'a' && c <= 'z')
+	)
+		return (1);
+	return (0);
 }

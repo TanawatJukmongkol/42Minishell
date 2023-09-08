@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/05 10:09:59 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/08 00:30:40 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "../lib/libft/libft.h"
-#include "../lib/libminishell/libminishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
+# include "../libminishell/libminishell.h"
+# include "../src_pun/pun.h"
+# include "../src_tun/tun.h"
 
+// MS_DEBUG = 1 -> debug mode
+// MS_DEBUG = 0 -> product mode
+
+# ifndef MS_DEBUG
+#  define MS_DEBUG 1
+# endif
+
+
+
+#endif

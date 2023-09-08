@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/08 17:55:03 by tponutha         ###   ########.fr       */
+/*   Created: 2022/07/23 01:20:56 by tjukmong          #+#    #+#             */
+/*   Updated: 2022/07/23 01:23:23 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "libft.h"
 
-void	ft_unsetenv()
+size_t	ft_strlen(const char *s)
 {
-	//
+	char	*str;
+	size_t	ptr;
+
+	str = (char *)s;
+	ptr = 0;
+	while (*str++ != '\0')
+		ptr++;
+	return (ptr);
 }

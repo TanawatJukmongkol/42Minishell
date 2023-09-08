@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
+/*   ft_ternary.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/08 17:55:03 by tponutha         ###   ########.fr       */
+/*   Created: 2022/07/30 20:32:00 by tjukmong          #+#    #+#             */
+/*   Updated: 2023/09/04 01:28:37 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "libft.h"
 
-void	ft_unsetenv()
+int	ft_ternary(int condition, int val1, int val2)
 {
-	//
+	return ((val1 * condition) + (val2 * !condition));
 }

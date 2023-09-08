@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_chdir.c                                         :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 01:38:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/08 17:55:44 by tponutha         ###   ########.fr       */
+/*   Created: 2022/07/10 22:13:26 by tjukmong          #+#    #+#             */
+/*   Updated: 2022/09/04 18:04:33 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "libft.h"
 
-char	*ft_chdir(char *path)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char	*real;
+	unsigned char	*destptr;
+	unsigned char	*ptr;
 
-	real = ft_realpath(path, NULL);
-	if (!chdir(real))
+	if (!dest && !src)
 		return (NULL);
-	return (real);
+	destptr = dest;
+	ptr = (unsigned char *)src;
+	while (n-- > 0)
+		*destptr++ = *ptr++;
+	return (dest);
 }

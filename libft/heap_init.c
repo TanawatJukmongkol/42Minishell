@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
+/*   heap_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/08 17:55:03 by tponutha         ###   ########.fr       */
+/*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
+/*   Updated: 2023/08/15 07:08:15 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "libft.h"
 
-void	ft_unsetenv()
+void	heap_init(t_stackheap *stack)
 {
-	//
+	stack->begin = NULL;
+	stack->last = NULL;
+	stack->id = 0;
 }

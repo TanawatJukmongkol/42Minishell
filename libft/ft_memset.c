@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/08 17:55:03 by tponutha         ###   ########.fr       */
+/*   Created: 2022/07/07 11:50:51 by tjukmong          #+#    #+#             */
+/*   Updated: 2022/08/30 17:35:23 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "libft.h"
 
-void	ft_unsetenv()
+// Sets the memory at array pointer *s to c with limit n.
+
+void	*ft_memset(void *s, int c, size_t n)
 {
-	//
+	unsigned char	*ptr;
+
+	ptr = s;
+	ft_bzero(ptr, n);
+	while (n--)
+		*ptr++ = (unsigned char)c;
+	return (s);
 }

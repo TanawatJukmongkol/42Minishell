@@ -3,62 +3,110 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+         #
+#    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 06:32:57 by tjukmong          #+#    #+#              #
-#    Updated: 2023/09/05 14:09:10 by Tanawat J.       ###   ########.fr        #
+#    Updated: 2023/09/08 00:27:15 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= minishell
-SRCS		= minishell.c
-LIBS		= libminishell libft # liblifetime libminishell
+# Prgram Name
+NAME			= minishell
 
-SRC_DIR		= ./src
-LIB_DIR		= ./lib
-BUILD_DIR	= ./build
+# Complier Properties
+CC				= cc
+CFLAGS			= -Wall -Werror -Wextra -O3 -g
+RM				= rm -f
 
-CC			= gcc
-CFLAGS		= -g -Wall -Werror -Wextra
-INCLUDE_OBJ	= ${addprefix -I,${LIBS_DIR}}
-INCLUDE_SRC	= ${addprefix -L,${LIBS_DIR}} \
-			  -lreadline \
-			  -l:libminishell.a
-			  # -l:libft.a \
-			  -l:libminishell.a
+# Man Source
+MAN_DIR			= ./src_share/
+MAN_HEADER		= ${addprefix ${MAN_DIR},minishell.h}
+SRC_MAN			=	minishell.c
+SRCS_MAN		= ${addprefix ${MAN_DIR},${SRC_MAN}}
 
-SRC			= ${addprefix ${BUILD_DIR}/,${SRCS}}
-LIBS_DIR	= ${addprefix ${LIB_DIR}/,${LIBS}}
-OBJ			= ${SRC:.c=.o}
+# Share Source
+SHARE_DIR		= ./libminishell/
+SHARE_HEADER	= ${addprefix ${SHARE_DIR},libminishell.h}
+SRC_SHARE		= 	ft_chdir.c \
+					ft_exit.c \
+					ft_genenv.c \
+					ft_getenv.c \
+					ft_getcwd.c \
+					ft_initenv.c \
+					ft_readline.c \
+					ft_realpath.c \
+					ft_setenv.c \
+					ft_token_consume.c \
+					ft_token.c \
+					ft_tokenfree.c \
+					ft_unsetenv.c \
+					get_next_quote.c \
+SRCS_SHARE		= ${addprefix ${SHARE_DIR},${SHARE_MAN}}
 
-all: lib ${BUILD_DIR} ${NAME}
+# Pun Source
+PUN_DIR			= ./src_pun/
+PUN_HEADER		= ${addprefix ${PUN_DIR},pun.h}
+SRC_PUN			= 
+SRCS_PUN		= ${addprefix ${PUN_DIR},${SRC_PUN}}
 
-lib:
-	make -C ${LIB_DIR}/libft
-	make -C ${LIB_DIR}/liblifetime
-	make -C ${LIB_DIR}/libminishell
+# Tun Source
+TUN_DIR			= ./src_tun/
+TUN_HEADER		= ${addprefix ${TUN_DIR},tun.h}
+SRC_TUN			=	tun_builtin.c \
+					tun_child.c \
+					tun_exit.c \
+					tun_init.c \
+SRCS_TUN		= ${addprefix ${TUN_DIR},${SRC_TUN}}
 
-lib-fclean:
-	make fclean -C ${LIB_DIR}/libft
-	make fclean -C ${LIB_DIR}/liblifetime
-	make fclean -C ${LIB_DIR}/libminishell
+# Library Flag & directory
+LIBFT_DIR		= ./libft/
+LIBINCFLAG		= -L$(LIBFT_DIR)
+LIBFLAG			= -lft -lreadline
 
+# Object
+HEADER			= ${MAN_HEADER} ${SHARE_DIR} ${PUN_HEADER} ${TUN_HEADER}
+SRC				= ${SRC_MAN} ${SRC_SHARE} ${SRC_PUN} ${SRC_TUN}
+OBJ				= ${SRC:.c=.o}
+
+# Build Rule
 ${BUILD_DIR}:
 	mkdir -p ${BUILD_DIR}
 
 ${BUILD_DIR}/%.o:${SRC_DIR}/%.c
-	$(CC) ${INCLUDE_OBJ} -c -o $@ $^ $(CFLAGS)
+	$(CC) $(CFLAGS) ${INCLUDE_OBJ} -c -o $@ $^ 
 
-${NAME}: ${OBJ}
-	$(CC) ${OBJ} ${INCLUDE_SRC} -o ${NAME} $(CFLAGS)
+# Main Rule
+all: lib ${BUILD_DIR} ${NAME}
 
-clean:
-	rm -rf ${BUILD_DIR}
+lib:
+	make -C $(LIBFT_DIR)
 
-fclean: lib-fclean clean
-	rm -f ${NAME}
+lib-clean:
+	make -C $(LIBFT_DIR) clean
+
+lib-fclean:
+	make -C $(LIBFT_DIR) fclean
+
+${NAME}: ${OBJ} ${HEADER}
+	$(CC) $(CFLAGS) ${OBJ} $(LIBINCFLAG) $(LIBFLAG) -o ${NAME}
+
+clean:	lib-clean
+	make -C $(LIBFT_DIR) clean
+	$(RM) $(OBJ)
+
+fclean: clean lib-fclean
+	$(RM) ${NAME}
 
 re: fclean all
 
-.PHONY: all lib clean fclean re
+# Additional Rule
+lib-norm:
+	make -C $(LIBFT_DIR) norm
 
+norm:	lib-norm
+	@norminette -R CheckForbiddenSourceHeader $(SRC) $(HEADER)
+
+# bonus: library ${BUILD_DIR} ${OBJ_BONUS}
+# 	$(CC) ${OBJ_BONUS} ${wildcard ${LIB_DIR}/*/*.a} -o ${NAME} $(CFLAGS)
+
+.PHONY:	all lib lib-clean lib-fclean lib-norm clean fclean re norm

@@ -1,18 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
+/*   heap_remove.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/08 17:55:03 by tponutha         ###   ########.fr       */
+/*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
+/*   Updated: 2023/08/15 07:09:06 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "libft.h"
 
-void	ft_unsetenv()
+void	heap_remove(t_stackheap *stack, size_t id)
 {
-	//
+	ssize_t		i;
+	t_stacknode	*run;
+
+	run = stack->last;
+	i = stack->id;
+	while (i >= 0)
+	{
+		if (run->id == id)
+		{
+			if (run->prev != NULL)
+				run->prev->next = run->next;
+			if (run->next != NULL)
+				run->next->prev = run->prev;
+			run->destruct(run->data);
+			free(run);
+			break ;
+		}
+		i--;
+	}
 }
