@@ -6,13 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/15 07:09:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/10 00:53:36 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	heap_remove(t_stackheap *stack, size_t id)
+void	heap_remove(t_stackheap *stack, ssize_t id)
 {
 	ssize_t		i;
 	t_stacknode	*run;

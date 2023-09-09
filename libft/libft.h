@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/08 17:53:42 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/10 00:59:18 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 
 typedef struct s_stacknode
 {
-	size_t				id;
+	ssize_t				id;
 	void				*data;
 	struct s_stacknode	*next;
 	struct s_stacknode	*prev;
@@ -44,7 +44,7 @@ typedef struct s_stackheap
 {
 	t_stacknode	*begin;
 	t_stacknode	*last;
-	size_t		id;
+	ssize_t		id;
 }				t_stackheap;
 
 typedef unsigned int	t_uint;
@@ -138,10 +138,10 @@ void	ft_putnbr_fd(int n, int fd);
 */
 
 void	heap_init(t_stackheap *stack);
-size_t	heap_push(t_stackheap *stack, void *data, void (*destruct)(void *data));
+ssize_t	heap_push(t_stackheap *stack, void *data, void (*destruct)(void *data));
 void	heap_pop(t_stackheap *stack);
-void	*heap_get(t_stackheap *stack, size_t id);
-void	heap_remove(t_stackheap *stack, size_t id);
+void	*heap_get(t_stackheap *stack, ssize_t id);
+void	heap_remove(t_stackheap *stack, ssize_t id);
 void	heap_free(t_stackheap *stack, void *data);
 void	heap_purge(t_stackheap *stack);
 

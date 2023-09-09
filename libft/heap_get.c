@@ -6,13 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/15 05:19:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/10 00:53:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*heap_get(t_stackheap *stack, size_t id)
+void	*heap_get(t_stackheap *stack, ssize_t id)
 {
 	t_stacknode	*tmp;
 

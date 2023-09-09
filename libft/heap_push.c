@@ -6,19 +6,19 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/16 04:43:47 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/10 00:58:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	heap_push(t_stackheap *stack, void *data, void (*destruct)(void *data))
+ssize_t	heap_push(t_stackheap *stack, void *data, void (*destruct)(void *data))
 {
 	t_stacknode	*node;
 
 	node = malloc(sizeof(t_stacknode));
 	if (node == NULL)
-		return (destruct(data), heap_purge(stack), -1);
+		return (-1);
 	node->data = data;
 	node->destruct = destruct;
 	node->id = ++stack->id;

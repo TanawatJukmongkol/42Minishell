@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/16 04:57:04 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/10 01:00:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ft_zeros(size_t nmemb, size_t size, t_stackheap *stack, size_t *id)
 {
 	void	*mem;
-	size_t	num;
+	ssize_t	num;
 
 	mem = ft_calloc(nmemb, size);
 	if (mem == NULL)
