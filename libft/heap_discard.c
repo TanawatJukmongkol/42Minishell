@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getcwd.c                                        :+:      :+:    :+:   */
+/*   heap_discard.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/23 16:02:21 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/11 02:25:00 by tponutha         ###   ########.fr       */
+/*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
+/*   Updated: 2023/09/11 03:06:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "libft.h"
 
-char	*ft_getcwd(t_stackheap *mem)
+void	heap_discard(t_stackheap *stack, void *mem)
 {
-	char	cwd[PATH_MAX];
+	t_stacknode	*run;
 
-	if (!getcwd(cwd, PATH_MAX))
-		return (NULL);
-	return (ft_strdup_heap(cwd, mem));
+	run = stack->last;
+	while (run != NULL)
+	{
+		if (run->data == mem)
+		{
+			if (run->prev != NULL)
+				run->prev->next = run->next;
+			if (run->next != NULL)
+				run->next->prev = run->prev;
+			free(run);
+			break ;
+		}
+		run = run->prev;
+	}
 }

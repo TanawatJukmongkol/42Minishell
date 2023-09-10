@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/08 03:03:52 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/09 16:07:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,28 @@
 5.) exit child process
 */
 
-static void	sb_clean_child(t_exec *exe);
+static void	sb_clean_child(t_exec *exe)
+{
+	int	i;
+
+	i = 0;
+	tun_close_pipe(exe->_info, exe->_pipes);
+	while (i < exe->in_len)
+	{
+		tun_close(exe->infile[i]);
+		i++;
+	}
+	i = 0;
+	while (i < exe->out_len)
+	{
+		tun_close(exe->outfile[i]);
+		i++;
+	}
+	if (exe->infile != NULL)
+		heap_free(exe->_info->_mem, exe->infile);
+	if (exe->outfile != NULL)
+		heap_free(exe->_info->_mem, exe->outfile);
+}
 
 static int	sb_redirct(int *fdes, int len, int std)
 {
@@ -35,18 +56,22 @@ static int	sb_redirct(int *fdes, int len, int std)
 	return (tun_dup2(0, std) != -1);
 }
 
-
-
 // child process function
 
-void	tun_child_process(t_exec *exe)
+void	tun_child_process(t_exec *exe, int child_no)
 {
 	int	e;
 
-	e = sb_redirct(exe->infile, exe->in_len, STDIN_FILENO);
+	e = 1;
+	if (child_no != 0)
+		e &= tun_dup2(exe->_pipes->box[child_no][0], STDIN_FILENO) != -1;
+	if (child_no != exe->_pipes->n)
+		e &= tun_dup2(exe->_pipes->box[child_no][1], STDOUT_FILENO) != -1;
+	e &= sb_redirct(exe->infile, exe->in_len, STDIN_FILENO);
 	e &= sb_redirct(exe->outfile, exe->out_len, STDOUT_FILENO);
-	tun_close_pipe(exe->_info, exe->_pipes);
+	sb_clean_child(exe);
 	if (e)
 		execve(exe->argv[0], exe->argv, exe->envp);
+	heap_purge(exe->_info->_mem);
 	tun_exit(exe->_info->_mem, 1);
 }
