@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/08 17:53:37 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/11 04:05:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBMINISHELL_H
 # include "../libft/libft.h"
 # include <stdio.h>
+# include <limits.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/errno.h>
@@ -21,17 +22,27 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-// Thrown Everything that need in linux here
+// Universal Marco
+# ifndef ERR_MSG
+#  define ERR_MSG "minishell"
+# endif
+
+// Linux's Marco
 # ifdef __linux
+#  ifndef _POSIX_C_SOURCE
+#   define _POSIX_C_SOURCE 200809L
+#  endif
 #  ifndef OPEN_MAX
 #   define OPEN_MAX 10420
 #  endif
 # endif
 
+typedef struct sigaction	t_sigaction;
+
 /** Token stream **/
 
 /* token type enum */
-typedef enum	e_token_type
+typedef enum e_token_type
 {
 	// Not defined
 	__none,
@@ -63,18 +74,9 @@ typedef struct s_token_stream
 }				t_token_stream;
 
 /** env **/
-typedef struct s_envnode
-{
-	char				*key;
-	char				*value;
-	struct s_envnode	*next;
-}				t_envnode;
-
 typedef struct s_envp
 {
-	char		**cache;
-	t_envnode	*begin;
-	t_envnode	*last;
+	char		**env;
 	size_t		len;
 }				t_envp;
 
@@ -89,21 +91,28 @@ typedef struct s_main
 }				t_main;
 
 /* misc */
-char	*ft_readline(const char *prompt);
-char	*ft_realpath(char *re_path, char **envp);
-char	*ft_getcwd(void);
-char	*ft_chdir(char *path);
+char	*ft_readline(const char *prompt, t_stackheap *mem);
+char	*ft_realpath(char *re_path, t_envp *env, t_stackheap *mem);
+char	*ft_getcwd(t_stackheap *mem);
+char	*ft_chdir(char *path, t_stackheap *mem);
 char	*get_next_qoute(char *str, char *match, int single);
 void	ft_exit(t_stackheap *mem ,int status);
 
 /** env **/
-void	ft_initenv(t_envp *_envp, char **envp);
-void	ft_genenv(t_envp *envp);
+char	**ft_initenv(t_envp *_envp, char **envp, t_stackheap *mem);
+void	ft_clear_envp(void *env);
+char	*ft_getenv(t_envp *envp, char *key);
+void	*ft_setenv(char *member, t_envp *env, t_stackheap *mem);
+void	*ft_unsetenv(char *key, t_envp *env, t_stackheap *mem)
 
 /** token **/
 t_token	*ft_token(t_token_stream *stream, t_token_type type);
 void	ft_token_consume(t_token_stream *dst,
 			t_token_stream *src, void (*fn)(t_token_stream *s, t_token *t));
 void	ft_tokenfree(t_token_stream *s);
+
+/** signal **/
+int	ft_sig_init(t_sigaction *s, int flag, void (*hand)(int),\
+				 void (*sact)(int, siginfo_t *, void *));
 
 #endif

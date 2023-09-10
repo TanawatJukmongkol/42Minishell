@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 21:14:32 by tjukmong          #+#    #+#              #
-#    Updated: 2023/09/08 17:56:14 by tponutha         ###   ########.fr        #
+#    Updated: 2023/09/11 03:08:59 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ MAN_SRC		= ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c\
 			ft_putendl_fd.c ft_putnbr_fd.c ft_striteri.c
 
 HEAP_SRC	= heap_init.c heap_get.c heap_push.c heap_pop.c \
-			heap_free.c heap_remove.c heap_purge.c
+			heap_free.c heap_remove.c heap_purge.c heap_discard.c
 
 ADD_SRC		= ft_malloc.c ft_zeros.c ft_strclen.c ft_ternary.c
 

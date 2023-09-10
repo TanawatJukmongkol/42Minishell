@@ -6,17 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/08 03:05:05 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/09 19:20:31 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TUN_H
 # define TUN_H
 # include "../libminishell/libminishell.h"
-
-# ifndef ERR_MSG
-#  define ERR_MSG "minishell"
-# endif
 
 typedef struct s_pipe
 {
@@ -38,7 +34,7 @@ typedef struct s_exec
 }				t_exec;
 
 // ctrl-c = SIGINT
-// ctrl-d = 
+// ctrl-d = EOF-Signal (don't handle)
 
 int		tun_builin_handler(char *cmd, char **av, t_main *info);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realpath.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/24 05:20:34 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/11 02:51:51 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ char	*ft_realpath(char *re_path, char **envp)
 			real = join_path(real, ft_substr(re_path, 0, len));
 		re_path = remove_repath(re_path);
 	}
-	printf("real -> \"%s\"\n", real);
+	// printf("real -> \"%s\"\n", real);
 	return (real);
 }

@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 06:32:57 by tjukmong          #+#    #+#              #
-#    Updated: 2023/09/08 00:27:15 by tponutha         ###   ########.fr        #
+#    Updated: 2023/09/09 21:34:31 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ CC				= cc
 CFLAGS			= -Wall -Werror -Wextra -O3 -g
 RM				= rm -f
 
+# OS Checking
+UNAME = $(shell uname -s)
+
 # Man Source
 MAN_DIR			= ./src_share/
 MAN_HEADER		= ${addprefix ${MAN_DIR},minishell.h}
@@ -27,6 +30,8 @@ SRCS_MAN		= ${addprefix ${MAN_DIR},${SRC_MAN}}
 # Share Source
 SHARE_DIR		= ./libminishell/
 SHARE_HEADER	= ${addprefix ${SHARE_DIR},libminishell.h}
+SRC_SHARE_MAC	=	ft_signal_mac.c
+SRC_SHARE_LINUX	=	ft_signal_linux.c
 SRC_SHARE		= 	ft_chdir.c \
 					ft_exit.c \
 					ft_genenv.c \
@@ -41,7 +46,11 @@ SRC_SHARE		= 	ft_chdir.c \
 					ft_tokenfree.c \
 					ft_unsetenv.c \
 					get_next_quote.c \
-SRCS_SHARE		= ${addprefix ${SHARE_DIR},${SHARE_MAN}}
+ifeq ($(UNAME), Linux)
+	SRC_SHARE_FINAL	= ${SRC_SHARE} ${SRC_SHARE_LINUX}
+else
+	SRC_SHARE_FINAL	= ${SRC_SHARE} ${SRC_SHARE_MAC}
+SRCS_SHARE		= ${addprefix ${SHARE_DIR},${SRC_SHARE_FINAL}}
 
 # Pun Source
 PUN_DIR			= ./src_pun/

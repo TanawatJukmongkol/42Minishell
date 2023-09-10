@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/10 00:59:18 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/11 03:05:36 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,10 @@ void	ft_putnbr_fd(int n, int fd);
 7.) heap_purge
 	- description : free every node in t_stackheap
 	- return : Nothing
+
+8.) heap_discard
+	- description : Like heap_remove but doesn't free content inside it
+	- return : Nothing
 */
 
 void	heap_init(t_stackheap *stack);
@@ -144,5 +148,6 @@ void	*heap_get(t_stackheap *stack, ssize_t id);
 void	heap_remove(t_stackheap *stack, ssize_t id);
 void	heap_free(t_stackheap *stack, void *data);
 void	heap_purge(t_stackheap *stack);
+void	heap_discard(t_stackheap *stack, void *mem);
 
 #endif

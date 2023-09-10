@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getcwd.c                                        :+:      :+:    :+:   */
+/*   ft_signal_mac.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/23 16:02:21 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/11 02:25:00 by tponutha         ###   ########.fr       */
+/*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
+/*   Updated: 2023/09/09 21:27:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-char	*ft_getcwd(t_stackheap *mem)
+int	ft_sig_init(t_sigaction *s, int flag, void (*hand)(int),\
+				 void (*sact)(int, siginfo_t *, void *))
 {
-	char	cwd[PATH_MAX];
-
-	if (!getcwd(cwd, PATH_MAX))
-		return (NULL);
-	return (ft_strdup_heap(cwd, mem));
+	s->sa_flags = flag;
+	if (sigemptyset(&s->sa_mask) == -1)
+		return (perror(ERR_MSG), -1);
+	s->__sigaction_u.__sa_handler = hand;
+	s->__sigaction_u.__sa_sigaction = sact;
+	return (0);
 }

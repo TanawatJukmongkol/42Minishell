@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/10 00:58:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/11 02:23:33 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ ssize_t	heap_push(t_stackheap *stack, void *data, void (*destruct)(void *data))
 
 	node = malloc(sizeof(t_stacknode));
 	if (node == NULL)
-		return (-1);
+		return (destruct(data), -1);
 	node->data = data;
 	node->destruct = destruct;
 	node->id = ++stack->id;
