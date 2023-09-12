@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realpath.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/11 02:51:51 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:48:12 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*remove_repath(char *path)
 	return (path);
 }
 
-static char	*get_repath(char *re_path)
+static char	*get_repath(char *re_path, t_stackheap *mem)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -68,7 +68,7 @@ static char	*get_repath(char *re_path)
 	}
 	if (re_path[0] != '/')
 	{
-		tmp = ft_getcwd();
+		tmp = ft_getcwd(mem);
 		tmp2 = ft_strjoin(tmp, "/");
 		free(tmp);
 		tmp = ft_strjoin(tmp2 + 1, re_path);
@@ -80,19 +80,19 @@ static char	*get_repath(char *re_path)
 	return (tmp);
 }
 
-char	*ft_realpath(char *re_path, char **envp)
+char	*ft_realpath(char *re_path, t_envp *env, t_stackheap *mem)
 {
 	char	*real;
 	size_t	len;
 
-	(void)(envp);
+	(void)(env);
 	if (ft_strncmp(re_path, "~\0", 2) == 0)
 	{
 		free(re_path);
 		return (ft_strdup(getenv("HOME")));
 	}
 	real = NULL;
-	re_path = get_repath(re_path);
+	re_path = get_repath(re_path, mem);
 	while (re_path)
 	{
 		if (!ft_strchr(re_path, '/'))

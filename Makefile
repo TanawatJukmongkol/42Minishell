@@ -6,11 +6,10 @@ SRCS		= minishell.c
 
 # Contributers
 SRCS_PUN	= ft_readline.c ft_chdir.c ft_realpath.c ft_getcwd.c \
-				ft_initenv.c ft_genenv.c ft_token.c ft_token_consume.c \
-				ft_tokenfree.c ft_isenv.c get_next_quote.c \
-				lexer.c lexer_stage1.c lexer_stage2_1.c \
-				lexer_stage2_2.c lexer_stage3.c lexer_stage4.c \
-				parser.c
+				ft_initenv.c ft_token.c ft_token_consume.c \
+				ft_tokenfree.c get_next_quote.c lexer.c \
+				lexer_stage1.c lexer_stage2_1.c lexer_stage2_2.c \
+				lexer_stage3.c lexer_stage4.c parser.c
 
 SRCS_TUN	= 
 
