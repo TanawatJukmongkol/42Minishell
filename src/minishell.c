@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 19:43:47 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/12 22:23:37 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	main(int argc, char **argv, char **envp)
 		if (!line || !*line)
 			continue ;
 		lexer(&stream, line);
-		parser(&output, &stream);
+		// parser(&output, &stream);
 
-		//output = stream;
+		output = stream;
 		for (t_token *i=output.begin; i; i = i->next)
 		{
 			switch (i->type)
@@ -60,8 +60,8 @@ int	main(int argc, char **argv, char **envp)
 			}
 			printf("-> %s\n", i->value);
 		}
-		// ft_tokenfree(&stream);
-		ft_tokenfree(&output);
+		ft_tokenfree(&stream);
+		// ft_tokenfree(&output);
 	}
 	return (0);
 }

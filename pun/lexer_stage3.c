@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:34 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 19:20:14 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/12 22:21:48 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,3 @@ void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3)
 	while(stage3->begin)
 		ft_token_consume(dst, stage3, env_replace);
 }
-

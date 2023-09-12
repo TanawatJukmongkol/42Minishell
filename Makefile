@@ -2,7 +2,7 @@
 NAME		= minishell
 
 # Shared sources
-SRCS		= minishell.c
+SRCS		= minishell.c ft_clear_env.c
 
 # Contributers
 SRCS_PUN	= ft_readline.c ft_chdir.c ft_realpath.c ft_getcwd.c \

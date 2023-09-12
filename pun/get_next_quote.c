@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:54:46 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/12 19:11:20 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/12 22:26:09 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_next_qoute(char *str, char *match, int single)
 		if (!dbq && *str == '\'')
 			q = !q;
 		if (!ft_strncmp(str, match, ft_strlen(
-						match)) && !q && !dbq)
+					match)) && !q && (!dbq || single > 1))
 			break ;
 		str++;
 	}
