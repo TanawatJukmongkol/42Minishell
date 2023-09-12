@@ -6,18 +6,19 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:19 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 19:11:33 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/13 05:58:48 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pun.h"
 
-void	meta_heredoc(t_token_stream *s, t_token *t)
+void	meta_heredoc(t_token_stream *s, t_token *t, void *vars)
 {
 	char	*ptr;
 	char	*next_match;
 	size_t	len;
 
+	(void)(vars);
 	ptr = t->value;
 	next_match = ptr;
 	while (1)
@@ -35,12 +36,13 @@ void	meta_heredoc(t_token_stream *s, t_token *t)
 	}
 }
 
-void	meta_redirr_out_append(t_token_stream *s, t_token *t)
+void	meta_redirr_out_append(t_token_stream *s, t_token *t, void *vars)
 {
 	char	*ptr;
 	char	*next_match;
 	size_t	len;
 
+	(void)(vars);
 	ptr = t->value;
 	next_match = ptr;
 	while (1)

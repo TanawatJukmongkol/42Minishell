@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:34 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 22:21:48 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/13 05:59:15 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*str_rejoin(char *dst, char *src)
 {
 	char	*tmp;
-	
+
 	tmp = ft_strjoin(dst, src);
 	free(dst);
 	free(src);
@@ -47,7 +47,7 @@ static void	replace_to_env(char **res, char **next_nonchar, char **next_match)
 	*next_nonchar = str;
 }
 
-void	env_replace(t_token_stream *s, t_token *t)
+void	env_replace(t_token_stream *s, t_token *t, void *vars)
 {
 	char	*ptr;
 	char	*next_match;
@@ -55,6 +55,7 @@ void	env_replace(t_token_stream *s, t_token *t)
 	char	*res;
 	size_t	len;
 
+	(void)(vars);
 	ptr = t->value;
 	next_match = ptr;
 	res = ft_strdup("");
@@ -76,6 +77,6 @@ void	env_replace(t_token_stream *s, t_token *t)
 
 void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3)
 {
-	while(stage3->begin)
-		ft_token_consume(dst, stage3, env_replace);
+	while (stage3->begin)
+		ft_token_consume(dst, stage3, env_replace, NULL);
 }

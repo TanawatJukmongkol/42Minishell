@@ -6,18 +6,19 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 19:11:40 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/13 05:59:05 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pun.h"
 
-void	meta_pipe(t_token_stream *s, t_token *t)
+void	meta_pipe(t_token_stream *s, t_token *t, void *vars)
 {
 	char	*ptr;
 	char	*next_match;
 	size_t	len;
 
+	(void)(vars);
 	ptr = t->value;
 	next_match = ptr;
 	while (1)
@@ -34,12 +35,13 @@ void	meta_pipe(t_token_stream *s, t_token *t)
 	}
 }
 
-void	meta_redirr_in(t_token_stream *s, t_token *t)
+void	meta_redirr_in(t_token_stream *s, t_token *t, void *vars)
 {
 	char	*ptr;
 	char	*next_match;
 	size_t	len;
 
+	(void)(vars);
 	if (t->type == __here_doc)
 		ft_token(s, t->type)->value = ft_strdup("<<");
 	else
@@ -61,12 +63,13 @@ void	meta_redirr_in(t_token_stream *s, t_token *t)
 	}
 }
 
-void	meta_redirr_out_trunc(t_token_stream *s, t_token *t)
+void	meta_redirr_out_trunc(t_token_stream *s, t_token *t, void *vars)
 {
 	char	*ptr;
 	char	*next_match;
 	size_t	len;
 
+	(void)(vars);
 	if (t->type == __redirr_append)
 		ft_token(s, t->type)->value = ft_strdup(">>");
 	else
@@ -91,14 +94,14 @@ void	meta_redirr_out_trunc(t_token_stream *s, t_token *t)
 void	stage2_tokenizer(t_token_stream *dst, t_token_stream *stage2)
 {
 	while(stage2->begin)
-		ft_token_consume(dst, stage2, meta_heredoc);
+		ft_token_consume(dst, stage2, meta_heredoc, NULL);
 	while(dst->begin)
-		ft_token_consume(stage2, dst, meta_redirr_out_append);
+		ft_token_consume(stage2, dst, meta_redirr_out_append, NULL);
 	while(stage2->begin)
-		ft_token_consume(dst, stage2, meta_pipe);
+		ft_token_consume(dst, stage2, meta_pipe, NULL);
 	while(dst->begin)
-		ft_token_consume(stage2, dst, meta_redirr_in);
+		ft_token_consume(stage2, dst, meta_redirr_in, NULL);
 	while(stage2->begin)
-		ft_token_consume(dst, stage2, meta_redirr_out_trunc);
+		ft_token_consume(dst, stage2, meta_redirr_out_trunc, NULL);
 }
 

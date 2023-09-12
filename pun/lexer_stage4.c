@@ -6,13 +6,13 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 19:11:53 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/13 05:59:31 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pun.h"
 
-void	quote_remove(t_token_stream *s, t_token *t)
+void	quote_remove(t_token_stream *s, t_token *t, void *vars)
 {
 	int		q;
 	int		dbq;
@@ -20,6 +20,7 @@ void	quote_remove(t_token_stream *s, t_token *t)
 	size_t	indx;
 	size_t	indx_res;
 
+	(void)(vars);
 	q = 0;
 	dbq = 0;
 	indx = 0;
@@ -41,6 +42,6 @@ void	quote_remove(t_token_stream *s, t_token *t)
 void	stage4_tokenizer(t_token_stream *dst, t_token_stream *stage4)
 {
 	while(stage4->begin)
-		ft_token_consume(dst, stage4, quote_remove);
+		ft_token_consume(dst, stage4, quote_remove, NULL);
 }
 

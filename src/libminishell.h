@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libminishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 20:01:44 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/13 05:13:23 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef struct s_main
 }				t_main;
 
 /** main **/
-int	ft_init_main(t_main *info);
+int		ft_init_main(t_main *info);
 
 /* misc */
 char	*ft_readline(const char *prompt, t_stackheap *mem);
@@ -110,6 +110,6 @@ void	*ft_unsetenv(char *key, t_envp *env, t_stackheap *mem);
 
 /** signal **/
 int	ft_sig_init(t_sigaction *s, int flag, void (*hand)(int),\
-				 void (*sact)(int, siginfo_t *, void *));
+				void (*sact)(int, siginfo_t *, void *));
 
 #endif
