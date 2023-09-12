@@ -6,11 +6,11 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 17:44:26 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:11:40 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "pun.h"
 
 void	meta_pipe(t_token_stream *s, t_token *t)
 {

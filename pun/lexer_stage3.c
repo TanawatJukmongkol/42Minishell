@@ -6,11 +6,11 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:34 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 17:44:35 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:20:14 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "pun.h"
 
 static char	*str_rejoin(char *dst, char *src)
 {
@@ -29,7 +29,7 @@ static void	replace_to_env(char **res, char **next_nonchar, char **next_match)
 	char	*tmp;
 
 	str = (*next_match) + 1;
-	while (*str && ft_isenv(*str))
+	while (*str && (ft_isalnum(*str) || *str == '_'))
 		str++;
 	if (str > (*next_match) + 1)
 	{

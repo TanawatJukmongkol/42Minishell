@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:54:46 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/08 17:54:48 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:11:20 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "pun.h"
 
 char	*get_next_qoute(char *str, char *match, int single)
 {

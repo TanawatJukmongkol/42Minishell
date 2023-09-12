@@ -6,11 +6,11 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:19 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 17:44:20 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:11:33 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "pun.h"
 
 void	meta_heredoc(t_token_stream *s, t_token *t)
 {
