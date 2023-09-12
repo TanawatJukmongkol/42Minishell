@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/11 16:45:17 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/12 15:47:12 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,34 @@ int	main(int argc, char **argv, char **envp)
 		if (!line || !*line)
 			continue ;
 		lexer(&stream, line);
-		// parser(&output, &stream);
+		parser(&output, &stream);
 
-		output = stream;
+		//output = stream;
 		for (t_token *i=output.begin; i; i = i->next)
-			printf("%d:%s\n", i->type, i->value);
-		ft_tokenfree(&stream);
-		// ft_tokenfree(&output);
+		{
+			switch (i->type)
+			{
+				case __none:
+					printf("%-14s", "none"); break;
+				case __pipe:
+					printf("%-14s", "pipe"); break;
+				case __redirr_in:
+					printf("%-14s", "redirr_in"); break;
+				case __here_doc:
+					printf("%-14s", "here_doc"); break;
+				case __redirr_trunc:
+					printf("%-14s", "redirr_trunc"); break;
+				case __redirr_append:
+					printf("%-14s", "redirr_append"); break;
+				case __cmd:
+					printf("%-14s", "cmd"); break;
+				case __argv:
+					printf("%-14s", "argv"); break;
+			}
+			printf("-> %s\n", i->value);
+		}
+		// ft_tokenfree(&stream);
+		ft_tokenfree(&output);
 	}
 	return (0);
 }
