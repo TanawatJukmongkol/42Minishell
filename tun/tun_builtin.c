@@ -6,25 +6,25 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/04 01:18:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/12 23:28:37 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
 
-static int	sb_chdir(char **av, t_main *info)
-{
-	char	here[PATH_MAX];
+// static int	sb_chdir(char **av, t_main *info)
+// {
+// 	char	here[PATH_MAX];
 
-	if (getcwd(here, PATH_MAX) == NULL)
-	{
-		// perror("minishell: cd:");
-		return (1);
-	}
-	ft_strlcpy(info->_path, here, PATH_MAX);
-	// set $PWD
-	return (0);
-}
+// 	if (getcwd(here, PATH_MAX) == NULL)
+// 	{
+// 		// perror("minishell: cd:");
+// 		return (1);
+// 	}
+// 	ft_strlcpy(info->_path, here, PATH_MAX);
+// 	// set $PWD
+// 	return (0);
+// }
 
 static int	sb_echo(char **av, t_main *info)
 {
@@ -49,7 +49,60 @@ static int	sb_echo(char **av, t_main *info)
 	return (0);
 }
 
+static int	sb_cd(char **av, t_main *info)
+{
+	char	*dir;
+	size_t	len;
+
+	len = 0;
+	while (av[len])
+		len++;
+	if (len > 2)
+		return (1);
+	if (len == 0)
+		dir = dir;
+	dir = ft_chdir(av[1], &info->_mem);
+	if (dir == NULL)
+		return (1);
+	if (ft_editenv("PWD", &info->_envp, &info->_mem) == NULL)
+		return (1); // TODO : write perror here
+	if (ft_editenv("OLDPWD", &info->_envp, &info->_mem) == NULL)
+		return (1); // TODO : write perror here
+	return (0);
+}
+
 // TODO: pwd kinda don't use getcwd & $PWD
+
+static int	sb_export(char **av, t_main *info)
+{
+	size_t	i;
+
+	i = 1;
+	while (av[i] != NULL)
+	{
+		if (ft_strchr(av[i], '=') != NULL)
+		{
+			if (ft_setenv(av[i], &info->_envp, &info->_mem) == NULL)
+				return (1); // TODO : write perror here
+		}
+		i++;
+	}
+	return (0);
+}
+
+static int	sb_unset(char **av, t_main *info)
+{
+	size_t	i;
+
+	i = 1;
+	while (av[i] != NULL)
+	{
+		if (ft_unsetenv(av[i], &info->_envp, &info->_mem) == NULL)
+			return (1); // TODO : write perror here
+		i++;
+	}
+	return (0);
+}
 
 /*
 RETURN VALUE
@@ -70,12 +123,14 @@ int	tun_builin_handler(char *cmd, char **av, t_main *info)
 	else if (ft_strncmp(cmd, "pwd", size) == 0)
 		err = 0 & printf("%s\n", info->_path);
 	else if (ft_strncmp(cmd, "cd", size) == 0)
-		err = 0;
+		err = sb_cd(av, info);
 	else if (ft_strncmp(cmd, "export", size) == 0)
-		err = 0;
+		err = sb_export(av, info);
 	else if (ft_strncmp(cmd, "unset", size) == 0)
-		err = 0;
+		err = sb_unset(av, info);
 	else if (ft_strncmp(cmd, "exit", size) == 0)
-		ft_exit(info->_mem, 0);
+		ft_exit(&info->_mem, 0);
+	else
+		err = execve(cmd, av, info->_envp.env);
 	return (err);
 }
