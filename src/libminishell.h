@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libminishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 19:10:16 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:01:44 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,14 @@ typedef struct s_envp
 typedef struct s_main
 {
 	char			*_path;
-	t_envp			*_envp;
-	t_token_stream	*_token;
-	t_stackheap		*_mem;
+	t_envp			_envp;
+	t_token_stream	_token;
+	t_stackheap		_mem;
 	int				_ngong;
 }				t_main;
+
+/** main **/
+int	ft_init_main(t_main *info);
 
 /* misc */
 char	*ft_readline(const char *prompt, t_stackheap *mem);
