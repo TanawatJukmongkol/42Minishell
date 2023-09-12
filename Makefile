@@ -19,7 +19,7 @@ LIBS		= libft
 SRC_DIR		= ./src
 SRC_DIR_PUN	= ./pun
 SRC_DIR_TUN	= ./tun
-LIB_DIR		= ./lib
+LIB_DIR		= .
 BUILD_DIR	= ./build
 
 CC			= cc
