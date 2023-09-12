@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/11 04:05:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:27:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,14 @@ typedef struct s_envp
 typedef struct s_main
 {
 	char			*_path;
-	t_envp			*_envp;
-	t_token_stream	*_token;
-	t_stackheap		*_mem;
+	t_envp			_envp;
+	t_token_stream	_token;
+	t_stackheap		_mem;
 	int				_ngong;
 }				t_main;
+
+/** main **/
+int	ft_init_main(t_main *info);
 
 /* misc */
 char	*ft_readline(const char *prompt, t_stackheap *mem);
@@ -103,7 +106,7 @@ char	**ft_initenv(t_envp *_envp, char **envp, t_stackheap *mem);
 void	ft_clear_envp(void *env);
 char	*ft_getenv(t_envp *envp, char *key);
 void	*ft_setenv(char *member, t_envp *env, t_stackheap *mem);
-void	*ft_unsetenv(char *key, t_envp *env, t_stackheap *mem)
+void	*ft_unsetenv(char *key, t_envp *env, t_stackheap *mem);
 
 /** signal **/
 int	ft_sig_init(t_sigaction *s, int flag, void (*hand)(int),\
