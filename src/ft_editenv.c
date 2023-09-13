@@ -6,13 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 21:25:16 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:56:15 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tun.h"
+#include "libminishell.h"
 
-void	*ft_editenv(char *member, t_envp *env, t_stackheap *mem)
+void	*ft_editenv(char *member, t_envp *env)
 {
 	size_t	i;
 	size_t	key_len;

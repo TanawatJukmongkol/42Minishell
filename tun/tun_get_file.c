@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tun_translate.c                                    :+:      :+:    :+:   */
+/*   tun_get_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/13 22:38:02 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 03:34:38 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	tun_get_infile(t_token_stream *subset, t_exec *exe)
 		}
 		err = sb_open_infile(subset, exe);
 	}
-	return (1);
+	return (err);
 }
 
 static int	sb_open_outfile(t_token_stream *subset, t_exec *exe)
@@ -113,5 +113,5 @@ int	tun_get_outfile(t_token_stream *subset, t_exec *exe)
 		}
 		err = sb_open_outfile(subset, exe);
 	}
-	return (1);
+	return (err);
 }

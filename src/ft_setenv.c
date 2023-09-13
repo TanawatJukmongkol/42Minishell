@@ -6,21 +6,19 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:12 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/12 19:51:24 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 03:00:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-static void	*sb_editenv(char *member, char *p, t_envp *env, t_stackheap *mem)
+static void	*sb_editenv(char *member, char *p, t_envp *env)
 {
 	size_t	i;
-	size_t	key_len;
 	char	*new_str;
 
 	i = 0;
 	p = p - 1 - ft_strlen(member);
-	key_len = ft_strlen(member);
 	new_str = ft_strdup(member);
 	if (new_str == NULL)
 		return (NULL);
@@ -45,7 +43,7 @@ void	*ft_setenv(char *member, t_envp *env, t_stackheap *mem)
 
 	find = ft_getenv(env, member);
 	if (find != NULL)
-		return (sb_editenv(member, find, env, mem));
+		return (sb_editenv(member, find, env));
 	i = 0;
 	env->len++;
 	new_env = malloc(sizeof(char *) * (env->len + 1));

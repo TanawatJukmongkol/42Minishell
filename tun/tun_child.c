@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 23:28:26 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 03:25:12 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		tun_redirct(int *fdes, int len, int std)
 
 // child process function
 
-void	tun_child_process(t_token_stream *subset, t_exec *exe, int child_no)
+void	tun_child_process(t_token_stream *subset, t_exec *exe, size_t child_no)
 {
 	int	e;
 

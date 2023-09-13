@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realpath.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 19:48:12 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/14 03:48:03 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*remove_repath(char *path)
 	return (path);
 }
 
-static char	*get_repath(char *re_path, t_stackheap *mem)
+static char	*get_repath(char *re_path, t_envp *envp, t_stackheap *mem)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -62,8 +62,7 @@ static char	*get_repath(char *re_path, t_stackheap *mem)
 	{
 		tmp = ft_strdup(re_path + 1);
 		free(re_path);
-		re_path = ft_strjoin(getenv("HOME"), tmp);
-		// re_path = ft_strjoin(ft_getenv("HOME", envp), tmp);
+		re_path = ft_strjoin(ft_getenv(envp, "HOME"), tmp);
 		free(tmp);
 	}
 	if (re_path[0] != '/')
@@ -85,14 +84,13 @@ char	*ft_realpath(char *re_path, t_envp *env, t_stackheap *mem)
 	char	*real;
 	size_t	len;
 
-	(void)(env);
 	if (ft_strncmp(re_path, "~\0", 2) == 0)
 	{
 		free(re_path);
-		return (ft_strdup(getenv("HOME")));
+		return (ft_strdup_heap(ft_getenv(env, "HOME"), mem));
 	}
 	real = NULL;
-	re_path = get_repath(re_path, mem);
+	re_path = get_repath(re_path, env, mem);
 	while (re_path)
 	{
 		if (!ft_strchr(re_path, '/'))
@@ -105,6 +103,7 @@ char	*ft_realpath(char *re_path, t_envp *env, t_stackheap *mem)
 			real = join_path(real, ft_substr(re_path, 0, len));
 		re_path = remove_repath(re_path);
 	}
-	// printf("real -> \"%s\"\n", real);
+	if (heap_push(mem, real, free) == -1)
+		return (NULL);
 	return (real);
 }

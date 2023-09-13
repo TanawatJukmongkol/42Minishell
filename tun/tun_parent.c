@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/14 02:42:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 03:30:44 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,13 @@ static void	sb_big_wait(int *pid, int n)
 
 void	tun_parent_process(t_main *info)
 {
-	int				i;
+	size_t			i;
 	int				*pid_box;
 	t_token_stream	*token_box;
 	t_exec			exe;
 
 	i = 0;
+	exe = tun_exec_init();
 	token_box = tun_split_token(info, &exe._pipes->n);
 	if (token_box == NULL)
 		return (perror(ERR_MSG), ft_exit(&info->_mem, ENOMEM));

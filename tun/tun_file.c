@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 02:19:32 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 03:34:06 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	tun_close(int fd)
 {
 	int	err;
 
+	if (fd == -1)
+		return ;
 	err = close(fd);
 	if (err == -1)
 		perror(ERR_MSG);

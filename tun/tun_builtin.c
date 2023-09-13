@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 23:04:04 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 03:24:39 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // 	return (0);
 // }
 
-static int	sb_echo(char **av, t_main *info)
+static int	sb_echo(char **av)
 {
 	size_t	len;
 	int		i;
@@ -59,14 +59,14 @@ static int	sb_cd(char **av, t_main *info)
 		len++;
 	if (len > 2)
 		return (1);
-	if (len == 0)
-		dir = dir;
+	// if (len == 0)
+	// 	dir = dir;
 	dir = ft_chdir(av[1], &info->_mem);
 	if (dir == NULL)
 		return (1);
-	if (ft_editenv("PWD", &info->_envp, &info->_mem) == NULL)
+	if (ft_editenv("PWD", &info->_envp) == NULL)
 		return (perror("minishell : export :"), 1); // TODO : write perror here
-	if (ft_editenv("OLDPWD", &info->_envp, &info->_mem) == NULL)
+	if (ft_editenv("OLDPWD", &info->_envp) == NULL)
 		return (perror("minishell : export :"), 1); // TODO : write perror here
 	return (0);
 }
@@ -119,7 +119,7 @@ int	tun_builin_handler(char *cmd, char **av, t_main *info)
 	err = -1;
 	size = ft_strlen(cmd);
 	if (ft_strncmp(cmd, "echo", size) == 0)
-		err = sb_echo(av, info);
+		err = sb_echo(av);
 	else if (ft_strncmp(cmd, "pwd", size) == 0)
 		err = 0 & printf("%s\n", info->_path);
 	else if (ft_strncmp(cmd, "cd", size) == 0)
