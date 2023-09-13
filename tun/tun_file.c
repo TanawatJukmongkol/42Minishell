@@ -1,42 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tun_init.c                                         :+:      :+:    :+:   */
+/*   tun_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 01:25:21 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:19:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
 
-int	tun_init_exec_parent(t_exec *exe, t_main *info)
+int	tun_open(const char *path, int oflag, mode_t mode)
 {
-	size_t	n;
+	int	fd;
 
-	exe->_info = info;
-	if (tun_alloc_pipe(info, exe->_pipes, exe->_pipes->n) == -1)
-		return (0);
-	exe->infile = NULL;
-	exe->in_len = 0;
-	exe->outfile = NULL;
-	exe->out_len = 0;
-	exe->delimeter = NULL;
-	exe->argv = NULL;
-	return (1);
+	fd = open(path, oflag, mode);
+	if (fd == -1)
+		perror(ERR_MSG);
+	return (fd);
 }
 
-int	tun_init_exec_child(t_exec *exe, t_token_stream *subset)
+void	tun_close(int fd)
 {
-	int	in;
-	int	out;
+	int	err;
 
-	exe->argv = tun_get_argv(subset, exe->_info);
-	if (exe->argv == NULL)
-		return (0);
-	in = tun_get_infile(subset, exe);
-	out = tun_get_outfile(subset, exe);
-	return (in == 1 && out == 1);
+	err = close(fd);
+	if (err == -1)
+		perror(ERR_MSG);
+}
+
+int	tun_dup2(int fd1, int fd2)
+{
+	int	err;
+
+	err = dup2(fd1, fd2);
+	if (err == -1)
+		perror(ERR_MSG);
+	return (err);
+}
+
+int	tun_pipe(int fdes[2])
+{
+	int	err;
+	
+	err = pipe(fdes);
+	if (err == -1)
+		perror(ERR_MSG);
+	return (err);
 }

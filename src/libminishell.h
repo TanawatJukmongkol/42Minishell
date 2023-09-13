@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libminishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 05:13:23 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:30:27 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	ft_clear_envp(void *env);
 char	*ft_getenv(t_envp *envp, char *key);
 void	*ft_setenv(char *member, t_envp *env, t_stackheap *mem);
 void	*ft_unsetenv(char *key, t_envp *env, t_stackheap *mem);
+void	*ft_editenv(char *member, t_envp *env, t_stackheap *mem);
 
 /** signal **/
 int	ft_sig_init(t_sigaction *s, int flag, void (*hand)(int),\

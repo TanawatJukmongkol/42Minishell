@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 00:07:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:21:26 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 # define TUN_H
 # include "../src/libminishell.h"
 
-# ifndef MS_DEBUG
-#  define MS_DEBUG 1
-# endif
-
 typedef struct s_pipe
 {
 	int		**box;
 	size_t	n;
 }				t_pipe;
+
+typedef struct s_token_set
+{
+	t_token_stream	*token_set;
+	size_t			n;
+	t_stackheap		*mem;
+}				t_token_set;
 
 typedef struct s_exec
 {
@@ -49,7 +52,12 @@ void	tun_child_exit(t_stackheap *mem, int isexe);
 void	tun_builtin_exit(char **av, t_stackheap *mem);
 
 /*		tun_init.c		*/
-int		tun_init(t_exec *exe, t_main *info);
+int		tun_init_exec_parent(t_exec *exe, t_main *info);
+int		tun_init_exec_child(t_exec *exe, t_token_stream *subset);
+
+/*		tun_split_token.c	*/
+t_token_stream	*tun_split_token(t_main *info, size_t *pipe_n);
+void			tun_free_token_box(void *tokens);
 
 /*		tun_pipe.c		*/
 int		tun_alloc_pipe(t_main *info, t_pipe *pipes, size_t n);
@@ -61,8 +69,17 @@ void	tun_close(int fd);
 int		tun_dup2(int fd1, int fd2);
 int		tun_pipe(int fdes[2]);
 
-void	*ft_editenv(char *member, t_envp *env, t_stackheap *mem);
+/*		tun_fork.c		*/
+int		tun_fork(const char *msg);
+int		tun_waitpid(int pid, int *stat, int option, const char *msg);
 
-int		tun_mass_open();
+int		tun_count_type(t_token_stream *subset, t_token_type t1, t_token_type t2);
+char	**tun_get_argv(t_token_stream *subset, t_main *info);
+int		tun_get_infile(t_token_stream *subset, t_exec *exe);
+int		tun_get_outfile(t_token_stream *subset, t_exec *exe);
+
+int		tun_redirct(int *fdes, int len, int std);
+void	tun_clean_child(t_exec *exe);
+void	tun_child_process(t_token_stream *subset, t_exec *exe, int child_no);
 
 # endif

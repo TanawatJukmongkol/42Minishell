@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 16:08:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/13 23:04:04 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,5 @@ int	tun_builin_handler(char *cmd, char **av, t_main *info)
 		err = sb_unset(av, info);
 	else if (ft_strncmp(cmd, "exit", size) == 0)
 		tun_builtin_exit(av, &info->_mem);
-	else
-		err = execve(cmd, av, info->_envp.env);
 	return (err);
 }
