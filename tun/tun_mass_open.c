@@ -1,26 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tun_init.c                                         :+:      :+:    :+:   */
+/*   tun_mass_open.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 22:53:13 by tponutha         ###   ########.fr       */
+/*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
+/*   Updated: 2023/09/12 23:09:53 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
 
-int	tun_init(t_exec *exe, t_main *info)
-{
-	exe->_info = info;
-	tun_alloc_pipe(info, exe->_pipes, 0);
-	exe->infile = NULL;
-	exe->in_len = 0;
-	exe->outfile = NULL;
-	exe->out_len = 0;
-	exe->delimeter = NULL;
-	exe->argv = NULL;
-	return (0);
-}
