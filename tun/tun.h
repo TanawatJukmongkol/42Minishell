@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 23:52:01 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/13 00:07:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		tun_builin_handler(char *cmd, char **av, t_main *info);
 
 /*		tun_exit.c		*/
 void	tun_child_exit(t_stackheap *mem, int isexe);
+void	tun_builtin_exit(char **av, t_stackheap *mem);
 
 /*		tun_init.c		*/
 int		tun_init(t_exec *exe, t_main *info);

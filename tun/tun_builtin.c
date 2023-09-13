@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 23:28:37 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/13 16:08:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ static int	sb_cd(char **av, t_main *info)
 	if (dir == NULL)
 		return (1);
 	if (ft_editenv("PWD", &info->_envp, &info->_mem) == NULL)
-		return (1); // TODO : write perror here
+		return (perror("minishell : export :"), 1); // TODO : write perror here
 	if (ft_editenv("OLDPWD", &info->_envp, &info->_mem) == NULL)
-		return (1); // TODO : write perror here
+		return (perror("minishell : export :"), 1); // TODO : write perror here
 	return (0);
 }
 
@@ -83,7 +83,7 @@ static int	sb_export(char **av, t_main *info)
 		if (ft_strchr(av[i], '=') != NULL)
 		{
 			if (ft_setenv(av[i], &info->_envp, &info->_mem) == NULL)
-				return (1); // TODO : write perror here
+				return (perror("minishell : export :"), 1); // TODO : write malloc perror here
 		}
 		i++;
 	}
@@ -98,7 +98,7 @@ static int	sb_unset(char **av, t_main *info)
 	while (av[i] != NULL)
 	{
 		if (ft_unsetenv(av[i], &info->_envp, &info->_mem) == NULL)
-			return (1); // TODO : write perror here
+			return (perror("minishell : export :"), 1); // TODO : write perror here
 		i++;
 	}
 	return (0);
@@ -129,7 +129,7 @@ int	tun_builin_handler(char *cmd, char **av, t_main *info)
 	else if (ft_strncmp(cmd, "unset", size) == 0)
 		err = sb_unset(av, info);
 	else if (ft_strncmp(cmd, "exit", size) == 0)
-		ft_exit(&info->_mem, 0);
+		tun_builtin_exit(av, &info->_mem);
 	else
 		err = execve(cmd, av, info->_envp.env);
 	return (err);
