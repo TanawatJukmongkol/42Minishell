@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:46:42 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 13:45:37 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/13 15:56:04 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@ void	clear_cmd_table(t_cmd_table *table)
 {
 	table->cmd = NULL;
 	table->here_doc = NULL;
-	table->infile = NULL;
-	table->outfile = NULL;
-	table->trunc = 0;
-	table->argv.begin = NULL;
 	table->search_argv = 0;
 	table->indx = 0;
+	table->infile.begin = NULL;
+	table->outfile.begin = NULL;
+	table->argv.begin = NULL;
 }
 
 void	build_stream_from_table(t_token_stream *s, t_cmd_table *table)
@@ -35,28 +34,35 @@ void	build_stream_from_table(t_token_stream *s, t_cmd_table *table)
 	}
 	if (table->here_doc)
 		ft_token(s, __here_doc)->value = table->here_doc;
-	if (table->infile)
-		ft_token(s, __redirr_in)->value = table->infile;
-	if (table->outfile)
+	if (table->infile.begin)
 	{
-		if (table->trunc)
-			ft_token(s, __redirr_trunc)->value = table->outfile;
-		else
-			ft_token(s, __redirr_append)->value = table->outfile;
+		s->last->next = table->infile.begin;
+		s->last = table->infile.last;
+	}
+	if (table->outfile.begin)
+	{
+		s->last->next = table->outfile.begin;
+		s->last = table->outfile.last;
 	}
 	clear_cmd_table(table);
 }
 
-char	*set_cmd_table(t_token *t)
+void	rm_next(t_token *t)
 {
 	t_token	*tmp;
-	char	*val;
 
-	val = ft_strdup(t->next->value);
 	tmp = t->next;
 	t->next = t->next->next;
 	free(tmp->value);
 	free(tmp);
+}
+
+char	*set_cmd_table(t_token *t)
+{
+	char	*val;
+
+	val = ft_strdup(t->next->value);
+	rm_next(t);
 	return (val);
 }
 
@@ -72,16 +78,22 @@ void	cmdtable_switch(t_token_stream *s, t_token *t, void *vars)
 		if (t->type == __here_doc)
 			table->here_doc = set_cmd_table(t);
 		if (t->type == __redirr_in)
-			table->infile = set_cmd_table(t);
+		{
+			ft_token(&table->infile, __redirr_in)->value = ft_strdup(\
+				t->next->value);
+			rm_next(t);
+		}
 		if (t->type == __redirr_append)
 		{
-			table->outfile = set_cmd_table(t);
-			table->trunc = 0;
+			ft_token(&table->outfile, __redirr_append)->value = ft_strdup(\
+				t->next->value);
+			rm_next(t);
 		}
 		if (t->type == __redirr_trunc)
 		{
-			table->outfile = set_cmd_table(t);
-			table->trunc = 1;
+			ft_token(&table->outfile, __redirr_trunc)->value = ft_strdup(\
+				t->next->value);
+			rm_next(t);
 		}
 	}
 	if (t->type == __none && !table->search_argv)
