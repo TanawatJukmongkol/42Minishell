@@ -6,20 +6,27 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 20:02:18 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 21:03:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-char	*ft_chdir(char *path, t_stackheap *mem)
+/*
+0 = success
+ENOMEM = malloc fail
+ELSE = can't access or don't exist
+*/
+
+int	ft_chdir(char *path, t_main *info)
 {
 	char	*real;
 
-	real = ft_realpath(path, NULL, mem);
+	real = ft_realpath(path, NULL, &info->_mem);
 	if (!real)
-		return (NULL);
+		return (ENOMEM);
 	if (!chdir(real))
-		return (NULL);
-	return (real);
+		return (errno);
+	
+	return (0);
 }

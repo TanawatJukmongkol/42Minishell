@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:12 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/14 03:00:54 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:35:08 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	*ft_setenv(char *member, t_envp *env, t_stackheap *mem)
 	char	*find;
 	char	**new_env;
 
+	if (ft_strchr(member, '=') == NULL)
+		return (env->env);
 	find = ft_getenv(env, member);
 	if (find != NULL)
 		return (sb_editenv(member, find, env));

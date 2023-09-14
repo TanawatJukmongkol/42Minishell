@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 03:48:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:10:51 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ char	*ft_realpath(char *re_path, t_envp *env, t_stackheap *mem)
 	size_t	len;
 
 	if (ft_strncmp(re_path, "~\0", 2) == 0)
-	{
-		free(re_path);
-		return (ft_strdup_heap(ft_getenv(env, "HOME"), mem));
-	}
+		return (free(re_path), ft_strdup_heap(ft_getenv(env, "HOME"), mem));
 	real = NULL;
 	re_path = get_repath(re_path, env, mem);
 	while (re_path)
@@ -107,3 +104,24 @@ char	*ft_realpath(char *re_path, t_envp *env, t_stackheap *mem)
 		return (NULL);
 	return (real);
 }
+
+/*
+int main(int ac, char **av, char **envp)
+{
+	t_mem	mem;
+	heap_init(&mem);
+	t_envp	env;
+
+	env.env = envp;
+	int i =0;
+	while (envp[i])
+		i++;
+	env.len = i;
+	char *a = "../kuy";
+	char *b = ft_realpath(a, &env, &mem);
+	printf("%s\n", b);
+	heap_purge(&mem);
+	return (0);
+}
+*/
+

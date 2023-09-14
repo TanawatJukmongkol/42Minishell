@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 03:39:14 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/14 21:03:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ typedef struct s_envp
 typedef struct s_main
 {
 	char			*_path;
+	char			*_oldpath;
+	char			*_home;
 	t_envp			_envp;
 	t_token_stream	_token;
 	t_stackheap		_mem;
@@ -97,7 +99,7 @@ int		ft_init_main(t_main *info);
 char	*ft_readline(const char *prompt, t_stackheap *mem);
 char	*ft_realpath(char *re_path, t_envp *env, t_stackheap *mem);
 char	*ft_getcwd(t_stackheap *mem);
-char	*ft_chdir(char *path, t_stackheap *mem);
+int		ft_chdir(char *path, t_main *info);
 char	*get_next_qoute(char *str, char *match, int single);
 void	ft_exit(t_stackheap *mem ,int status);
 
@@ -107,7 +109,7 @@ void	ft_clear_envp(void *env);
 char	*ft_getenv(t_envp *envp, char *key);
 void	*ft_setenv(char *member, t_envp *env, t_stackheap *mem);
 void	*ft_unsetenv(char *key, t_envp *env, t_stackheap *mem);
-void	*ft_editenv(char *member, t_envp *env);
+void	*ft_editenv(char *key, char *value, t_envp *env);
 
 /** signal **/
 int	ft_sig_init(t_sigaction *s, int flag, void (*hand)(int),\
