@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 21:03:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/19 21:51:48 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ typedef struct s_envp
 typedef struct s_main
 {
 	char			*_path;
-	char			*_oldpath;
 	char			*_home;
 	t_envp			_envp;
 	t_token_stream	_token;
