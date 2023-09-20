@@ -2,9 +2,7 @@
 NAME		= minishell
 
 # Shared sources
-SRCS		= minishell.c \
-				ft_chdir.c \
-				ft_clear_env.c \
+SRCS		= ft_clear_env.c \
 				ft_editenv.c \
 				ft_exit.c \
 				ft_getcwd.c \
@@ -14,6 +12,8 @@ SRCS		= minishell.c \
 				ft_realpath.c \
 				ft_setenv.c \
 				ft_unsetenv.c
+				# minishell.c
+				# ft_chdir.c
 
 HEADERS		= libminishell.h \
 				minishell.h
@@ -34,7 +34,7 @@ SRCS_PUN	= ft_token.c \
 HEADERS_PUN	= pun.h
 
 # Contributers (TUN)
-SRCS_TUN	= tun_builtin.c \
+SRCS_TUN	= #tun_builtin.c \
 				tun_child.c \
 				tun_exit.c \
 				tun_file.c \

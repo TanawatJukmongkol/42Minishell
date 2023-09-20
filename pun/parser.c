@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:46:42 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 15:56:04 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/09/17 20:18:24 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	cmdtable_switch(t_token_stream *s, t_token *t, void *vars)
 	table = (t_cmd_table *)vars;
 	if (table->search_argv && t->type == __none)
 		ft_token(&table->argv, __argv)->value = ft_strdup(t->value);
-	if (t->next)
+	if (t->next && t->next->type == __none)
 	{
 		if (t->type == __here_doc)
 			table->here_doc = set_cmd_table(t);
