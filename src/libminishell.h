@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/19 21:51:48 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/28 06:37:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_main
 }				t_main;
 
 /** main **/
-int		ft_init_main(t_main *info);
+int		ft_init_main(t_main *info, char **envp);
 
 /* misc */
 char	*ft_readline(const char *prompt, t_stackheap *mem);

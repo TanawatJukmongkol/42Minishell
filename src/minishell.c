@@ -3,68 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 13:42:55 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/01 22:10:20 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	t_stackheap		mem;
-	char			*prompt;
+	t_token_stream	lex;
+	t_main			info;
 	char			*line;
-	t_token_stream	stream;
-	t_token_stream	output;
 
-	(void)(argc);
-	(void)(argv);
-	(void)(envp);
-	heap_init(&mem);
-	stream.begin = NULL;
-	output.begin = NULL;
-	while (1)
+	(void)av;
+	if (ac != 1)
+		return (0);
+	if (ft_init_main(&info, envp) == -1)
 	{
-		char	*cwd = ft_getcwd(&mem);
-		prompt = ft_strjoin(cwd, "> ");
-		free(cwd);
-		line = ft_readline(prompt, &mem);
-		free(prompt);
-		if (!line || !*line)
-			continue ;
-		lexer(&stream, line);
-		parser(&output, &stream);
-
-		// output = stream;
-		for (t_token *i=output.begin; i; i = i->next)
-		{
-			switch (i->type)
-			{
-				case __none:
-					printf("%-14s", "none"); break;
-				case __pipe:
-					printf("%-14s", "pipe"); break;
-				case __redirr_in:
-					printf("%-14s", "redirr_in"); break;
-				case __here_doc:
-					printf("%-14s", "here_doc"); break;
-				case __redirr_trunc:
-					printf("%-14s", "redirr_trunc"); break;
-				case __redirr_append:
-					printf("%-14s", "redirr_append"); break;
-				case __cmd:
-					printf("%-14s", "cmd"); break;
-				case __argv:
-					printf("%-14s", "argv"); break;
-			}
-			printf("-> %s\n", i->value);
-		}
-		// ft_tokenfree(&stream);
-		ft_tokenfree(&output);
+		heap_purge(&info._mem);
+		return (ENOMEM);
 	}
+	lex.begin = NULL;
+	lex.last = NULL;
+	line = ft_readline("minishell>", &info._mem);	
+	while (line != NULL)
+	{
+		lexer(&lex, line);
+		parser(&info._token, &lex);
+		while (info._token.begin != NULL)
+		{
+			printf("%d - %s\n", info._token.begin->type, info._token.begin->value);
+			info._token.begin = info._token.begin->next;
+		}
+		heap_free(&info._mem, line);
+		line = ft_readline("minishell>", &info._mem);	
+	}
+	heap_purge(&info._mem);
 	return (0);
 }
-

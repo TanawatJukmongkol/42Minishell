@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 03:25:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/28 06:29:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	tun_child_process(t_token_stream *subset, t_exec *exe, size_t child_no)
 	if (e)
 	{
 		if (tun_builin_handler(exe->argv[0], exe->argv, exe->_info) == -1)
-			execve(exe->argv[0], exe->argv, exe->_info->_envp.env);
+			tun_execve(exe);
 	}
 	heap_purge(&exe->_info->_mem);
 	tun_child_exit(&exe->_info->_mem, errno);

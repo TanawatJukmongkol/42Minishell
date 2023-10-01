@@ -41,6 +41,7 @@
 *.su
 *.idb
 *.pdb
+vgcore*
 main.c
 minishell
 

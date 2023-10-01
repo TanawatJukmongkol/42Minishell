@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/14 01:23:21 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/30 18:12:14 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static void	sb_token_manage(t_token_stream *out, t_main *info)
 		info->_token.begin = info->_token.begin->next;
 	}
 }
+
+// TODO : tun_split_token doesn't work correctly 
 
 t_token_stream	*tun_split_token(t_main *info, size_t *pipe_n)
 {

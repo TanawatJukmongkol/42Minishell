@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 03:30:19 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/28 06:29:44 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,8 @@ void	tun_child_process(t_token_stream *subset, t_exec *exe, size_t child_no);
 
 /*		tun_parent.c	*/
 void	tun_parent_process(t_main *info);
+
+/*		tun_exeve.c		*/
+void	tun_execve(t_exec *exe);
 
 # endif
