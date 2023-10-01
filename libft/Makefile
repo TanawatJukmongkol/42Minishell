@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 21:14:32 by tjukmong          #+#    #+#              #
-#    Updated: 2023/09/11 03:08:59 by tponutha         ###   ########.fr        #
+#    Updated: 2023/10/01 23:30:44 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		= libft.a
 
 # Makefile Properties
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -g -Wall -Wextra -Werror #-fsanitize=address
 RM			= rm -f
 
 # Source & Header dirrectory
