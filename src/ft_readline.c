@@ -6,13 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:04:49 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/11 03:09:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:18:26 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-char	*ft_readline(const char *prompt, t_stackheap *mem)
+char	*ft_readline(const char *prompt)
 {
 	char	*ln;
 	char	*tmp;
@@ -21,7 +21,7 @@ char	*ft_readline(const char *prompt, t_stackheap *mem)
 	if (ln == NULL)
 		return (NULL);
 	add_history(ln);
-	tmp = ft_strtrim_heap(ln, "\n", mem);
+	tmp = ft_strtrim(ln, "\n");
 	free(ln);
 	return (tmp);
 }

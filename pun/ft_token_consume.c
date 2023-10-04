@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_token_consume.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 08:30:19 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 05:52:03 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/04 18:27:21 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	ft_token_consume(t_token_stream *dst, t_token_stream *src,
 	if (!dst->begin)
 		dst->begin = tmp.begin;
 	else
-		dst->last->next = tmp.begin;
+		dst->last->next = tmp.begin; // segfault here
 	dst->last = tmp.last;
 }
+
+// Suggest : i think it's segfault due to you forget to init last

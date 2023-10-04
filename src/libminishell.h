@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/28 06:37:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:18:24 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef struct s_main
 int		ft_init_main(t_main *info, char **envp);
 
 /* misc */
-char	*ft_readline(const char *prompt, t_stackheap *mem);
+char	*ft_readline(const char *prompt);
 char	*ft_realpath(char *re_path, t_envp *env, t_stackheap *mem);
 char	*ft_getcwd(t_stackheap *mem);
 int		ft_chdir(char *path, t_main *info);
