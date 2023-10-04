@@ -21,13 +21,19 @@ void	ft_token_consume(t_token_stream *dst, t_token_stream *src,
 	if (!dst || !src || !src->begin)
 		return ;
 	tmp.begin = NULL;
-	fn(&tmp, src->begin, vars);
+	tmp.last = NULL;
+	if (src->begin->value)
+		fn(&tmp, src->begin, vars);
 	begin_next = src->begin->next;
-	free(src->begin->value);
+	if (src->begin->value)
+		free(src->begin->value);
 	free(src->begin);
 	src->begin = begin_next;
 	if (!dst->begin)
+	{
 		dst->begin = tmp.begin;
+		dst->last = tmp.last;
+	}
 	else
 		dst->last->next = tmp.begin; // segfault here
 	dst->last = tmp.last;

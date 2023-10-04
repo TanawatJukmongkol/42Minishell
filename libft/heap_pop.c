@@ -16,9 +16,11 @@ void	heap_pop(t_stackheap *stack)
 {
 	t_stacknode	*node;
 
-	if (stack->begin == NULL)
+	if (!stack || ! stack->begin)
 		return ;
 	node = stack->last;
+	if (!node || !node->data)
+		return ;
 	if (node == stack->begin)
 	{
 		stack->begin = NULL;

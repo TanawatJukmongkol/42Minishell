@@ -16,6 +16,8 @@ ssize_t	heap_push(t_stackheap *stack, void *data, void (*destruct)(void *data))
 {
 	t_stacknode	*node;
 
+	if (!stack || !data || !destruct)
+		return (heap_purge(stack), exit(-1), -1);
 	node = malloc(sizeof(t_stacknode));
 	if (node == NULL)
 		return (destruct(data), -1);
@@ -31,6 +33,7 @@ ssize_t	heap_push(t_stackheap *stack, void *data, void (*destruct)(void *data))
 	}
 	else
 	{
+		node->next = NULL;
 		stack->last->next = node;
 		node->prev = stack->last;
 		stack->last = node;

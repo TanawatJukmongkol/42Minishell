@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 20:31:58 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/16 05:06:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/18 03:37:44 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ char	*ft_strdup_heap(const char *s, t_stackheap *stack)
 	char	*str;
 
 	str = ft_strdup(s);
-	if (str == NULL)
-		return (NULL);
 	if (heap_push(stack, str, free) == -1)
 		return (NULL);
 	return (str);

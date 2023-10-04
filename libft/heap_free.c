@@ -16,6 +16,8 @@ void	heap_free(t_stackheap *stack, void *data)
 {
 	t_stacknode	*run;
 
+	if (!stack || !data)
+		return ;
 	run = stack->last;
 	while (run != NULL)
 	{
