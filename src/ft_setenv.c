@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:12 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/14 18:35:08 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/02 00:33:39 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	*sb_editenv(char *member, char *p, t_envp *env)
 	}
 	return (env->env);
 }
+
+// TODO : handle SHLVL
 
 void	*ft_setenv(char *member, t_envp *env, t_stackheap *mem)
 {

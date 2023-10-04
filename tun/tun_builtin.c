@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 19:54:39 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/09/27 23:25:31 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ static int	sb_echo(char **av)
 
 static int	sb_cd(char **av, t_main *info)
 {
-	char	*dir;
-	char	*current_dir;
+	int		err;
+	char	*home;
 	size_t	len;
 
 	len = 0;
@@ -60,16 +60,22 @@ static int	sb_cd(char **av, t_main *info)
 		len++;
 	if (len > 2)
 		return (1);
-	// if (len == 0)
-	// 	dir = dir;
-	dir = ft_chdir(av[1], &info->_mem);
-	if (dir == NULL)
-		return (1);
-	if (ft_editenv("PWD", , &info->_envp) == NULL)
-		return (perror("minishell : cd :"), 1); // TODO : write perror here
-	if (ft_editenv("OLDPWD", &info->_envp) == NULL)
-		return (perror("minishell : cd :"), 1); // TODO : write perror here
-	return (0);
+	if (len == 1)
+	{
+		home = ft_getenv(&info->_envp, "HOME");
+		if (home == NULL)
+		{
+			// TODO: print error
+			return (1);
+		}
+		else
+			err = ft_chdir(home, info);
+	}
+	else
+		err = ft_chdir(av[1], info);
+	if (err != 0)
+		perror(""); // TODO : write here
+	return (err);
 }
 
 // TODO: pwd kinda don't use getcwd & $PWD

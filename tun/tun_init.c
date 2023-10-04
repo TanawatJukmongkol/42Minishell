@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 03:29:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/04 20:15:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	tun_init_exec_parent(t_exec *exe, t_main *info)
 {
 	exe->_info = info;
-	if (tun_alloc_pipe(info, exe->_pipes, exe->_pipes->n) == -1)
+	if (tun_alloc_pipe(info, &exe->_pipes, exe->_pipes.n) == -1)
 		return (0);
 	return (1);
 }
@@ -38,7 +38,6 @@ t_exec	tun_exec_init(void)
 	t_exec	exe;
 
 	exe._info = NULL;
-	exe._pipes = NULL;
 	exe.argv = NULL;
 	exe.delimeter = NULL;
 	exe.envp = NULL;

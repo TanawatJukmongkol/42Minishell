@@ -6,13 +6,14 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 03:30:19 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/04 19:56:59 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TUN_H
 # define TUN_H
 # include "../src/libminishell.h"
+# include "../pun/pun.h"
 
 typedef struct s_pipe
 {
@@ -24,13 +25,12 @@ typedef struct s_token_set
 {
 	t_token_stream	*token_set;
 	size_t			n;
-	t_stackheap		*mem;
 }				t_token_set;
 
 typedef struct s_exec
 {
 	t_main	*_info;
-	t_pipe	*_pipes;
+	t_pipe	_pipes;
 	int		*infile;
 	int		*outfile;
 	int		in_len;
@@ -87,5 +87,8 @@ void	tun_child_process(t_token_stream *subset, t_exec *exe, size_t child_no);
 
 /*		tun_parent.c	*/
 void	tun_parent_process(t_main *info);
+
+/*		tun_exeve.c		*/
+void	tun_execve(t_exec *exe);
 
 # endif

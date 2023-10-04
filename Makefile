@@ -11,9 +11,8 @@ SRCS		= ft_clear_env.c \
 				ft_readline.c \
 				ft_realpath.c \
 				ft_setenv.c \
-				ft_unsetenv.c
-				# minishell.c
-				# ft_chdir.c
+				ft_unsetenv.c \
+				ft_init_main.c
 
 HEADERS		= libminishell.h \
 				minishell.h
@@ -45,6 +44,7 @@ SRCS_TUN	= #tun_builtin.c \
 				tun_parent.c \
 				tun_pipe.c \
 				tun_split_token.c \
+				tun_exeve.c
 
 HEADERS_TUN	= tun.h
 
@@ -56,7 +56,7 @@ LIB_DIR		= ./libft
 BUILD_DIR	= ./build
 
 CC			= cc
-CFLAGS		= -g -Wall -Werror -Wextra
+CFLAGS		= -g -Wall -Werror -Wextra -fsanitize=address
 
 INCLUDE_OBJ_LINUX	= 
 INCLUDE_SRC_LINUX	= 

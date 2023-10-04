@@ -92,7 +92,7 @@ typedef struct s_main
 }				t_main;
 
 /** main **/
-int		ft_init_main(t_main *info);
+int		ft_init_main(t_main *info, char **envp);
 
 /* misc */
 char	*ft_readline(const char *prompt, t_stackheap *mem);

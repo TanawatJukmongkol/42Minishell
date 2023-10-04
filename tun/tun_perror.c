@@ -1,27 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_readline.c                                      :+:      :+:    :+:   */
+/*   tun_perror.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/20 16:04:49 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/17 19:49:18 by Tanawat J.       ###   ########.fr       */
+/*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
+/*   Updated: 2023/09/28 06:22:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libminishell.h"
+#include "tun.h"
 
-char	*ft_readline(const char *prompt)
-{
-	char	*ln;
-	char	*tmp;
-
-	ln = readline(prompt);
-	if (ln == NULL || ft_strlen(ln) == 0)
-		return (NULL);
-	add_history(ln);
-	tmp = ft_strtrim(ln, "\n");
-	free(ln);
-	return (tmp);
-}

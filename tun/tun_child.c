@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/14 03:25:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/04 21:05:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	tun_clean_child(t_exec *exe)
 	int	i;
 
 	i = 0;
-	tun_close_pipe(exe->_info, exe->_pipes);
+	tun_close_pipe(exe->_info, &exe->_pipes);
 	while (i < exe->in_len)
 	{
 		tun_close(exe->infile[i]);
@@ -66,9 +66,9 @@ void	tun_child_process(t_token_stream *subset, t_exec *exe, size_t child_no)
 	if (e == 1)
 	{
 		if (child_no != 0)
-			e &= tun_dup2(exe->_pipes->box[child_no][0], STDIN_FILENO) != -1;
-		if (child_no != exe->_pipes->n - 1)
-			e &= tun_dup2(exe->_pipes->box[child_no][1], STDOUT_FILENO) != -1;
+			e &= tun_dup2(exe->_pipes.box[child_no - 1][0], STDIN_FILENO) != -1;
+		if (child_no != exe->_pipes.n)
+			e &= tun_dup2(exe->_pipes.box[child_no][1], STDOUT_FILENO) != -1;
 		e &= tun_redirct(exe->infile, exe->in_len, STDIN_FILENO);
 		e &= tun_redirct(exe->outfile, exe->out_len, STDOUT_FILENO);
 	}
@@ -76,8 +76,10 @@ void	tun_child_process(t_token_stream *subset, t_exec *exe, size_t child_no)
 	if (e)
 	{
 		if (tun_builin_handler(exe->argv[0], exe->argv, exe->_info) == -1)
-			execve(exe->argv[0], exe->argv, exe->_info->_envp.env);
+			tun_execve(exe);
 	}
+	ft_clear_envp(exe->envp);
+	ft_tokenfree(&exe->_info->_token);
 	heap_purge(&exe->_info->_mem);
 	tun_child_exit(&exe->_info->_mem, errno);
 }
