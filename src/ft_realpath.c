@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/21 05:48:47 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/04 23:05:00 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,7 @@ void	split_slash(t_token_stream *s, t_token *t, void *vars)
 	return (res);
 }*/
 
+/*
 int main(int ac, char **av, char **envp)
 {
 	t_main	m;
@@ -287,3 +288,4 @@ int main(int ac, char **av, char **envp)
 	// heap_purge(&m._mem);
 	return (0);
 }
+*/

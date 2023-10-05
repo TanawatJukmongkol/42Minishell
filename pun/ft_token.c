@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:44:28 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/19 22:04:27 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/09/12 19:11:14 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_token	*ft_token(t_token_stream *stream, t_token_type type)
 		stream->last = stream->begin;
 		return (new_token);
 	}
-	stream->last->next = new_token;
-	stream->last = stream->last->next;
+	(stream->last)->next = new_token;
+	stream->last = (stream->last)->next;
 	return (new_token);
 }

@@ -2,7 +2,8 @@
 NAME		= minishell
 
 # Shared sources
-SRCS		= ft_clear_env.c \
+SRCS		= minishell.c \
+				ft_clear_env.c \
 				ft_editenv.c \
 				ft_exit.c \
 				ft_getcwd.c \
@@ -12,7 +13,8 @@ SRCS		= ft_clear_env.c \
 				ft_realpath.c \
 				ft_setenv.c \
 				ft_unsetenv.c \
-				ft_init_main.c
+				ft_init_main.c \
+				ft_chdir.c
 
 HEADERS		= libminishell.h \
 				minishell.h
@@ -33,7 +35,7 @@ SRCS_PUN	= ft_token.c \
 HEADERS_PUN	= pun.h
 
 # Contributers (TUN)
-SRCS_TUN	= #tun_builtin.c \
+SRCS_TUN	= tun_builtin.c \
 				tun_child.c \
 				tun_exit.c \
 				tun_file.c \
@@ -56,7 +58,7 @@ LIB_DIR		= ./libft
 BUILD_DIR	= ./build
 
 CC			= cc
-CFLAGS		= -g -Wall -Werror -Wextra -fsanitize=address
+CFLAGS		= -g -Wall -Werror -Wextra
 
 INCLUDE_OBJ_LINUX	= 
 INCLUDE_SRC_LINUX	= 

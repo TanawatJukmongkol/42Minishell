@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/04 21:08:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/05 07:53:57 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,40 +45,96 @@
 // 	return (0);
 // }
 
+int	main(int argc, char **argv, char **envp)
+{
+	t_stackheap		mem;
+	char			*prompt;
+	char			*line;
+	t_token_stream	stream;
+	t_token_stream	output;
+
+	(void)(argc);
+	(void)(argv);
+	(void)(envp);
+	heap_init(&mem);
+	stream.begin = NULL;
+	output.begin = NULL;
+	while (1)
+	{
+		char	*cwd = ft_getcwd(&mem);
+		prompt = ft_strjoin(cwd, "> ");
+		free(cwd);
+		line = ft_readline(prompt);
+		free(prompt);
+		if (!line || !*line)
+			continue ;
+		lexer(&stream, line);
+		parser(&output, &stream);
+
+		// output = stream;
+		for (t_token *i=output.begin; i; i = i->next)
+		{
+			switch (i->type)
+			{
+				case __none:
+					printf("%-14s", "none"); break;
+				case __pipe:
+					printf("%-14s", "pipe"); break;
+				case __redirr_in:
+					printf("%-14s", "redirr_in"); break;
+				case __here_doc:
+					printf("%-14s", "here_doc"); break;
+				case __redirr_trunc:
+					printf("%-14s", "redirr_trunc"); break;
+				case __redirr_append:
+					printf("%-14s", "redirr_append"); break;
+				case __cmd:
+					printf("%-14s", "cmd"); break;
+				case __argv:
+					printf("%-14s", "argv"); break;
+			}
+			printf("-> %s\n", i->value);
+		}
+		// ft_tokenfree(&stream);
+		ft_tokenfree(&output);
+	}
+	return (0);
+}
+
 // OUTPUT EMULATOR
 
-void	set_node(t_token_stream *output, t_token_type num, char *val)
-{
-	t_token	*node;
+// void	set_node(t_token_stream *output, t_token_type num, char *val)
+// {
+// 	t_token	*node;
 
-	node = malloc(sizeof(t_token));
-	node->value = val;
-	node->type = num;
-	node->next = NULL;
-	if (output->begin == NULL)
-	{
-		output->begin = node;
-		output->last = node;
-	}
-	else
-	{
-		output->last->next = node;
-		output->last = node;
-	}
-}
+// 	node = malloc(sizeof(t_token));
+// 	node->value = val;
+// 	node->type = num;
+// 	node->next = NULL;
+// 	if (output->begin == NULL)
+// 	{
+// 		output->begin = node;
+// 		output->last = node;
+// 	}
+// 	else
+// 	{
+// 		output->last->next = node;
+// 		output->last = node;
+// 	}
+// }
 
-void	set_output(t_token_stream *output, char *list[], t_token_type *num)
-{
-	int		i = 0;
+// void	set_output(t_token_stream *output, char *list[], t_token_type *num)
+// {
+// 	int		i = 0;
 
-	output->begin = NULL;
-	output->last = NULL;
-	while (list[i] != NULL)
-	{
-		set_node(output, num[i], list[i]);
-		i++;
-	}
-}
+// 	output->begin = NULL;
+// 	output->last = NULL;
+// 	while (list[i] != NULL)
+// 	{
+// 		set_node(output, num[i], list[i]);
+// 		i++;
+// 	}
+// }
 
 // int	main(int ac, char **av, char **envp)
 // {
@@ -108,7 +164,7 @@ void	set_output(t_token_stream *output, char *list[], t_token_type *num)
 // 	// heap_purge(&info._mem);
 // 	return (0);
 // }
-
+/*
 int	main(int ac, char **av, char **envp)
 {
 	char	*list[] = {"cat", "infile", "|", "ls", "-l", "-a", "|", "sleep", "|", "env", "|", "grep", "PATH", NULL};
@@ -125,3 +181,4 @@ int	main(int ac, char **av, char **envp)
 	heap_purge(&info._mem);
 	return (0);
 }
+*/
