@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 20:32:02 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/16 05:14:54 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/05 15:26:04 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s1len-- > 0)
 		res[s1len] = s1[s1len];
 	return (res);
-}
-
-char	*ft_strjoin_heap(char const *s1, char const *s2, t_stackheap *stack)
-{
-	char	*str;
-
-	str = ft_strjoin(s1, s2);
-	if (str == NULL)
-		return (NULL);
-	if (heap_push(stack, str, free) == -1)
-		return (NULL);
-	return (str);
 }
