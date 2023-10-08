@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/04 21:07:09 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/09 00:43:00 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,24 @@ static int	sb_count_pipe(t_token_stream run)
 	return (pipe_n);
 }
 
-void	tun_free_token_box(void *tokens)
+void	tun_free_token_box(t_token_stream *box, size_t pipe_n)
 {
-	(void)tokens;
-	// size_t		i;
-	// t_token_set	*set;
-	// t_token		*tmp;
+	size_t		i;
+	t_token		*tmp;
 
-	// i = 0;
-	// set = (t_token_set *)tokens;
-	// while (i < set->n)
-	// {
-	// 	while (set->token_set[i].begin)
-	// 	{
-	// 		tmp = set->token_set->begin->next;
-	// 		free(set->token_set[i].begin->value);
-	// 		free(set->token_set[i].begin);
-	// 		// heap_free(set->mem, set->token_set[i].begin);
-	// 		set->token_set->begin = tmp;
-	// 	}
-	// 	i++;
-	// }
-	// free(set->token_set);
+	i = 0;
+	while (i < pipe_n + 1)
+	{
+		while (box[i].begin != NULL)
+		{
+			tmp = box[i].begin->next;
+			free(box[i].begin->value);
+			free(box[i].begin);
+			box[i].begin = tmp;
+		}
+		i++;
+	}
+	free(box);
 }
 
 // static void	sb_token_abuse(t_token_stream *out, t_token_stream *in)
@@ -79,9 +75,8 @@ static void	sb_token_manage(t_token_stream *out, t_token_stream *in)
 		if (in->begin->type == __pipe)
 		{
 			in->begin = tmp;
-			// TODO : open when throw heap to test
-			// free(in->begin->value); 
-			// free(in->begin);
+			free(in->begin->value); 
+			free(in->begin);
 			return ;
 		}
 		if (out->begin == NULL)
@@ -98,8 +93,6 @@ static void	sb_token_manage(t_token_stream *out, t_token_stream *in)
 	}
 }
 
-// TODO : tun_split_token doesn't work correctly 
-
 t_token_stream	*tun_split_token(t_main *info, size_t *pipe_n)
 {
 	size_t			i;
@@ -115,7 +108,5 @@ t_token_stream	*tun_split_token(t_main *info, size_t *pipe_n)
 		sb_token_manage(&box[i], &info->_token);
 		i++;
 	}
-	if (heap_push(&info->_mem, box, tun_free_token_box) == -1)
-		return (NULL);
 	return (box);
 }

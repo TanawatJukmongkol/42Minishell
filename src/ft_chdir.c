@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/04 23:02:30 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/09 00:49:36 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,17 @@ int	ft_chdir(char *path, t_main *info)
 	if (!real)
 		return (ENOMEM);
 	if (!chdir(real))
+	{
+		free(real);
 		return (errno);
-	heap_free(&info->_mem, info->_path);
-	info->_path = real;
+	}
 	old = ft_getenv(&info->_envp, "PWD");
 	if (old == NULL)
 		old = "";
 	if (ft_editenv("OLDPWD", old, &info->_envp) == NULL)
-	{
-		heap_free(&info->_mem, info->_path);
 		return (ENOMEM);
-	}
 	if (ft_editenv("PWD", real, &info->_envp) == NULL)
-	{
-		heap_free(&info->_mem, info->_path);
 		return (ENOMEM);
-	}
+	free(real);
 	return (0);
 }

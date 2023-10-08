@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/14 01:59:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/09 03:05:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ static void	sb_failsafe_pipe(t_main *info, t_pipe *pipes, size_t err_i)
 	size_t	i;
 
 	i = 0;
+	(void)info;
 	while (i < err_i && pipes->box[i] != NULL)
 	{
 		close(pipes->box[i][0]);
 		close(pipes->box[i][1]);
-		heap_free(&info->_mem, pipes->box[i]);
+		free(pipes->box[i]);
 		i++;
 	}
-	heap_free(&info->_mem, pipes->box);
+	free(pipes->box);
 }
 
 void	tun_close_pipe(t_main *info, t_pipe *pipes)
@@ -32,14 +33,16 @@ void	tun_close_pipe(t_main *info, t_pipe *pipes)
 	size_t	i;
 
 	i = 0;
+	(void)info;
 	while (i < pipes->n)
 	{
 		close(pipes->box[i][0]);
 		close(pipes->box[i][1]);
-		heap_free(&info->_mem, pipes->box[i]);
+		free(pipes->box[i]);
 		i++;
 	}
-	heap_free(&info->_mem, pipes->box);
+	// heap_free(&info->_mem, pipes->box);
+	free(pipes->box);
 }
 
 int	tun_alloc_pipe(t_main *info, t_pipe *pipes, size_t n)
@@ -48,15 +51,18 @@ int	tun_alloc_pipe(t_main *info, t_pipe *pipes, size_t n)
 	int		err;
 
 	i = 0;
+	pipes->n = n;
 	if (n == 0)
+	{
+		pipes->box = NULL;
 		return (1);
-	pipes->box = ft_malloc(sizeof(int *), n, &info->_mem, NULL);
+	}
+	pipes->box = malloc(sizeof(int *) * n);
 	if (pipes->box == NULL)
 		return (perror(ERR_MSG), -1);
-	pipes->n = n;
 	while (i < n)
 	{
-		pipes->box[i] = ft_malloc(sizeof(int), 2, &info->_mem, NULL);
+		pipes->box[i] = malloc(sizeof(int) * 2);
 		if (pipes->box[i] != NULL)
 			err = tun_pipe(pipes->box[i]);
 		if (pipes->box[i] == NULL || err == -1)

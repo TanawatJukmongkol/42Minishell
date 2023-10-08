@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_genenv.c                                        :+:      :+:    :+:   */
+/*   ft_clear_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:36 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/10 02:25:27 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/09 01:07:37 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-void	ft_clear_envp(void *env)
+void	ft_clear_envp(char **envs)
 {
 	size_t	i;
-	char	**envs;
 
 	i = 0;
-	envs = (char **)env;
 	if (envs == NULL)
 		return ;
 	while (envs[i] != NULL)

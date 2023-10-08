@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/04 21:05:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/05 20:07:27 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	tun_clean_child(t_exec *exe)
 	int	i;
 
 	i = 0;
-	tun_close_pipe(exe->_info, &exe->_pipes);
+	if (exe->_pipes.n > 0)
+		tun_close_pipe(exe->_info, &exe->_pipes);
 	while (i < exe->in_len)
 	{
 		tun_close(exe->infile[i]);
@@ -38,9 +39,9 @@ void	tun_clean_child(t_exec *exe)
 		i++;
 	}
 	if (exe->infile != NULL)
-		heap_free(&exe->_info->_mem, exe->infile);
+		free(exe->infile);
 	if (exe->outfile != NULL)
-		heap_free(&exe->_info->_mem, exe->outfile);
+		free(exe->outfile);
 }
 
 int		tun_redirct(int *fdes, int len, int std)
@@ -49,7 +50,7 @@ int		tun_redirct(int *fdes, int len, int std)
 		return (len != -1);
 	while (len > 0 && fdes[len] != std)
 	{
-		if (tun_dup2(len, len - 1) == -1)
+		if (tun_dup2(fdes[len], fdes[len - 1]) == -1)
 			return (0);
 		len--;
 	}
@@ -75,11 +76,11 @@ void	tun_child_process(t_token_stream *subset, t_exec *exe, size_t child_no)
 	tun_clean_child(exe);
 	if (e)
 	{
-		if (tun_builin_handler(exe->argv[0], exe->argv, exe->_info) == -1)
+		if (tun_builin_handler(exe->argv[0], exe->argv, exe) == -1)
 			tun_execve(exe);
 	}
 	ft_clear_envp(exe->envp);
 	ft_tokenfree(&exe->_info->_token);
-	heap_purge(&exe->_info->_mem);
-	tun_child_exit(&exe->_info->_mem, errno);
+	// heap_purge(&exe->_info->_mem);
+	tun_child_exit(exe, errno);
 }

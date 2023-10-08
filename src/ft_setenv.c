@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:12 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/02 00:33:39 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/09 00:49:23 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	*sb_editenv(char *member, char *p, t_envp *env)
 
 // TODO : handle SHLVL
 
-void	*ft_setenv(char *member, t_envp *env, t_stackheap *mem)
+void	*ft_setenv(char *member, t_envp *env)
 {
 	size_t	i;
 	char	*find;
@@ -53,8 +53,6 @@ void	*ft_setenv(char *member, t_envp *env, t_stackheap *mem)
 	new_env = malloc(sizeof(char *) * (env->len + 1));
 	if (new_env == NULL)
 		return (NULL);
-	heap_discard(mem, env->env);
-	heap_discard(mem, member);
 	while (i < env->len - 1)
 	{
 		new_env[i] = env->env[i];

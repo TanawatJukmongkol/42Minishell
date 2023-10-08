@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/27 23:25:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/09 01:03:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ static int	sb_export(char **av, t_main *info)
 	{
 		if (ft_strchr(av[i], '=') != NULL)
 		{
-			if (ft_setenv(av[i], &info->_envp, &info->_mem) == NULL)
-				return (perror("minishell : export :"), 1); // TODO : write malloc perror here
+			if (ft_setenv(av[i], &info->_envp) == NULL)
+				return (perror("minishell : export :"), 1);
 		}
 		i++;
 	}
@@ -104,8 +104,8 @@ static int	sb_unset(char **av, t_main *info)
 	i = 1;
 	while (av[i] != NULL)
 	{
-		if (ft_unsetenv(av[i], &info->_envp, &info->_mem) == NULL)
-			return (perror("minishell : export :"), 1); // TODO : write perror here
+		if (ft_unsetenv(av[i], &info->_envp) == NULL)
+			return (perror("minishell : export :"), 1);
 		i++;
 	}
 	return (0);
@@ -118,24 +118,31 @@ RETURN VALUE
 positive	: error
 */
 
-int	tun_builin_handler(char *cmd, char **av, t_main *info)
+int	tun_builin_handler(char *cmd, char **av, t_exec *exe)
 {
 	size_t	size;
 	int		err;
+	char	*curr;
 
 	err = -1;
 	size = ft_strlen(cmd);
 	if (ft_strncmp(cmd, "echo", size) == 0)
 		err = sb_echo(av);
 	else if (ft_strncmp(cmd, "pwd", size) == 0)
-		err = 0 & printf("%s\n", info->_path);
+	{
+		curr = ft_getcwd();
+		if (curr == NULL)
+			return (ENOMEM);
+		err = 0 & printf("%s\n", curr);
+		free(curr);
+	}
 	else if (ft_strncmp(cmd, "cd", size) == 0)
-		err = sb_cd(av, info);
+		err = sb_cd(av, exe->_info);
 	else if (ft_strncmp(cmd, "export", size) == 0)
-		err = sb_export(av, info);
+		err = sb_export(av, exe->_info);
 	else if (ft_strncmp(cmd, "unset", size) == 0)
-		err = sb_unset(av, info);
+		err = sb_unset(av, exe->_info);
 	else if (ft_strncmp(cmd, "exit", size) == 0)
-		tun_builtin_exit(av, &info->_mem);
+		tun_builtin_exit(exe, av);
 	return (err);
 }

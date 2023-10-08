@@ -6,127 +6,24 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/04 23:05:00 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/09 01:02:12 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
-// #include "../pun/pun.h"
 
-/*static char	*join_path(char *dst, char *path)
-{
-	char	*join;
-
-	join = ft_strjoin("/", path);
-	free(path);
-	if (!dst)
-		return (join);
-	path = ft_strjoin(dst, join);
-	free(dst);
-	free(join);
-	return (path);
-}
-
-static char	*remove_path(char *path)
-{
-	char	*tmp;
-
-	tmp = ft_substr(path, 0, ft_strrchr(path, '/') - path);
-	free(path);
-	return (tmp);
-}
-
-static char	*remove_repath(char *path)
-{
-	char	*tmp;
-	char	*stopper;
-
-	stopper = ft_strchr(path + 1, '/');
-	if (!stopper)
-	{
-		free(path);
-		return (NULL);
-	}
-	tmp = ft_strdup(stopper + 1);
-	free(path);
-	path = ft_strtrim(tmp, "/");
-	free(tmp);
-	return (path);
-}
-
-static char	*get_repath(char *re_path, t_envp *envp, t_stackheap *mem)
+char	*join_path(char *dst, char *src)
 {
 	char	*tmp;
 	char	*tmp2;
 
-	if (ft_strncmp(re_path, "~/", 2) == 0)
-	{
-		tmp = ft_strdup(re_path + 1);
-		free(re_path);
-		re_path = ft_strjoin(ft_getenv(envp, "HOME"), tmp);
-		free(tmp);
-	}
-	if (re_path[0] != '/')
-	{
-		tmp = ft_getcwd(mem);
-		tmp2 = ft_strjoin(tmp, "/");
-		free(tmp);
-		tmp = ft_strjoin(tmp2 + 1, re_path);
-		free(tmp2);
-	}
-	else
-		tmp = ft_strtrim(re_path, "/");
-	free(re_path);
-	return (tmp);
-}
-
-char	*ft_realpath(char *re_path, t_envp *env, t_stackheap *mem)
-{
-	char	*real;
-	size_t	len;
-
-	if (ft_strncmp(re_path, "~", 1) == 0)
-		return (free(re_path), ft_strdup_heap(ft_getenv(env, "HOME"), mem));
-	real = NULL;
-	re_path = get_repath(re_path, env, mem);
-	while (re_path)
-	{
-		if (!ft_strchr(re_path, '/'))
-			len = ft_strlen(re_path);
-		else
-			len = ft_strchr(re_path, '/') - re_path;
-		if (ft_strncmp(re_path, "../", 3) == 0)
-			real = remove_path(real);
-		else if (ft_strncmp(re_path, "./", 2))
-			real = join_path(real, ft_substr(re_path, 0, len));
-		re_path = remove_repath(re_path);
-	}
-	if (heap_push(mem, real, free) == -1)
-		return (NULL);
-	return (real);
-}*/
-
-/*char	*ft_strredup_heap(char *head, char *str, t_stackheap *mem)
-{
-	char	*ret;
-
-	ret = ft_strdup_heap(str, mem);
-	heap_free(mem, head);
-	return (ret);
-}*/
-
-char	*join_path(char *dst, char *src, t_mem *m)
-{
-	char	*tmp;
-	char	*tmp2;
-
-	tmp = ft_strjoin_heap("/", src, m);
+	tmp = ft_strjoin("/", src);
 	// heap_free(m, src);
 	if (!tmp)
 		return (NULL);
-	tmp2 = ft_strjoin_heap(dst, tmp, m);
-	heap_free(m, dst);
-	heap_free(m, tmp);
+	tmp2 = ft_strjoin(dst, tmp);
+	free(dst);
+	free(tmp);
 	return (tmp2);
 }
 
@@ -140,20 +37,19 @@ char	*ft_realpath(char *re_path, t_main *m)
 	if (!re_path || !*re_path)
 		return (NULL);
 	if (!ft_strncmp(re_path, "~", 2) || !ft_strncmp(re_path, "~/", 2))
-		begin = ft_strjoin_heap(m->_home, re_path + 1, &m->_mem);
+		begin = ft_strjoin(m->_home, re_path + 1);
 	else if (re_path[0] == '/')
-		begin = ft_strdup_heap(re_path, &m->_mem);
+		begin = ft_strdup(re_path);
 	else
 	{
-		begin = ft_strdup_heap(getenv("PWD"), &m->_mem);
+		begin = ft_strdup(getenv("PWD")); // TODO : if PWD doesn't exist, then SEGFAULT
 		if (!begin)
 			return (NULL);
-		begin = join_path(begin, re_path, &m->_mem);
+		begin = join_path(begin, re_path);
 	}
 	if (!begin)
 		return (NULL);
-
-	path = ft_strdup_heap("/", &m->_mem);
+	path = ft_strdup("/");
 	if (!path)
 		return (NULL);
 	next_slash = begin;
@@ -162,7 +58,7 @@ char	*ft_realpath(char *re_path, t_main *m)
 		next_slash = ft_strchr(begin, '/');
 		if (!next_slash)
 			next_slash = re_path + ft_strlen(re_path);
-		trim = ft_substr_heap(begin, 0, next_slash - begin, &m->_mem);
+		trim = ft_substr(begin, 0, next_slash - begin);
 		if (!trim)
 			return (NULL);
 		if (*trim && ft_strncmp(trim, ".", ft_strlen(trim)))
@@ -180,18 +76,18 @@ char	*ft_realpath(char *re_path, t_main *m)
 			{
 				if (!path[1])
 					path[0] = '\0';
-				path = join_path(path, trim, &m->_mem);
+				path = join_path(path, trim);
 			}
 		}
-		re_path = ft_strdup_heap(next_slash + (*next_slash != 0), &m->_mem);
-		heap_free(&m->_mem, begin);
+		re_path = ft_strdup(next_slash + (*next_slash != 0));
+		free(begin);
 		if (trim)
-			heap_free(&m->_mem, trim);
+			free(trim);
 		begin = re_path;
 	}
 	if (!re_path)
 		return (NULL);
-	heap_free(&m->_mem, re_path);
+	free(re_path);
 	return (path);
 }
 

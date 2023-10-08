@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 22:30:32 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/05 18:28:31 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	**tun_get_argv(t_token_stream *subset, t_main *info)
 	t_token	*run;
 	char	**argv;
 
+	(void)info;
 	len = tun_count_type(subset, __cmd, __argv);
 	argv = malloc(sizeof(char *) * (len + 1));
 	if (argv == NULL)
@@ -52,7 +53,5 @@ char	**tun_get_argv(t_token_stream *subset, t_main *info)
 		run = run->next;
 	}
 	argv[i] = NULL;
-	if (heap_push(&info->_mem, argv, ft_free_split) == -1)
-		return (NULL);
 	return (argv);
 }

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/30 18:07:00 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/08 15:37:45 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*sb_find_cmd(char *cmd, t_main *info)
 	path = ft_getenv(&info->_envp, "PATH");
 	if (path == NULL)
 		return (cmd);
-	path_set = ft_split_heap(path, ':', &info->_mem);
+	path_set = ft_split(path, ':');
 	if (path_set == NULL)
 		return (NULL);
 	while (path_set[i] != NULL)
@@ -54,14 +54,16 @@ static char	*sb_find_cmd(char *cmd, t_main *info)
 		full_cmd = sb_pathjoin(cmd, path_set[i]);
 		if (full_cmd == NULL)
 		{
-			heap_free(&info->_mem, path_set);
+			free(path_set);
+			// heap_free(&info->_mem, path_set);
 			return (NULL);
 		}
 		if (full_cmd != cmd)
 			break ;
 		i++;
 	}
-	heap_free(&info->_mem, path_set);
+	free(path_set);
+	// heap_free(&info->_mem, path_set);
 	return (full_cmd);
 }
 
@@ -71,6 +73,8 @@ void	tun_execve(t_exec *exe)
 	char	*full_path;
 
 	// TODO : handle ~/ later na
+	if (exe->argv[0] == NULL)
+		return ;
 	full_path = sb_find_cmd(exe->argv[0], exe->_info);
 	if (full_path == NULL)
 		return ;

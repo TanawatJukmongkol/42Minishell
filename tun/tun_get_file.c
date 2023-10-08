@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/14 03:34:38 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/08 20:42:12 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	sb_open_infile(t_token_stream *subset, t_exec *exe)
 		else if (run->type == __here_doc)
 		{
 			exe->infile[i] = STDIN_FILENO;
-			exe->delimeter = ft_strdup_heap(run->value, &exe->_info->_mem);
+			// exe->delimeter = ft_strdup(run->value);
 			err = exe->delimeter != NULL;
 		}
 		i += run->type == __redirr_in || run->type == __here_doc;
@@ -52,7 +52,7 @@ int	tun_get_infile(t_token_stream *subset, t_exec *exe)
 		exe->infile = NULL;
 	else
 	{
-		exe->infile = ft_malloc(sizeof(int), exe->in_len + 2, &exe->_info->_mem, NULL);
+		exe->infile = malloc(sizeof(int) * (exe->in_len + 2));
 		if (exe->infile == NULL)
 		{
 			exe->in_len = -1;
@@ -105,7 +105,7 @@ int	tun_get_outfile(t_token_stream *subset, t_exec *exe)
 		exe->outfile = NULL;
 	else
 	{
-		exe->outfile = ft_malloc(sizeof(int), exe->out_len + 2, &exe->_info->_mem, NULL);
+		exe->outfile = malloc(sizeof(int) * (exe->out_len + 2));
 		if (exe->outfile == NULL)
 		{
 			exe->out_len = -1;

@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_tokenfree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/05 18:25:22 by tponutha         ###   ########.fr       */
+/*   Created: 2023/08/09 14:48:03 by tjukmong          #+#    #+#             */
+/*   Updated: 2023/10/09 00:19:26 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-void	ft_exit(t_main *info,int status)
+void	ft_tokenfree(t_token_stream *s)
 {
-	// TODO : fix this
-	(void)info;
-	exit(status);
+	t_token	*tmp;
+
+	while (s->begin)
+	{
+		tmp = s->begin->next;
+		free(s->begin->value);
+		free(s->begin);
+		s->begin = tmp;
+	}
 }

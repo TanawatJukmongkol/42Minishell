@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_clear_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/05 18:25:22 by tponutha         ###   ########.fr       */
+/*   Created: 2023/08/09 14:48:03 by tjukmong          #+#    #+#             */
+/*   Updated: 2023/10/09 01:07:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-void	ft_exit(t_main *info,int status)
+int	ft_clear_main(t_main *info, int status)
 {
-	// TODO : fix this
-	(void)info;
-	exit(status);
+	free(info->_home);
+	ft_tokenfree(&info->_token);
+	ft_clear_envp(info->_envp.env);
+	return (status);
 }
