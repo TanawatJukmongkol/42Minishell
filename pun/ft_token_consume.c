@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_token_consume.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 08:30:19 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 05:52:03 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/09 04:00:40 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

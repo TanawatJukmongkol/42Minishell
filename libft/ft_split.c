@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 20:32:06 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/05 15:22:50 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:39:46 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_splitlen(char const *s, char c)
 }
 
 // Free the whole 2D array if failed to malloc.
-static void	ft_free_split(void *box)
+void	ft_free_split(void *box)
 {
 	int		i;
 	char	**s;

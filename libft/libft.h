@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/05 15:22:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:05:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@
 # include <unistd.h>
 # ifdef __linux
 #  include <stdint.h>
-# endif
-
-// Annoy from MacOS's vscode
-# ifndef __null
-#  define __null (void *)0x0
 # endif
 
 # ifndef SIZE_MAX
@@ -68,6 +63,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
+void	ft_free_split(void *box);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 

@@ -4,6 +4,8 @@ NAME		= minishell
 # Shared sources
 SRCS		= minishell.c \
 				ft_clear_env.c \
+				ft_clear_main.c \
+				ft_tokenfree.c \
 				ft_editenv.c \
 				ft_exit.c \
 				ft_getcwd.c \
@@ -22,7 +24,6 @@ HEADERS		= libminishell.h \
 # Contributers (PUN)
 SRCS_PUN	= ft_token.c \
 				ft_token_consume.c \
-				ft_tokenfree.c \
 				get_next_quote.c \
 				lexer.c \
 				lexer_stage1.c \
@@ -58,7 +59,7 @@ LIB_DIR		= ./libft
 BUILD_DIR	= ./build
 
 CC			= cc
-CFLAGS		= -g -Wall -Werror -Wextra
+CFLAGS		= -g -Wall -Werror -Wextra -fsanitize=address
 
 INCLUDE_OBJ_LINUX	= 
 INCLUDE_SRC_LINUX	= 
