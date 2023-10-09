@@ -35,7 +35,7 @@ SRCS_PUN	= ft_token.c \
 HEADERS_PUN	= pun.h
 
 # Contributers (TUN)
-SRCS_TUN	= tun_builtin.c \
+#SRCS_TUN	= tun_builtin.c \
 				tun_child.c \
 				tun_exit.c \
 				tun_file.c \
@@ -48,7 +48,7 @@ SRCS_TUN	= tun_builtin.c \
 				tun_split_token.c \
 				tun_exeve.c
 
-HEADERS_TUN	= tun.h
+#HEADERS_TUN	= tun.h
 
 
 SRC_DIR		= ./src
@@ -58,7 +58,7 @@ LIB_DIR		= ./libft
 BUILD_DIR	= ./build
 
 CC			= cc
-CFLAGS		= -g -Wall -Werror -Wextra
+CFLAGS		= -g -Wall -Werror -Wextra -fsanitize=address
 
 INCLUDE_OBJ_LINUX	= 
 INCLUDE_SRC_LINUX	= 

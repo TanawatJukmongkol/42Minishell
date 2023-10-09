@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/04 19:56:59 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/08 21:40:02 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef struct s_exec
 int		tun_builin_handler(char *cmd, char **av, t_main *info);
 
 /*		tun_exit.c		*/
-void	tun_child_exit(t_stackheap *mem, int isexe);
-void	tun_builtin_exit(char **av, t_stackheap *mem);
+void	tun_child_exit(int isexe);
+void	tun_builtin_exit(char **av);
 
 /*		tun_init.c		*/
 int		tun_init_exec_parent(t_exec *exe, t_main *info);

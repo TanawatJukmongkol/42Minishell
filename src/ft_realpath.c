@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/04 23:05:00 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/08 22:51:13 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,18 +115,18 @@ char	*ft_realpath(char *re_path, t_envp *env, t_stackheap *mem)
 	return (ret);
 }*/
 
-char	*join_path(char *dst, char *src, t_mem *m)
+char	*join_path(char *dst, char *src)
 {
 	char	*tmp;
 	char	*tmp2;
 
-	tmp = ft_strjoin_heap("/", src, m);
+	tmp = ft_strjoin("/", src);
 	// heap_free(m, src);
 	if (!tmp)
 		return (NULL);
-	tmp2 = ft_strjoin_heap(dst, tmp, m);
-	heap_free(m, dst);
-	heap_free(m, tmp);
+	tmp2 = ft_strjoin(dst, tmp);
+	// heap_free(m, dst);
+	// heap_free(m, tmp);
 	return (tmp2);
 }
 
@@ -140,20 +140,20 @@ char	*ft_realpath(char *re_path, t_main *m)
 	if (!re_path || !*re_path)
 		return (NULL);
 	if (!ft_strncmp(re_path, "~", 2) || !ft_strncmp(re_path, "~/", 2))
-		begin = ft_strjoin_heap(m->_home, re_path + 1, &m->_mem);
+		begin = ft_strjoin(m->_home, re_path + 1);
 	else if (re_path[0] == '/')
-		begin = ft_strdup_heap(re_path, &m->_mem);
+		begin = ft_strdup(re_path);
 	else
 	{
-		begin = ft_strdup_heap(getenv("PWD"), &m->_mem);
+		begin = ft_strdup(getenv("PWD"));
 		if (!begin)
 			return (NULL);
-		begin = join_path(begin, re_path, &m->_mem);
+		begin = join_path(begin, re_path);
 	}
 	if (!begin)
 		return (NULL);
 
-	path = ft_strdup_heap("/", &m->_mem);
+	path = ft_strdup("/");
 	if (!path)
 		return (NULL);
 	next_slash = begin;
@@ -162,7 +162,7 @@ char	*ft_realpath(char *re_path, t_main *m)
 		next_slash = ft_strchr(begin, '/');
 		if (!next_slash)
 			next_slash = re_path + ft_strlen(re_path);
-		trim = ft_substr_heap(begin, 0, next_slash - begin, &m->_mem);
+		trim = ft_substr(begin, 0, next_slash - begin);
 		if (!trim)
 			return (NULL);
 		if (*trim && ft_strncmp(trim, ".", ft_strlen(trim)))
@@ -180,18 +180,18 @@ char	*ft_realpath(char *re_path, t_main *m)
 			{
 				if (!path[1])
 					path[0] = '\0';
-				path = join_path(path, trim, &m->_mem);
+				path = join_path(path, trim);
 			}
 		}
-		re_path = ft_strdup_heap(next_slash + (*next_slash != 0), &m->_mem);
-		heap_free(&m->_mem, begin);
-		if (trim)
-			heap_free(&m->_mem, trim);
+		re_path = ft_strdup(next_slash + (*next_slash != 0));
+		// heap_free(&m->_mem, begin);
+		//if (trim)
+		//	heap_free(&m->_mem, trim);
 		begin = re_path;
 	}
 	if (!re_path)
 		return (NULL);
-	heap_free(&m->_mem, re_path);
+	//heap_free(&m->_mem, re_path);
 	return (path);
 }
 

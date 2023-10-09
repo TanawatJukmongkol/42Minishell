@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/02 00:34:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/08 22:52:45 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // TODO : handle SHLVL
 
-void	*ft_unsetenv(char *key, t_envp *env, t_stackheap *mem)
+void	*ft_unsetenv(char *key, t_envp *env)
 {
 	size_t	i;
 	char	*val;
@@ -29,8 +29,8 @@ void	*ft_unsetenv(char *key, t_envp *env, t_stackheap *mem)
 	new_env = malloc(sizeof(char *) * (env->len + 1));
 	if (new_env == NULL)
 		return (NULL);
-	heap_discard(mem, env->env);
-	heap_discard(mem, key);
+	// heap_discard(mem, env->env);
+	// heap_discard(mem, key);
 	while (i < env->len)
 	{
 		if (env->env[i] == val)

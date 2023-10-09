@@ -6,14 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/08 00:18:01 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/08 21:40:38 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-void	ft_exit(t_stackheap *mem ,int status)
+void	ft_exit(int status)
 {
-	heap_purge(mem);
 	exit(status);
 }

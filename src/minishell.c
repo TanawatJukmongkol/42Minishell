@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/05 07:53:57 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/09 13:53:43 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_stackheap		mem;
+	// t_stackheap		mem;
 	char			*prompt;
 	char			*line;
 	t_token_stream	stream;
@@ -56,12 +56,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)(argc);
 	(void)(argv);
 	(void)(envp);
-	heap_init(&mem);
+	// heap_init(&mem);
 	stream.begin = NULL;
 	output.begin = NULL;
 	while (1)
 	{
-		char	*cwd = ft_getcwd(&mem);
+		char	*cwd = ft_getcwd();
 		prompt = ft_strjoin(cwd, "> ");
 		free(cwd);
 		line = ft_readline(prompt);
