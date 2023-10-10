@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/10 23:02:05 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:51:10 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	tun_builtin_exit(t_exec *info, char **av);
 
 /*		tun_program_exit.c		*/
 void	tun_parent_exit(int status, t_exec *exe, t_token_stream *box);
-void	tun_clear_process(t_exec *exe, t_token_stream *box);
+void	tun_clear_process(t_exec *exe);
 void	tun_flush_subset(t_token_stream *subset);
 
 /*		tun_init.c		*/

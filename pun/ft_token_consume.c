@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_token_consume.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 08:30:19 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 04:00:40 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/09 13:52:28 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@ void	ft_token_consume(t_token_stream *dst, t_token_stream *src,
 	t_token_stream	tmp;
 	t_token			*begin_next;
 
-	if (!dst || !src || !src->begin)
+	if (!fn || !dst || !src || !src->begin)
 		return ;
 	tmp.begin = NULL;
+	tmp.last = NULL;
 	fn(&tmp, src->begin, vars);
 	begin_next = src->begin->next;
 	free(src->begin->value);
 	free(src->begin);
 	src->begin = begin_next;
+	if (!tmp.begin)
+		return ;
 	if (!dst->begin)
 		dst->begin = tmp.begin;
 	else

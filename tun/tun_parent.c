@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/10 23:36:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:51:21 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,5 @@ void	tun_parent_process(t_main *info, t_token_stream *box, size_t pipe_n)
 	}
 	sb_big_wait(&exe, pid_box, pipe_n + 1);
 	free(pid_box);
-	tun_clear_process(&exe, box);
+	tun_clear_process(&exe);
 }

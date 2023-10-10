@@ -6,15 +6,14 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/10 23:42:49 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:51:01 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
 
-void	tun_clear_process(t_exec *exe, t_token_stream *box)
+void	tun_clear_process(t_exec *exe)
 {
-	tun_free_token_box(box, exe->_pipes.n);
 	tun_close_pipe(&exe->_pipes);
 	tun_close_files(exe->infile, exe->in_len);
 	tun_close_files(exe->outfile, exe->out_len);
@@ -44,7 +43,8 @@ void	tun_flush_subset(t_token_stream *subset)
 
 void	tun_parent_exit(int status, t_exec *exe, t_token_stream *box)
 {
-	tun_clear_process(exe, box);
+	tun_clear_process(exe);
+	tun_free_token_box(box, exe->_pipes.n);
 	ft_clear_envp(exe->_info->_envp.env);
 	exit(status);
 }
