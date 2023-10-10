@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/08 17:07:01 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/10 12:12:18 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@
 typedef struct s_cmd_table
 {
 	char			*cmd;
-	char			*here_doc;
 	int				search_argv;
 	t_token_stream	infile;
 	t_token_stream	outfile;
 	t_token_stream	argv;
-	//size_t			indx;
+	// size_t			indx;
 }				t_cmd_table;
 
 /** token **/

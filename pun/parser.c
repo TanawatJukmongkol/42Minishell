@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:46:42 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/10 12:04:18 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/10 12:12:42 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ void	parser(t_token_stream *output, t_token_stream *input)
 void	init_table(t_cmd_table *table)
 {
 	table->cmd = NULL;
-	table->here_doc = NULL;
 	table->search_argv = 0;
 	table->infile.begin = NULL;
 	table->infile.last = NULL;
@@ -165,8 +164,6 @@ void	build_table(t_token_stream *s, t_cmd_table *table, int pipe)
 		s->last->next = table->argv.begin;
 		s->last = table->argv.last;
 	}
-	if (table->here_doc)
-		ft_token(s, __here_doc)->value = ft_strdup(table->here_doc);
 	if (table->infile.begin)
 	{
 		if (!s->begin)
@@ -209,14 +206,7 @@ void	cmdtable_switch(t_token_stream *s, t_token *t, void *vars)
 	}
 	if (t->next)
 	{
-		if (t->type == __here_doc)
-		{
-			if (table->here_doc)
-				free(table->here_doc);
-			table->here_doc = ft_strdup(t->next->value);
-			rm_next(t);
-		}
-		if (t->type == __redirr_in)
+		if (t->type == __redirr_in || t->type == __here_doc)
 		{
 			ft_token(&table->infile, t->type)->value = ft_strdup(t->next->value);
 			rm_next(t);
