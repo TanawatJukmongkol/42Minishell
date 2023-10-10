@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 03:09:02 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:02:05 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_exec
 	int		out_len;
 	char	**delimeter;
 	char	**argv;
-	char	**envp;
 }				t_exec;
 
 // ctrl-c = SIGINT
@@ -41,37 +40,43 @@ typedef struct s_exec
 /*		tun_builtin.c		*/
 int		tun_builin_handler(char *cmd, char **av, t_exec *exe);
 
-/*		tun_exit.c		*/
-void	tun_child_exit(t_exec *exe, int isexe);
+/*		tun_builtin_exit.c		*/
 void	tun_builtin_exit(t_exec *info, char **av);
+
+/*		tun_program_exit.c		*/
+void	tun_parent_exit(int status, t_exec *exe, t_token_stream *box);
+void	tun_clear_process(t_exec *exe, t_token_stream *box);
+void	tun_flush_subset(t_token_stream *subset);
 
 /*		tun_init.c		*/
 int		tun_init_exec_parent(t_exec *exe, t_main *info, size_t pipe_n);
 int		tun_init_exec_child(t_exec *exe, t_token_stream *subset);
+int		tun_init_box(t_token_stream subset, t_exec *exe);
 
 /*		tun_split_token.c	*/
 t_token_stream	*tun_split_token(t_main *info, size_t *pipe_n);
 void			tun_free_token_box(t_token_stream *box, size_t pipe_n);
 
 /*		tun_pipe.c		*/
-int		tun_alloc_pipe(t_main *info, t_pipe *pipes, size_t n);
-void	tun_close_pipe(t_main *info, t_pipe *pipes);
+int		tun_alloc_pipe(t_pipe *pipes, size_t n);
+void	tun_close_pipe(t_pipe *pipes);
 
 /*		tun_file.c		*/
 int		tun_open(const char *path, int oflag, mode_t mode);
 void	tun_close(int fd);
 int		tun_dup2(int fd1, int fd2);
 int		tun_pipe(int fdes[2]);
+void	tun_close_files(int *fdes, int n);
 
 /*		tun_fork.c		*/
 int		tun_fork(const char *msg);
 int		tun_waitpid(int pid, int *stat, int option, const char *msg);
 
 /*		tun_translate	*/
-int		tun_count_type(t_token_stream *subset, t_token_type t1, t_token_type t2);
-char	**tun_get_argv(t_token_stream *subset, t_main *info);
-int		tun_get_infile(t_token_stream *subset, t_exec *exe);
-int		tun_get_outfile(t_token_stream *subset, t_exec *exe);
+int		tun_count_token(t_token_stream subset, t_exec *exe, int *del_len);
+void	tun_get_argv(t_token_stream subset, t_exec *exe);
+int		tun_get_infile(t_token_stream subset, t_exec *exe);
+int		tun_get_outfile(t_token_stream subset, t_exec *exe);
 
 /*		tun_child.c		*/
 int		tun_redirct(int *fdes, int len, int std);

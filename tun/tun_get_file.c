@@ -6,112 +6,89 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/08 20:42:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:23:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
 
-static int	sb_open_infile(t_token_stream *subset, t_exec *exe)
+int	tun_get_infile(t_token_stream subset, t_exec *exe)
 {
-	int		i;
+	size_t	i;
+	size_t	j;
 	int		err;
-	t_token	*run;
 
-	i = 1;
+	i = 0;
+	j = 0;
 	err = 1;
+	if (exe->in_len == 0)
+		return (err);
 	exe->infile[0] = STDIN_FILENO;
-	run = subset->begin;
-	while (run != NULL)
+	while (subset.begin != NULL && err == 1)
 	{
-		if (run->type == __redirr_in)
+		if (subset.begin->type == __redirr_in)
 		{
-			exe->infile[i] = tun_open(run->value, O_RDONLY, 0644);
-			if (exe->infile[i] == -1)
-				err = 0;
+			exe->infile[i] = tun_open(subset.begin->value, O_RDONLY, 0644);
+			err = exe->infile[i] != -1;
 		}
-		else if (run->type == __here_doc)
+		else if (subset.begin->type == __here_doc)
 		{
 			exe->infile[i] = STDIN_FILENO;
-			// exe->delimeter = ft_strdup(run->value);
-			err = exe->delimeter != NULL;
+			exe->delimeter[j] = subset.begin->value;
+			j++;
 		}
-		i += run->type == __redirr_in || run->type == __here_doc;
-		run = run->next;
+		i += subset.begin->type == __redirr_in \
+			|| subset.begin->type == __here_doc;
+		subset.begin = subset.begin->next;
 	}
+	exe->delimeter[j] = NULL;
 	return (err);
 }
 
-int	tun_get_infile(t_token_stream *subset, t_exec *exe)
+int	tun_get_outfile(t_token_stream subset, t_exec *exe)
 {
-	int	err;
+	size_t	i;
+	int		err;
 
+	i = 0;
 	err = 1;
-	exe->in_len = tun_count_type(subset, __redirr_in, __here_doc);
-	if (exe->in_len == 0)
-		exe->infile = NULL;
-	else
+	if (exe->out_len == 0)
+		return (err);
+	exe->outfile[0] = STDOUT_FILENO;
+	while (subset.begin != NULL && err == 1)
 	{
-		exe->infile = malloc(sizeof(int) * (exe->in_len + 2));
-		if (exe->infile == NULL)
+		if (subset.begin->type == __redirr_append)
 		{
-			exe->in_len = -1;
-			return (0);
+			exe->outfile[i] = tun_open(subset.begin->value, \
+								O_WRONLY | O_APPEND | O_CREAT, 0644);
+			err = exe->infile[i] != -1;
 		}
-		err = sb_open_infile(subset, exe);
+		else if (subset.begin->type == __redirr_trunc)
+		{
+			exe->outfile[i] = tun_open(subset.begin->value, \
+								O_WRONLY | O_TRUNC | O_CREAT, 0644);
+			err = exe->infile[i] != -1;
+		}
+		i += subset.begin->type == __redirr_append \
+			|| subset.begin->type == __redirr_trunc;
+		subset.begin = subset.begin->next;
 	}
 	return (err);
 }
 
-static int	sb_open_outfile(t_token_stream *subset, t_exec *exe)
+void	tun_get_argv(t_token_stream subset, t_exec *exe)
 {
 	int		i;
-	int		err;
-	t_token	*run;
 
-	i = 1;
-	err = 1;
-	exe->outfile[0] = STDOUT_FILENO;
-	run = subset->begin;
-	while (run != NULL)
-	{
-		if (run->type == __redirr_append)
+	i = 0;
+	while (subset.begin != NULL)
+	{		
+		if (subset.begin->type == __cmd || subset.begin->type == __argv)
 		{
-			exe->outfile[i] = tun_open(run->value, \
-								O_WRONLY | O_APPEND | O_CREAT, 0644);
-			if (exe->infile[i] == -1)
-				err = 0;
+			exe->argv[i] = subset.begin->value;
+			i++;
 		}
-		else if (run->type == __redirr_trunc)
-		{
-			exe->outfile[i] = tun_open(run->value, \
-								O_WRONLY | O_TRUNC | O_CREAT, 0644);
-			if (exe->infile[i] == -1)
-				err = 0;
-		}
-		i += run->type == __redirr_append || run->type == __redirr_trunc;
-		run = run->next;
+		subset.begin = subset.begin->next;
 	}
-	return (err);
-}
-
-int	tun_get_outfile(t_token_stream *subset, t_exec *exe)
-{
-	int	err;
-
-	err = 1;
-	exe->out_len = tun_count_type(subset, __redirr_append, __redirr_trunc);
-	if (exe->out_len == 0)
-		exe->outfile = NULL;
-	else
-	{
-		exe->outfile = malloc(sizeof(int) * (exe->out_len + 2));
-		if (exe->outfile == NULL)
-		{
-			exe->out_len = -1;
-			return (0);
-		}
-		err = sb_open_outfile(subset, exe);
-	}
-	return (err);
+	exe->argv[i] = NULL;
 }

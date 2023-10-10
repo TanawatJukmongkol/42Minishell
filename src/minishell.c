@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 04:47:17 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:20:34 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int ac, char **av, char **envp)
 		if (info._token.begin == NULL)
 			return (ft_clear_main(&info, 0));
 		box = tun_split_token(&info, &pipe_n);
+		tun_parent_process(&info, box, pipe_n);
 		tun_free_token_box(box, pipe_n);
 		line = ft_readline("minishell>");
 	}

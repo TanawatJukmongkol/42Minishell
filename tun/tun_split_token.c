@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/09 00:43:00 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:06:08 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	tun_free_token_box(t_token_stream *box, size_t pipe_n)
 	t_token		*tmp;
 
 	i = 0;
+	if (box == NULL)
+		return ;
 	while (i < pipe_n + 1)
 	{
 		while (box[i].begin != NULL)
@@ -44,23 +46,6 @@ void	tun_free_token_box(t_token_stream *box, size_t pipe_n)
 	}
 	free(box);
 }
-
-// static void	sb_token_abuse(t_token_stream *out, t_token_stream *in)
-// {
-	
-// 	if (*i == 0)
-// 	{
-// 		out->begin = info->_token.begin;
-// 		out->last = info->_token.begin;
-// 		(*i)++;
-// 	}
-// 	else
-// 	{
-// 		out->last->next = info->_token.begin;
-// 		out->last = out->last->next;
-// 	}
-// 	out->last->next = NULL;
-// }
 
 static void	sb_token_manage(t_token_stream *out, t_token_stream *in)
 {

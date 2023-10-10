@@ -38,10 +38,10 @@ HEADERS_PUN	= pun.h
 # Contributers (TUN)
 SRCS_TUN	= tun_builtin.c \
 				tun_child.c \
-				tun_exit.c \
+				tun_builtin_exit.c \
+				tun_program_exit.c \
 				tun_file.c \
 				tun_fork.c \
-				tun_get_argv.c \
 				tun_get_file.c \
 				tun_init.c \
 				tun_parent.c \
