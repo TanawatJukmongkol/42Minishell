@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:46:42 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 14:32:16 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/10 09:54:21 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ void	rm_next(t_token *t)
 {
 	t_token	*tmp;
 
+	if (!t->next)
+		return ;
 	tmp = t->next;
 	t->next = t->next->next;
 	free(tmp->value);
@@ -207,11 +209,13 @@ void	cmdtable_switch(t_token_stream *s, t_token *t, void *vars)
 	}
 	if (t->next)
 	{
-		if (t->type == __here_doc)
+		/*if (t->type == __here_doc)
 		{
+			if (table->here_doc)
+				free(table->here_doc);
 			table->here_doc = ft_strdup(t->next->value);
 			rm_next(t);
-		}
+		}*/
 		if (t->type == __redirr_in || t->type == __here_doc)
 		{
 			ft_token(&table->infile, t->type)->value = ft_strdup(t->next->value);
