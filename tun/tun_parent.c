@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/10 23:22:52 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:36:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,6 @@ static void	sb_single_mom(t_token_stream *box, t_exec *exe, int *pid)
 			}
 		}
 	}
-	tun_clear_process(exe, box);
 }
 
 void	tun_parent_process(t_main *info, t_token_stream *box, size_t pipe_n)
