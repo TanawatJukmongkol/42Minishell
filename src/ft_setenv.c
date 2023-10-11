@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:12 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/09 00:49:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/11 01:03:48 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,24 @@ static void	*sb_editenv(char *member, char *p, t_envp *env)
 	return (env->env);
 }
 
+static void	*sb_set_newenv(t_envp *env, char ***new_env, char *member)
+{
+	(*new_env)[env->len - 1] = ft_strdup(member);
+	if ((*new_env)[env->len - 1] == NULL)
+	{
+		free(env->env);
+		ft_clear_envp(*new_env);
+		*new_env = NULL;
+		return (NULL);
+	}
+	free(env->env);
+	env->env = *new_env;
+	env->env[env->len] = NULL;
+	return (*new_env);
+}
+
 // TODO : handle SHLVL
+// WORK
 
 void	*ft_setenv(char *member, t_envp *env)
 {
@@ -58,8 +75,5 @@ void	*ft_setenv(char *member, t_envp *env)
 		new_env[i] = env->env[i];
 		i++;
 	}
-	new_env[env->len - 1] = member;
-	free(env->env);
-	env->env = new_env;
-	return (new_env);
+	return (sb_set_newenv(env, &new_env, member));
 }

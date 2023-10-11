@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 01:07:32 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 01:29:51 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,12 @@ typedef struct sigaction	t_sigaction;
 /* token type enum */
 typedef enum e_token_type
 {
-	// Not defined
 	__none,
-	// Pipes
 	__pipe,
-	// C standard out file operations
 	__redirr_in,
 	__here_doc,
 	__redirr_trunc,
 	__redirr_append,
-	// cmd & argv
 	__cmd,
 	__argv
 }				t_token_type;
@@ -113,7 +109,7 @@ void	*ft_editenv(char *key, char *value, t_envp *env);
 void	ft_tokenfree(t_token_stream *s);
 
 /** signal **/
-int	ft_sig_init(t_sigaction *s, int flag, void (*hand)(int),\
+int		ft_sig_init(t_sigaction *s, int flag, void (*hand)(int), \
 				void (*sact)(int, siginfo_t *, void *));
 
 #endif

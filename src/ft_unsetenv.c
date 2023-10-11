@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/05 15:49:27 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/11 19:33:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 void	*ft_unsetenv(char *key, t_envp *env)
 {
 	size_t	i;
+	size_t	j;
 	char	*val;
 	char	**new_env;
 
 	i = 0;
+	j = 0;
 	val = ft_getenv(env, key);
 	if (val == NULL)
 		return (env->env);
@@ -29,16 +31,17 @@ void	*ft_unsetenv(char *key, t_envp *env)
 	new_env = malloc(sizeof(char *) * (env->len + 1));
 	if (new_env == NULL)
 		return (NULL);
-	// heap_discard(mem, env->env);
-	// heap_discard(mem, key);
-	while (i < env->len)
+	while (i < env->len + 1)
 	{
-		if (env->env[i] == val)
-			continue ;
-		new_env[i] = env->env[i];
+		if (env->env[i] != val)
+		{
+			new_env[j] = env->env[i];
+			j++;
+		}
 		i++;
 	}
 	free(env->env);
 	env->env = new_env;
+	env->env[env->len] = NULL;
 	return (new_env);
 }
