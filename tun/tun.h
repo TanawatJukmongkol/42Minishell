@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/10 23:51:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 01:59:47 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define TUN_H
 # include "../src/libminishell.h"
 # include "../pun/pun.h"
+
+# ifndef BUILTIN_PID
+#  define BUILTIN_PID -69
+# endif
 
 typedef struct s_pipe
 {
@@ -37,10 +41,9 @@ typedef struct s_exec
 // ctrl-d = EOF-Signal (don't handle)
 // ctrl-f = SIGQUIT
 
-/*		tun_builtin.c		*/
+/*		tun_builtin		*/
 int		tun_builin_handler(char *cmd, char **av, t_exec *exe);
-
-/*		tun_builtin_exit.c		*/
+int		tun_echo(char **av, t_exec *exe);
 void	tun_builtin_exit(t_exec *info, char **av);
 
 /*		tun_program_exit.c		*/
@@ -69,17 +72,16 @@ int		tun_pipe(int fdes[2]);
 void	tun_close_files(int *fdes, int n);
 
 /*		tun_fork.c		*/
-int		tun_fork(const char *msg);
-int		tun_waitpid(int pid, int *stat, int option, const char *msg);
+int		tun_fork(void);
+int		tun_waitpid(int pid, int *stat, int option);
+int		tun_redirct(int *fdes, int len, int std, int isok);
 
 /*		tun_translate	*/
-int		tun_count_token(t_token_stream subset, t_exec *exe, int *del_len);
 void	tun_get_argv(t_token_stream subset, t_exec *exe);
 int		tun_get_infile(t_token_stream subset, t_exec *exe);
 int		tun_get_outfile(t_token_stream subset, t_exec *exe);
 
 /*		tun_child.c		*/
-int		tun_redirct(int *fdes, int len, int std);
 void	tun_clean_child(t_exec *exe);
 void	tun_child_process(t_token_stream *subset, t_exec *exe, size_t child_no);
 
@@ -88,5 +90,8 @@ void	tun_parent_process(t_main *info, t_token_stream *box, size_t pipe_n);
 
 /*		tun_exeve.c		*/
 void	tun_execve(t_exec *exe);
+
+/*		tun_heredoc.c	*/
+int		tun_heredoc(t_exec *exe);
 
 # endif

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/10 23:18:19 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/11 00:43:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,14 @@ static char	*sb_find_cmd(char *cmd, t_main *info)
 		full_cmd = sb_pathjoin(cmd, path_set[i]);
 		if (full_cmd == NULL)
 		{
-			free(path_set);
-			// heap_free(&info->_mem, path_set);
+			ft_free_split(path_set);
 			return (NULL);
 		}
 		if (full_cmd != cmd)
 			break ;
 		i++;
 	}
-	free(path_set);
-	// heap_free(&info->_mem, path_set);
+	ft_free_split(path_set);
 	return (full_cmd);
 }
 

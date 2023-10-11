@@ -6,9 +6,15 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/28 06:22:56 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/11 20:21:04 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
 
+// void	tun_cmd_perror(char *cmd, char **argv, t_exec *exe)
+// {
+// 	char	*first;
+
+// 	first = 
+// }

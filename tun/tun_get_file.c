@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/10 23:51:13 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 01:15:19 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	tun_get_infile(t_token_stream subset, t_exec *exe)
 	size_t	j;
 	int		err;
 
-	i = 0;
+	i = 1;
 	j = 0;
 	err = 1;
 	if (exe->in_len == 0)
@@ -50,7 +50,7 @@ int	tun_get_outfile(t_token_stream subset, t_exec *exe)
 	size_t	i;
 	int		err;
 
-	i = 0;
+	i = 1;
 	err = 1;
 	if (exe->out_len == 0)
 		return (err);

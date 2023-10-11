@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/10 23:26:58 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 01:59:59 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ int	tun_init_exec_parent(t_exec *exe, t_main *info, size_t pipe_n)
 	return (1);
 }
 
-int	tun_count_token(t_token_stream subset, t_exec *exe, int *del_len)
+static int	sb_count_token(t_token_stream subset, t_exec *exe, int *del_len)
 {
 	int		argv_len;
 	
 	argv_len = 0;
 	*del_len = 0;
-	exe->in_len = 0;
-	exe->out_len = 0;
+	exe->in_len = 1;
+	exe->out_len = 1;
 	while (subset.begin != NULL)
 	{
 		if (subset.begin->type == __redirr_in || subset.begin->type == __here_doc)
@@ -76,10 +76,10 @@ int	tun_init_box(t_token_stream subset, t_exec *exe)
 	int	argv_len;
 	int	del_len;
 
-	argv_len = tun_count_token(subset, exe, &del_len);
+	argv_len = sb_count_token(subset, exe, &del_len);
 	exe->argv = malloc(sizeof(char *) * (argv_len + 1));
-	exe->infile = malloc(sizeof(int) * (exe->in_len + 2));
-	exe->outfile = malloc(sizeof(int) * (exe->out_len + 2));
+	exe->infile = malloc(sizeof(int) * exe->in_len);
+	exe->outfile = malloc(sizeof(int) * exe->out_len);
 	exe->delimeter = ft_calloc(sizeof(char *), (del_len + 1));
 	if (exe->argv == NULL || exe->infile == NULL \
 		|| exe->outfile == NULL || exe->delimeter == NULL)

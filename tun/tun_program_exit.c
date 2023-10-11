@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/10 23:51:01 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/11 00:36:10 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	tun_clear_process(t_exec *exe)
 	tun_close_pipe(&exe->_pipes);
 	tun_close_files(exe->infile, exe->in_len);
 	tun_close_files(exe->outfile, exe->out_len);
-	ft_clear_envp(exe->argv);
-	ft_clear_envp(exe->delimeter);
+	ft_free_split(exe->argv);
+	ft_free_split(exe->delimeter);
 }
 
 // use after init all kind of box
