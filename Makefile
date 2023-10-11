@@ -37,6 +37,7 @@ HEADERS_PUN	= pun.h
 
 # Contributers (TUN)
 SRCS_TUN	= tun_builtin.c \
+		  		tun_echo.c \
 				tun_child.c \
 				tun_builtin_exit.c \
 				tun_program_exit.c \
@@ -47,7 +48,8 @@ SRCS_TUN	= tun_builtin.c \
 				tun_parent.c \
 				tun_pipe.c \
 				tun_split_token.c \
-				tun_exeve.c
+				tun_exeve.c \
+				tun_heredoc.c
 
 HEADERS_TUN	= tun.h
 
@@ -83,9 +85,9 @@ INCLUDE_OBJ = $(INCLUDE_OBJ_OSX) $(INCLUDE_OBJ_SHARE)
 INCLUDE_SRC = $(INCLUDE_OBJ_OSX) $(INCLUDE_SRC_SHARE)
 endif
 
-SRC			= ${addprefix ${BUILD_DIR}/,${SRCS}} \
-				${addprefix ${BUILD_DIR}/,${SRCS_PUN}} \
-				${addprefix ${BUILD_DIR}/,${SRCS_TUN}}
+SRC			= ${addprefix ${SRC_DIR}/,${SRCS}} \
+				${addprefix ${SRC_DIR_PUN}/,${SRCS_PUN}} \
+				${addprefix ${SRC_DIR_TUN}/,${SRCS_TUN}}
 HEADER		= ${addprefix ${SRC_DIR}/,${HEADERS}} \
 				${addprefix ${SRC_DIR_PUN}/,${HEADERS_PUN}} \
 				${addprefix ${SRC_DIR_TUN}/,${HEADERS_TUN}}
