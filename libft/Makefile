@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 21:14:32 by tjukmong          #+#    #+#              #
-#    Updated: 2023/10/05 15:26:54 by tponutha         ###   ########.fr        #
+#    Updated: 2023/10/11 21:14:29 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ MAN_SRC		= ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c\
 			ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c\
 			ft_putendl_fd.c ft_putnbr_fd.c ft_striteri.c
 
-ADD_SRC		= ft_strclen.c ft_ternary.c
+ADD_SRC		= ft_strclen.c ft_ternary.c get_next_line.c
 
 SRC			= $(MAN_SRC) $(ADD_SRC)
 

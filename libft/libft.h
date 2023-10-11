@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/05 16:05:32 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 01:28:40 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,39 @@
 #   define SIZE_MAX 4294967295U
 #  endif
 # endif
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 10420
+# endif
+
+// for pun's fastgnl
+
+# ifndef FD_MAX
+#  define FD_MAX OPEN_MAX
+# endif
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 64
+# endif
+
+typedef struct s_gnl
+{
+	char			buff[BUFFER_SIZE];
+	size_t			nbyte;
+	struct s_gnl	*next;
+}			t_gnl;
+
+typedef struct s_vars
+{
+	int			fd;
+	int			eof;
+	int			fin;
+	t_gnl		*t;
+	t_gnl		*t_last;
+	size_t		offset;
+	size_t		nl_bytes;
+	size_t		tok_len;
+}				t_vars;
 
 /*		MEMORY FUNCTION		*/
 void	*ft_memset(void *s, int c, size_t n);
@@ -72,5 +105,8 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *c, int fd);
 void	ft_putendl_fd(char *c, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+/*		GET_NEXT_LINE				*/
+char	*get_next_line(int fd);
 
 #endif
