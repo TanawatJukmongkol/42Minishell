@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tun_exit.c                                         :+:      :+:    :+:   */
+/*   tun_builtin_exit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 04:54:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:00:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,17 @@ static int	sb_check_number(char *num, unsigned char *e)
 	int		overflow;
 	size_t	i;
 
-	i = 0;
+	i = ft_isdigit(num[0]) == 0;
+	if (num[0] != '+' && num[0] != '-' && ft_isdigit(num[0]) == 0)
+		return (1);
 	while (num[i] != 0)
 	{
-		if (i == 0 && num[i] != '+' && num[i] != '-')
+		if (ft_isdigit(num[i]) == 0)
 			return (1);
-		else
-		{
-			if (ft_isdigit(num[i]) == 0)
-				return (1);
-		}
 		i++;
 	}
 	*e = sb_atol(num, &overflow);
-	return (*e != 1);
+	return (overflow);
 }
 
 static void	sb_exit_error(char *str, t_exec *exe)
@@ -94,7 +91,7 @@ static void	sb_exit_error(char *str, t_exec *exe)
 
 	(void)exe;
 	front = "minishell: exit: ";
-	back = ": numeric argument required";
+	back = ": numeric argument required\n";
 	first = ft_strjoin(front, str);
 	if (first != NULL)
 		res = ft_strjoin(first, back);
@@ -110,20 +107,26 @@ static void	sb_exit_error(char *str, t_exec *exe)
 
 // TODO : handle free too
 
-void	tun_builtin_exit(t_exec *exe, char **av)
+void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe)
 {
 	size_t			len;
 	unsigned char	e;
 	char			*msg;
 
 	len = 0;
-	msg = "minishell: exit: too many arguments";
-	while (av[len] != NULL)
+	msg = "minishell: exit: too many arguments\n";
+	while (exe->argv[len] != NULL && len <= 2)
 		len++;
-	if (len != 2)
+	if (len > 2)
 		return (void)write(2, msg, ft_strlen(msg)); // TODO : write perror here
-	if (sb_check_number(av[1], &e))
-		return (sb_exit_error(av[1], exe));
+	if (len == 1)
+	{
+		free(pid);
+		printf("exit\n");
+		tun_parent_exit(0, exe, box);
+	}
+	if (sb_check_number(exe->argv[1], &e))
+		return (sb_exit_error(exe->argv[1], exe));
 	printf("exit\n");
-	ft_exit(exe->_info, e);
+	tun_parent_exit(e, exe, box);
 }

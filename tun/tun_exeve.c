@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/11 00:43:50 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:43:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,14 @@ static char	*sb_pathjoin(char *cmd, char *path)
 	return (full_cmd);
 }
 
-static char	*sb_find_cmd(char *cmd, t_main *info)
+static char	*sb_find_cmd(char *cmd, char *path)
 {
 	int		i;
-	char	*path;
 	char	*full_cmd;
 	char	**path_set;
 
 	i = 0;
-	path = ft_getenv(&info->_envp, "PATH");
-	if (path == NULL)
+	if (path == NULL || cmd[0] == '.' || cmd[0] == '/')
 		return (cmd);
 	path_set = ft_split(path, ':');
 	if (path_set == NULL)
@@ -65,15 +63,21 @@ static char	*sb_find_cmd(char *cmd, t_main *info)
 	return (full_cmd);
 }
 
+/*
+if path is set and not found -> command not found
+if path isn't set -> thrown it to access and check for x
+*/
+
 void	tun_execve(t_exec *exe)
 {
-	// char	**argv;
 	char	*full_path;
+	char	*path;
 
 	// TODO : handle ~/ later na
 	if (exe->argv[0] == NULL)
 		return ;
-	full_path = sb_find_cmd(exe->argv[0], exe->_info);
+	path = ft_getenv(&exe->_info->_envp, "PATH");
+	full_path = sb_find_cmd(exe->argv[0], path);
 	if (full_path == NULL)
 		return ;
 	if (full_path != exe->argv[0])
@@ -81,6 +85,10 @@ void	tun_execve(t_exec *exe)
 		free(exe->argv[0]);
 		exe->argv[0] = full_path;
 	}
-	execve(exe->argv[0], exe->argv, exe->_info->_envp.env);
-	// TODO : put perror here
+	if (path != NULL && (exe->argv[0][0] != '.' && exe->argv[0][0] != '/'))
+		return (tun_cmd_perror(exe, ": command not found\n"));
+	if (access(exe->argv[0], X_OK) != -1)
+		execve(exe->argv[0], exe->argv, exe->_info->_envp.env);
+	else
+		tun_cmd_perror(exe, ": No such file or directory\n");
 }

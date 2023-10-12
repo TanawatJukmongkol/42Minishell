@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/11 20:28:33 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:18:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,17 +119,19 @@ RETURN VALUE
 positive	: error
 */
 
-int	tun_builin_handler(char *cmd, char **av, t_exec *exe)
+int	tun_builin_handler(t_token_stream *box, int *pid, t_exec *exe)
 {
 	size_t	size;
 	int		err;
 	char	*curr;
 
 	err = -1;
-	size = ft_strlen(cmd);
-	if (ft_strncmp(cmd, "echo", size) == 0)
-		err = tun_echo(av, exe);
-	else if (ft_strncmp(cmd, "pwd", size) == 0)
+	if (exe->argv[0] == NULL)
+		return (err);
+	size = ft_strlen(exe->argv[0]);
+	if (ft_strncmp(exe->argv[0], "echo", size) == 0)
+		err = tun_echo(exe->argv, exe);
+	else if (ft_strncmp(exe->argv[0], "pwd", size) == 0)
 	{
 		curr = ft_getcwd();
 		if (curr == NULL)
@@ -137,13 +139,13 @@ int	tun_builin_handler(char *cmd, char **av, t_exec *exe)
 		err = 0 & printf("%s\n", curr);
 		free(curr);
 	}
-	else if (ft_strncmp(cmd, "cd", size) == 0)
-		err = sb_cd(av, exe->_info);
-	else if (ft_strncmp(cmd, "export", size) == 0)
-		err = sb_export(av, exe->_info);
-	else if (ft_strncmp(cmd, "unset", size) == 0)
-		err = sb_unset(av, exe->_info);
-	else if (ft_strncmp(cmd, "exit", size) == 0)
-		tun_builtin_exit(exe, av);
+	else if (ft_strncmp(exe->argv[0], "cd", size) == 0)
+		err = sb_cd(exe->argv, exe->_info);
+	else if (ft_strncmp(exe->argv[0], "export", size) == 0)
+		err = sb_export(exe->argv, exe->_info);
+	else if (ft_strncmp(exe->argv[0], "unset", size) == 0)
+		err = sb_unset(exe->argv, exe->_info);
+	else if (ft_strncmp(exe->argv[0], "exit", size) == 0)
+		tun_builtin_exit(box, pid, exe);
 	return (err);
 }

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/12 01:59:47 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:41:53 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef struct s_exec
 // ctrl-f = SIGQUIT
 
 /*		tun_builtin		*/
-int		tun_builin_handler(char *cmd, char **av, t_exec *exe);
+int		tun_builin_handler(t_token_stream *box, int *pid, t_exec *exe);
 int		tun_echo(char **av, t_exec *exe);
-void	tun_builtin_exit(t_exec *info, char **av);
+void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe);
 
 /*		tun_program_exit.c		*/
 void	tun_parent_exit(int status, t_exec *exe, t_token_stream *box);
@@ -93,5 +93,8 @@ void	tun_execve(t_exec *exe);
 
 /*		tun_heredoc.c	*/
 int		tun_heredoc(t_exec *exe);
+
+/*		tun_perror.c	*/
+void		tun_cmd_perror(t_exec *exe, char *err);
 
 # endif

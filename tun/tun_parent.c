@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/12 02:00:15 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:22:07 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	sb_dad_buy_milk(t_token_stream *box, t_exec *exe, int *pid, int e)
 	if (!e)
 		return ;
 	pid[0] = BUILTIN_PID;
-	if (tun_builin_handler(exe->argv[0], exe->argv, exe) == -1)
+	if (tun_builin_handler(box, pid, exe) == -1)
 	{
 		pid[0] = tun_fork();
 		if (pid[0] != 0)
@@ -71,18 +71,21 @@ static int	sb_single_mom(t_token_stream *box, t_exec *exe, int *pid)
 
 static void	sb_family(t_exec *exe, t_token_stream *box, int *pid_box)
 {
-	size_t	i;
+	// size_t	i;
 
-	i = 0;
-	while (i <= exe->_pipes.n)
-	{
-			// pid_box[i] = tun_fork();
-			// if (pid_box[i] == 0)
+	// i = 0;
+	(void)box;
+	(void)exe;
+	(void)pid_box;
+	// while (i <= exe->_pipes.n)
+	// {
+	// 		// pid_box[i] = tun_fork();
+	// 		// if (pid_box[i] == 0)
 				
-			// else if (pid_box[i] == -1)
-			// 	break ;
-		i++;
-	}
+	// 		// else if (pid_box[i] == -1)
+	// 		// 	break ;
+	// 	i++;
+	// }
 }
 
 void	tun_parent_process(t_main *info, t_token_stream *box, size_t pipe_n)
