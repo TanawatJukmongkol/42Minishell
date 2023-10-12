@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/10 23:12:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/13 02:48:24 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,18 @@
 // 	// heap_purge(&exe->_info->_mem);
 // 	tun_parent_exit(exe, errno);
 // }
+
+
+void	tun_child_process(t_exec *exe, t_token_stream *box, int *pid, int i)
+{
+	int	e;
+
+	if (tun_init_box(box[i], exe) == 0)
+		tun_parent_exit(ENOMEM, exe, box);
+	tun_get_argv(box[i], exe);
+	e = tun_get_infile(box[i], exe);
+	if (e)
+		e = tun_get_outfile(box[i], exe);
+	tun_flush_subset(&box[i]);
+	tun_clear_process(exe);
+}

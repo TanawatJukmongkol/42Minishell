@@ -6,40 +6,11 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/12 13:18:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 23:21:08 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
-
-// WORK
-
-// static int	sb_echo(char **av, t_exec *exe)
-// {
-// 	size_t	len;
-// 	int		i;
-// 	int		flag;
-
-// 	if (av[1] == NULL)
-// 		return (0);
-// 	len = ft_strlen(av[1]);
-// 	flag = ft_strncmp(av[1], "-n", len + 1);
-// 	i = ft_ternary(flag == 0, 2, 1);
-// 	while (av[i] != NULL)
-// 	{
-// 		if (ft_strncmp(av[i], "$?", 2) == 0)
-// 		{
-// 			printf("%d%s", exe->_info->_ngong, &av[i][2]);
-// 		}
-// 		printf("%s", av[i]);
-// 		if (av[i + 1] != NULL)
-// 			printf(" ");
-// 		i++;
-// 	}
-// 	if (flag != 0)
-// 		printf("\n");
-// 	return (0);
-// }
 
 // WORk
 

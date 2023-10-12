@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/12 14:41:53 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/13 02:47:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		tun_get_outfile(t_token_stream subset, t_exec *exe);
 
 /*		tun_child.c		*/
 void	tun_clean_child(t_exec *exe);
-void	tun_child_process(t_token_stream *subset, t_exec *exe, size_t child_no);
+void	tun_child_process(t_exec *exe, t_token_stream *box, int *pid, int i);
 
 /*		tun_parent.c	*/
 void	tun_parent_process(t_main *info, t_token_stream *box, size_t pipe_n);
@@ -95,6 +95,7 @@ void	tun_execve(t_exec *exe);
 int		tun_heredoc(t_exec *exe);
 
 /*		tun_perror.c	*/
-void		tun_cmd_perror(t_exec *exe, char *err);
+void	tun_cmd_perror(t_exec *exe, char *err);
+void	tun_file_perror(t_exec *exe);
 
 # endif

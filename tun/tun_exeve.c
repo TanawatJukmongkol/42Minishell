@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/12 14:43:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 23:36:44 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,5 @@ void	tun_execve(t_exec *exe)
 	if (access(exe->argv[0], X_OK) != -1)
 		execve(exe->argv[0], exe->argv, exe->_info->_envp.env);
 	else
-		tun_cmd_perror(exe, ": No such file or directory\n");
+		tun_file_perror(exe);
 }

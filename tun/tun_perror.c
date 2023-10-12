@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/12 14:42:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 23:48:49 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,32 @@ void	tun_cmd_perror(t_exec *exe, char *err)
 		return ;
 	ft_putstr_fd(third, STDERR_FILENO);
 	free(third);
-	return ;
+}
+
+void	tun_file_perror(t_exec *exe)
+{
+	char	*first;
+	char	*second;
+	char	*third;
+	char	*final;
+	char	*err;
+
+	first = "minishell: ";
+	second = ft_strjoin(first, exe->argv[0]);
+	if (second == NULL)
+		return ;
+	err = strerror(errno);
+	third = ft_strjoin(second, ": ");
+	free(second);
+	if (third == NULL)
+		return ;
+	second = ft_strjoin(third, err);
+	free(third);
+	if (second == NULL)
+		return ;
+	final = ft_strjoin(second, "\n");
+	free(second);
+	if (final != NULL)
+		ft_putstr_fd(final, STDERR_FILENO);
+	free(final);
 }
