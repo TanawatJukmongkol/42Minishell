@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/11 19:34:13 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:38:09 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,18 @@ int	main(int ac, char **av, char **envp)
 	line = ft_readline("minishell>");
 	while (line != NULL)
 	{
-		lexer(&lex, line);
-		parser(&info._token, &lex);
-		if (info._token.begin == NULL)
-			return (ft_clear_main(&info, 0));
-		box = tun_split_token(&info, &pipe_n);
-		tun_parent_process(&info, box, pipe_n);
-		tun_free_token_box(box, pipe_n);
+		if (line[0] != 0)
+		{
+			lexer(&lex, line);
+			parser(&info._token, &lex);
+			if (info._token.begin == NULL)
+				return (ft_clear_main(&info, 0));
+			box = tun_split_token(&info, &pipe_n);
+			tun_parent_process(&info, box, pipe_n);
+			tun_free_token_box(box, pipe_n);
+		}
+		else
+			free(line);
 		line = ft_readline("minishell>");
 	}
 	return (ft_clear_main(&info, 0));

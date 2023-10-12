@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/11 19:33:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:05:22 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	*ft_unsetenv(char *key, t_envp *env)
 			new_env[j] = env->env[i];
 			j++;
 		}
+		else
+			free(env->env[i]);
 		i++;
 	}
 	free(env->env);
