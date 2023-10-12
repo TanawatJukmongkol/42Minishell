@@ -49,7 +49,8 @@ SRCS_TUN	= tun_builtin.c \
 				tun_pipe.c \
 				tun_split_token.c \
 				tun_exeve.c \
-				tun_heredoc.c
+				tun_heredoc.c \
+				tun_perror.c
 
 HEADERS_TUN	= tun.h
 
@@ -138,4 +139,3 @@ norm:	lib-norm
 	@norminette -R CheckForbiddenSourceHeader $(SRC) $(HEADER)
 
 .PHONY: all lib clean fclean re
-

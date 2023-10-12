@@ -45,6 +45,7 @@ minishell*
 vgcore*
 main.c
 minishell
+*.sh
 
 # Kernel Module Compile Results
 *.mod*
@@ -54,3 +55,6 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Vscode thing
+.vscode/
