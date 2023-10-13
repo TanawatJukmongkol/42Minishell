@@ -16,7 +16,7 @@ SRCS		= minishell.c \
 				ft_setenv.c \
 				ft_unsetenv.c \
 				ft_init_main.c \
-				ft_chdir.c
+				ft_chdir.c \
 
 HEADERS		= libminishell.h \
 				minishell.h

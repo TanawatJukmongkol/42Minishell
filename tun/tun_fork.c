@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/12 01:24:28 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:13:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ int	tun_waitpid(int pid, int *stat, int option)
 		return (0);
 	id = waitpid(pid, stat, option);
 	if (id == -1)
-	{
-		perror("minishell: waitpid");
 		return (-1);
-	}
 	return (id);
 }
 

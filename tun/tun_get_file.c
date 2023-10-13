@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/12 01:15:19 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:12:39 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	tun_get_infile(t_token_stream subset, t_exec *exe)
 	if (exe->in_len == 0)
 		return (err);
 	exe->infile[0] = STDIN_FILENO;
-	while (subset.begin != NULL && err == 1)
+	while (subset.begin != NULL && err == 1 && errno != ENOMEM)
 	{
 		if (subset.begin->type == __redirr_in)
 		{
@@ -55,7 +55,7 @@ int	tun_get_outfile(t_token_stream subset, t_exec *exe)
 	if (exe->out_len == 0)
 		return (err);
 	exe->outfile[0] = STDOUT_FILENO;
-	while (subset.begin != NULL && err == 1)
+	while (subset.begin != NULL && err == 1 && errno != ENOMEM)
 	{
 		if (subset.begin->type == __redirr_append)
 		{

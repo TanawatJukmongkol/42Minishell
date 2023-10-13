@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/12 01:05:09 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:12:51 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	tun_open(const char *path, int oflag, mode_t mode)
 
 	fd = open(path, oflag, mode);
 	if (fd == -1)
-		perror(ERR_MSG); // TODO : write new perror here
+		tun_open_perror(path);
 	return (fd);
 }
 
