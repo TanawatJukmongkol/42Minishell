@@ -40,20 +40,20 @@ SRCS_TUN	= tun_builtin.c \
 		  		tun_echo.c \
 				tun_child.c \
 				tun_builtin_exit.c \
-				tun_program_exit.c \
+				tun_process_exit.c \
 				tun_file.c \
 				tun_fork.c \
-				tun_get_file.c \
+				tun_translate.c \
 				tun_init.c \
 				tun_parent.c \
 				tun_pipe.c \
 				tun_split_token.c \
 				tun_exeve.c \
 				tun_heredoc.c \
-				tun_perror.c
+				tun_perror.c \
+				tun_redirect.c
 
 HEADERS_TUN	= tun.h
-
 
 SRC_DIR		= ./src
 SRC_DIR_PUN	= ./pun
@@ -128,7 +128,7 @@ lib-norm:
 	@make -C $(LIB_DIR) norm
 
 clean:	lib-clean
-	rm -rf $(BUILD_DIR)
+	rm -rf $(OBJ)
 
 fclean: clean lib-fclean
 	rm -f ${NAME}
