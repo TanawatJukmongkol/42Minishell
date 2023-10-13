@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/12 23:36:44 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 01:31:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ if path is set and not found -> command not found
 if path isn't set -> thrown it to access and check for x
 */
 
-void	tun_execve(t_exec *exe)
+void	tun_execve(t_exec *exe, int e)
 {
 	char	*full_path;
 	char	*path;
 
 	// TODO : handle ~/ later na
-	if (exe->argv[0] == NULL)
+	if (e == 0 || exe->argv[0] == NULL)
 		return ;
 	path = ft_getenv(&exe->_info->_envp, "PATH");
 	full_path = sb_find_cmd(exe->argv[0], path);

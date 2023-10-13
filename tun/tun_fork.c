@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/13 14:13:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 02:13:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	tun_waitpid(int pid, int *stat, int option)
 
 int	tun_redirct(int *fdes, int len, int std, int isok)
 {
-	if (isok == 0)
-		return (0);
 	if (fdes == NULL)
 		return (len != -1);
+	if (isok == 0)
+		return (0);
 	len--;
 	while (len > 0 && fdes[len] != std)
 	{

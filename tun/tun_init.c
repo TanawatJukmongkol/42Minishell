@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/12 01:59:59 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 02:09:24 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static int	sb_count_token(t_token_stream subset, t_exec *exe, int *del_len)
 			exe->in_len++;
 			*del_len += subset.begin->type == __here_doc;
 		}
-		else if (subset.begin->type == __redirr_in || subset.begin->type == __here_doc)
+		else if (subset.begin->type == __redirr_trunc \
+				|| subset.begin->type == __redirr_append)
 			exe->out_len++;
 		else if (subset.begin->type == __argv || subset.begin->type == __cmd)
 			argv_len++;
@@ -81,6 +82,7 @@ int	tun_init_box(t_token_stream subset, t_exec *exe)
 	exe->infile = malloc(sizeof(int) * exe->in_len);
 	exe->outfile = malloc(sizeof(int) * exe->out_len);
 	exe->delimeter = ft_calloc(sizeof(char *), (del_len + 1));
+	printf("%d %d %d %d\n", argv_len, del_len, exe->in_len, exe->out_len);
 	if (exe->argv == NULL || exe->infile == NULL \
 		|| exe->outfile == NULL || exe->delimeter == NULL)
 	{

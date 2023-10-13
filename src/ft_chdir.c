@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 00:49:36 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 02:26:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_chdir(char *path, t_main *info)
 	real = ft_realpath(path, NULL);
 	if (!real)
 		return (ENOMEM);
-	if (!chdir(real))
+	if (chdir(real) == -1)
 	{
 		free(real);
 		return (errno);

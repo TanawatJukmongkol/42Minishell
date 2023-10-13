@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/12 23:21:08 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 02:30:02 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ static int	sb_cd(char **av, t_main *info)
 			write(STDERR_FILENO, err_str, ft_strlen(err_str));
 			return (1);
 		}
+		err = ft_chdir(home, info);
+		if (err != 0)
+			perror("minishell: cd");
+		return (err);
 	}
-	if (av[2] != NULL)
+	else if (av[2] != NULL)
 	{
 		err_str = "minishell: cd: too many arguments";
 		write(STDERR_FILENO, err_str, ft_strlen(err_str));
@@ -38,7 +42,7 @@ static int	sb_cd(char **av, t_main *info)
 	}
 	err = ft_chdir(av[1], info);
 	if (err != 0)
-		perror(""); // TODO : write here
+		perror("minishell: cd");
 	return (err);
 }
 
@@ -83,6 +87,18 @@ static int	sb_unset(char **av, t_main *info)
 	return (0);
 }
 
+static int	sb_pwd(void)
+{
+	char	*curr;
+
+	curr = ft_getcwd();
+	if (curr == NULL)
+		return (ENOMEM);
+	printf("%s\n", curr);
+	free(curr);
+	return (0);
+}
+
 /*
 RETURN VALUE
 -1			: cmd isn't built-in
@@ -90,26 +106,21 @@ RETURN VALUE
 positive	: error
 */
 
-int	tun_builin_handler(t_token_stream *box, int *pid, t_exec *exe)
+int	tun_builin_handler(t_token_stream *box, int *pid, t_exec *exe, int e)
 {
 	size_t	size;
 	int		err;
-	char	*curr;
 
 	err = -1;
+	if (e == 0)
+		return (0);
 	if (exe->argv[0] == NULL)
 		return (err);
 	size = ft_strlen(exe->argv[0]);
 	if (ft_strncmp(exe->argv[0], "echo", size) == 0)
 		err = tun_echo(exe->argv, exe);
 	else if (ft_strncmp(exe->argv[0], "pwd", size) == 0)
-	{
-		curr = ft_getcwd();
-		if (curr == NULL)
-			return (ENOMEM);
-		err = 0 & printf("%s\n", curr);
-		free(curr);
-	}
+		err = sb_pwd();
 	else if (ft_strncmp(exe->argv[0], "cd", size) == 0)
 		err = sb_cd(exe->argv, exe->_info);
 	else if (ft_strncmp(exe->argv[0], "export", size) == 0)
@@ -118,5 +129,7 @@ int	tun_builin_handler(t_token_stream *box, int *pid, t_exec *exe)
 		err = sb_unset(exe->argv, exe->_info);
 	else if (ft_strncmp(exe->argv[0], "exit", size) == 0)
 		tun_builtin_exit(box, pid, exe);
+	if (err >= 0)
+		exe->_info->_ngong = err;
 	return (err);
 }

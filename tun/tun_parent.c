@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/13 14:28:05 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 02:18:39 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	sb_dad_buy_milk(t_token_stream *box, t_exec *exe, int *pid, int e)
 	if (!e)
 		return ;
 	pid[0] = BUILTIN_PID;
-	if (tun_builin_handler(box, pid, exe) == -1)
+	if (tun_builin_handler(box, pid, exe, e) == -1)
 	{
 		pid[0] = tun_fork();
 		if (pid[0] != 0)
@@ -47,8 +47,7 @@ static void	sb_dad_buy_milk(t_token_stream *box, t_exec *exe, int *pid, int e)
 		e = tun_heredoc(exe);
 		e = tun_redirct(exe->infile, exe->in_len, STDIN_FILENO, e);
 		e = tun_redirct(exe->outfile, exe->out_len, STDOUT_FILENO, e);
-		if (e)
-			tun_execve(exe);
+		tun_execve(exe, e);
 		tun_parent_exit(errno, exe, box);
 	}
 }
@@ -80,7 +79,7 @@ static void	sb_family(t_exec *exe, t_token_stream *box, int *pid_box)
 	{
 		pid_box[i] = tun_fork();
 		if (pid_box[i] == 0)
-			tun_child_process(exe, box, pid_box, i);
+			return (tun_child_process(exe, box, pid_box, i));
 		else if (pid_box[i] == -1)
 			break ;
 		i++;
