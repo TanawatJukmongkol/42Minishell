@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/13 13:45:08 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:13:14 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av, char **envp)
 		return (ENOMEM);
 	lex.begin = NULL;
 	lex.last = NULL;
-	line = ft_readline("minishell>");
+	line = ft_readline("minishell> ");
 	while (line != NULL)
 	{
 		if (line[0] != 0)
@@ -42,7 +42,7 @@ int	main(int ac, char **av, char **envp)
 		}
 		else
 			free(line);
-		line = ft_readline("minishell>");
+		line = ft_readline("minishell> ");
 	}
 	printf("exit\n");
 	return (ft_clear_main(&info, 0));
