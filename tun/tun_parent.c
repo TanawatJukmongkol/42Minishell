@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/12 23:52:34 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:28:05 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static int	sb_single_mom(t_token_stream *box, t_exec *exe, int *pid)
 	e = tun_get_infile(box[0], exe);
 	if (e)
 		e = tun_get_outfile(box[0], exe);
+	if (errno == ENOMEM)
+		tun_parent_exit(ENOMEM, exe, box);
 	tun_flush_subset(&box[0]);
 	sb_dad_buy_milk(box, exe, pid, e);
 	tun_clear_process(exe);
@@ -76,13 +78,14 @@ static void	sb_family(t_exec *exe, t_token_stream *box, int *pid_box)
 	i = 0;
 	while (i <= exe->_pipes.n)
 	{
-			pid_box[i] = tun_fork();
-			if (pid_box[i] == 0)
-				
-			else if (pid_box[i] == -1)
-				break ;
+		pid_box[i] = tun_fork();
+		if (pid_box[i] == 0)
+			tun_child_process(exe, box, pid_box, i);
+		else if (pid_box[i] == -1)
+			break ;
 		i++;
 	}
+	tun_close_pipe(&exe->_pipes);
 }
 
 void	tun_parent_process(t_main *info, t_token_stream *box, size_t pipe_n)

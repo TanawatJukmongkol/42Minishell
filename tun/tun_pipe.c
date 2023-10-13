@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/10 08:27:33 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/13 03:23:28 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	tun_close_pipe(t_pipe *pipes)
 	}
 	free(pipes->box);
 	pipes->box = NULL;
+	pipes->n = 0;
 }
 
 int	tun_alloc_pipe(t_pipe *pipes, size_t n)

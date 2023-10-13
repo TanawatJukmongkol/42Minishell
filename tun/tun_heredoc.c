@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/12 02:16:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:48:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ static int	sb_heredoc_ignore(t_exec *exe, size_t del_len, int j)
 	{
 		len = ft_strclen(line, '\n');
 		if (sb_delimeter(exe->delimeter[j], line, del_len, len))
-			break ;
+		{
+			free(line);
+			return (1);
+		}
 		free(line);
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO);
 	}
-	if (errno == ENOMEM)
-		return (0);
-	return (1);
+	return (errno != ENOMEM);
 }
 
 static int	sb_heredoc(t_exec *exe, size_t del_len, int j)
