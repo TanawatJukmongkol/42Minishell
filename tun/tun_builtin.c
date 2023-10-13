@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 03:23:00 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:35:55 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	sb_cd(char **av, t_main *info)
 		}
 		err = ft_chdir(home, info);
 		if (err != 0)
-			perror("minishell: cd");
+			tun_file_perror("minishell: cd: ", home);
 		return (err);
 	}
 	else if (av[2] != NULL)
@@ -42,7 +42,7 @@ static int	sb_cd(char **av, t_main *info)
 	}
 	err = ft_chdir(av[1], info);
 	if (err != 0)
-		perror("minishell: cd");
+		tun_file_perror("minishell: cd: ", av[1]);
 	return (err);
 }
 

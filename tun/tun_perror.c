@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/14 01:19:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:32:12 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,14 @@ void	tun_cmd_perror(t_exec *exe, char *err)
 	free(third);
 }
 
-void	tun_file_perror(t_exec *exe)
+void	tun_file_perror(const char *msg, const char *path)
 {
-	char	*first;
+	char	*err;
 	char	*second;
 	char	*third;
 	char	*final;
-	char	*err;
 
-	first = "minishell: ";
-	second = ft_strjoin(first, exe->argv[0]);
+	second = ft_strjoin(msg, path);
 	if (second == NULL)
 		return ;
 	err = strerror(errno);
@@ -58,30 +56,3 @@ void	tun_file_perror(t_exec *exe)
 	free(final);
 }
 
-void	tun_open_perror(const char *path)
-{
-	char	*first;
-	char	*err;
-	char	*second;
-	char	*third;
-	char	*final;
-
-	first = "minishell: ";
-	second = ft_strjoin(first, path);
-	if (second == NULL)
-		return ;
-	err = strerror(errno);
-	third = ft_strjoin(second, ": ");
-	free(second);
-	if (third == NULL)
-		return ;
-	second = ft_strjoin(third, err);
-	free(third);
-	if (second == NULL)
-		return ;
-	final = ft_strjoin(second, "\n");
-	free(second);
-	if (final != NULL)
-		ft_putstr_fd(final, STDERR_FILENO);
-	free(final);
-}

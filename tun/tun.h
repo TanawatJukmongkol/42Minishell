@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 04:07:18 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:32:22 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ int		tun_heredoc(t_exec *exe);
 
 /*		tun_perror.c	*/
 void	tun_cmd_perror(t_exec *exe, char *err);
-void	tun_file_perror(t_exec *exe);
-void	tun_open_perror(const char *path);
+void	tun_file_perror(const char *msg, const char *path);
 
 # endif
