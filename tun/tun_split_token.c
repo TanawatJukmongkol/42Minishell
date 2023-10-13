@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/12 13:24:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 03:52:04 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,14 @@ static int	sb_count_pipe(t_token_stream run)
 
 void	tun_free_token_box(t_token_stream *box, size_t pipe_n)
 {
-	size_t		i;
-	t_token		*tmp;
+	size_t	i;
 
 	i = 0;
 	if (box == NULL)
 		return ;
 	while (i < pipe_n + 1)
 	{
-		while (box[i].begin != NULL)
-		{
-			tmp = box[i].begin->next;
-			free(box[i].begin->value);
-			free(box[i].begin);
-			box[i].begin = tmp;
-		}
+		ft_tokenfree(&box[i]);
 		i++;
 	}
 	free(box);

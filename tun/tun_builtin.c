@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 02:30:02 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 03:23:00 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,8 @@ int	tun_builin_handler(t_token_stream *box, int *pid, t_exec *exe, int e)
 	int		err;
 
 	err = -1;
-	if (e == 0)
+	if (exe->argv[0] == NULL || e == 0)
 		return (0);
-	if (exe->argv[0] == NULL)
-		return (err);
 	size = ft_strlen(exe->argv[0]);
 	if (ft_strncmp(exe->argv[0], "echo", size) == 0)
 		err = tun_echo(exe->argv, exe);

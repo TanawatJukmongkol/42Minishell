@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 01:28:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:07:18 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ typedef struct s_exec
 
 /*		tun_builtin		*/
 int		tun_builin_handler(t_token_stream *box, int *pid, t_exec *exe, int e);
-int		tun_echo(char **av, t_exec *exe);
 void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe);
+int		tun_echo(char **av, t_exec *exe);
 
 /*		tun_program_exit.c		*/
-void	tun_parent_exit(int status, t_exec *exe, t_token_stream *box);
+void	tun_parent_exit(int status, t_exec *exe, t_token_stream *box, size_t n);
 void	tun_clear_process(t_exec *exe);
 void	tun_flush_subset(t_token_stream *subset);
+void	tun_free_unused_token(t_token_stream **box);
 
 /*		tun_init.c		*/
 int		tun_init_exec_parent(t_exec *exe, t_main *info, size_t pipe_n);
@@ -76,7 +77,7 @@ int		tun_fork(void);
 int		tun_waitpid(int pid, int *stat, int option);
 int		tun_redirct(int *fdes, int len, int std, int isok);
 
-/*		tun_translate	*/
+/*		tun_translate.c	*/
 void	tun_get_argv(t_token_stream subset, t_exec *exe);
 int		tun_get_infile(t_token_stream subset, t_exec *exe);
 int		tun_get_outfile(t_token_stream subset, t_exec *exe);
