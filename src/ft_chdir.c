@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_chdir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 02:26:50 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:15:15 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_chdir(char *path, t_main *info)
 	char	*real;
 	char	*old;
 
-	real = ft_realpath(path, NULL);
+	real = ft_realpath(path, info);
 	if (!real)
 		return (ENOMEM);
 	if (chdir(real) == -1)

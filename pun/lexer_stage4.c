@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 05:59:31 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:24:20 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	quote_remove(t_token_stream *s, t_token *t, void *vars)
 
 void	stage4_tokenizer(t_token_stream *dst, t_token_stream *stage4)
 {
-	while(stage4->begin)
+	while (stage4->begin)
 		ft_token_consume(dst, stage4, quote_remove, NULL);
 }
 

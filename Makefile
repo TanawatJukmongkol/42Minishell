@@ -31,6 +31,7 @@ SRCS_PUN	= ft_token.c \
 				lexer_stage2_2.c \
 				lexer_stage3.c \
 				lexer_stage4.c \
+				parser_utils.c \
 				parser.c
 
 HEADERS_PUN	= pun.h

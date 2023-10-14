@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realpath.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 01:02:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:15:28 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
+
 
 char	*join_path(char *dst, char *src)
 {
@@ -18,7 +19,6 @@ char	*join_path(char *dst, char *src)
 	char	*tmp2;
 
 	tmp = ft_strjoin("/", src);
-	// heap_free(m, src);
 	if (!tmp)
 		return (NULL);
 	tmp2 = ft_strjoin(dst, tmp);
@@ -42,13 +42,14 @@ char	*ft_realpath(char *re_path, t_main *m)
 		begin = ft_strdup(re_path);
 	else
 	{
-		begin = ft_strdup(getenv("PWD")); // TODO : if PWD doesn't exist, then SEGFAULT
+		begin = ft_strdup(getenv("PWD"));
 		if (!begin)
 			return (NULL);
 		begin = join_path(begin, re_path);
 	}
 	if (!begin)
 		return (NULL);
+
 	path = ft_strdup("/");
 	if (!path)
 		return (NULL);
@@ -90,98 +91,3 @@ char	*ft_realpath(char *re_path, t_main *m)
 	free(re_path);
 	return (path);
 }
-
-
-/*void	build_path(t_token_stream *s, t_token *t, void *vars)
-{
-	(void)(s);
-	printf("%s\n", t->value);
-	(void)(vars);
-}
-
-void	split_slash(t_token_stream *s, t_token *t, void *vars)
-{
-	char	*ptr;
-	char	*next_match;
-	size_t	len;
-
-	(void)(vars);
-	ptr = t->value;
-	next_match = ptr;
-	while (1)
-	{
-		next_match = ft_strchr(next_match, '/');
-		if (!next_match)
-			next_match = ptr + ft_strlen(ptr);
-		len = next_match - ptr;
-		if (len)
-			ft_token(s, t->type)->value = ft_substr(ptr, 0, len);
-		if (!*next_match)
-			break ;
-		ptr = ++next_match;
-	}
-}*/
-
-/*char	*ft_realpath(char *re_path, t_main *m)
-{
-	t_token_stream	stream;
-	t_token_stream	slash;
-	t_token_stream	climb;
-	t_token			*prev;
-	t_token			*current;
-	char			*res;
-
-	(void)(m);
-	res = NULL;
-	stream.begin = NULL;
-	slash.begin = NULL;
-	climb.begin = NULL;
-	ft_token(&stream, __none)->value = ft_strdup(re_path);
-	ft_token_consume(&slash, &stream, split_slash, m);
-	current = slash.begin;
-	prev = NULL;
-	while (current)
-	{
-		if (!ft_strncmp(current->next->value, "..", ft_strlen(current->value)))
-		{
-			free(current->value);
-			current->
-			continue ;
-		}
-		if (!ft_strncmp(current->value, ".", ft_strlen(current->value))
-			|| !ft_strncmp(current->value, "..", ft_strlen(current->value)))
-		{
-			free(current->value);
-			current->value = NULL;
-		}
-		// printf("%s\n", current->value);
-		prev = current;
-		current = current->next;
-	}
-	while (slash.begin)
-		ft_token_consume(&climb, &slash, build_path, m);
-	return (res);
-}*/
-
-/*
-int main(int ac, char **av, char **envp)
-{
-	t_main	m;
-
-	(void)(ac);
-	(void)(av);
-	(void)(envp);
-	if (ac < 2)
-		return (printf("Don't forget to give an argument to the program, idiot!\n"), 0);
-	heap_init(&m._mem);
-	m._home = getenv("HOME");
-
-	char *a = av[1];
-	char *b = ft_realpath(a, &m);
-	//ft_realpath(a, &m);
-	printf("final: %s\n", b);
-	heap_free(&m._mem, b);
-	// heap_purge(&m._mem);
-	return (0);
-}
-*/
