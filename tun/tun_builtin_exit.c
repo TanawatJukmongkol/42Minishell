@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tun_exit.c                                         :+:      :+:    :+:   */
+/*   tun_builtin_exit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/02 00:35:40 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:28:41 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 127: no such file or directory
 */
 
-void	tun_child_exit(t_stackheap *mem, int isexe)
+void	tun_child_exit(t_exec *exec, int isexe)
 {
 	if (errno == ENOENT)
-		ft_exit(mem, 127);
+		ft_exit(exec->_info, 127);
 	if (errno == EACCES)
 	{
 		if (isexe != -1)
-			ft_exit(mem, 126);
-		ft_exit(mem, 1);
+			ft_exit(exec->_info, 126);
+		ft_exit(exec->_info, 1);
 	}
-	ft_exit(mem, 0);
+	ft_exit(exec->_info, 0);
 }
 
 static long	sb_atol(char *str, int *overflow)
@@ -69,58 +69,64 @@ static int	sb_check_number(char *num, unsigned char *e)
 	int		overflow;
 	size_t	i;
 
-	i = 0;
+	i = ft_isdigit(num[0]) == 0;
+	if (num[0] != '+' && num[0] != '-' && ft_isdigit(num[0]) == 0)
+		return (1);
 	while (num[i] != 0)
 	{
-		if (i == 0 && num[i] != '+' && num[i] != '-')
+		if (ft_isdigit(num[i]) == 0)
 			return (1);
-		else
-		{
-			if (ft_isdigit(num[i]) == 0)
-				return (1);
-		}
 		i++;
 	}
 	*e = sb_atol(num, &overflow);
-	return (*e != 1);
+	return (overflow);
 }
 
-static void	sb_exit_error(char *str, t_stackheap *mem)
+static void	sb_exit_error(char *str, t_exec *exe)
 {
 	char	*front;
 	char	*back;
 	char	*first;
 	char	*res;
 
+	(void)exe;
 	front = "minishell: exit: ";
-	back = ": numeric argument required";
-	first = ft_strjoin_heap(front, str, mem);
+	back = ": numeric argument required\n";
+	first = ft_strjoin(front, str);
 	if (first != NULL)
-		res = ft_strjoin_heap(first, back, mem);
+		res = ft_strjoin(first, back);
 	if (first != NULL && back != NULL)
 	{
 		write(STDERR_FILENO, res, ft_strlen(res));
-		heap_free(mem, first);
-		heap_free(mem, res);
+		free(first);
+		free(res);
 	}
 	else
 		perror("minishell: exit:");
 }
 
-void	tun_builtin_exit(char **av, t_stackheap *mem)
+// TODO : handle free too
+
+void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe)
 {
 	size_t			len;
 	unsigned char	e;
 	char			*msg;
 
 	len = 0;
-	msg = "minishell: exit: too many arguments";
-	while (av[len] != NULL)
+	msg = "minishell: exit: too many arguments\n";
+	while (exe->argv[len] != NULL && len <= 2)
 		len++;
-	if (len != 2)
+	if (len > 2)
 		return (void)write(2, msg, ft_strlen(msg)); // TODO : write perror here
-	if (sb_check_number(av[1], &e))
-		return (sb_exit_error(av[1], mem));
+	if (len == 1)
+	{
+		free(pid);
+		printf("exit\n");
+		tun_parent_exit(0, exe, box, exe->_pipes.n);
+	}
+	if (sb_check_number(exe->argv[1], &e))
+		return (sb_exit_error(exe->argv[1], exe));
 	printf("exit\n");
-	ft_exit(mem, e);
+	tun_parent_exit(e, exe, box, exe->_pipes.n);
 }

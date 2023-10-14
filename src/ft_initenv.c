@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:21 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/08 21:41:01 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/09 01:11:16 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ char	**ft_initenv(t_envp *_envp, char **envp)
 			return (ft_clear_envp(_envp->env), NULL);
 		i++;
 	}
-	// if (heap_push(mem, _envp->env, ft_clear_envp) == -1)
-	// 	return (NULL);
+	_envp->env[_envp->len] = NULL;
 	return (_envp->env);
 }
 

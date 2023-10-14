@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/04 21:05:11 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:10:04 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,66 +20,35 @@
 5.) exit child process
 */
 
-void	tun_clean_child(t_exec *exe)
+static int	sb_redirect_pipe(t_exec *exe, size_t i, int e)
 {
-	int	i;
-
-	i = 0;
-	tun_close_pipe(exe->_info, &exe->_pipes);
-	while (i < exe->in_len)
-	{
-		tun_close(exe->infile[i]);
-		i++;
-	}
-	i = 0;
-	while (i < exe->out_len)
-	{
-		tun_close(exe->outfile[i]);
-		i++;
-	}
-	if (exe->infile != NULL)
-		heap_free(&exe->_info->_mem, exe->infile);
-	if (exe->outfile != NULL)
-		heap_free(&exe->_info->_mem, exe->outfile);
+	e = 1;
+	if (i != 0)
+		e = tun_dup2(exe->_pipes.box[i - 1][0], STDIN_FILENO) != -1;
+	if (i != exe->_pipes.n)
+		e = tun_dup2(exe->_pipes.box[i][1], STDOUT_FILENO) != -1;
+	return (e);
 }
 
-int		tun_redirct(int *fdes, int len, int std)
+void	tun_child_process(t_exec *exe, t_token_stream *box, int *pid, size_t i)
 {
-	if (fdes == NULL)
-		return (len != -1);
-	while (len > 0 && fdes[len] != std)
-	{
-		if (tun_dup2(len, len - 1) == -1)
-			return (0);
-		len--;
-	}
-	return (tun_dup2(0, std) != -1);
-}
+	int		e;
+	size_t	n;
 
-// child process function
-
-void	tun_child_process(t_token_stream *subset, t_exec *exe, size_t child_no)
-{
-	int	e;
-
-	e = tun_init_exec_child(exe, subset);
-	if (e == 1)
-	{
-		if (child_no != 0)
-			e &= tun_dup2(exe->_pipes.box[child_no - 1][0], STDIN_FILENO) != -1;
-		if (child_no != exe->_pipes.n)
-			e &= tun_dup2(exe->_pipes.box[child_no][1], STDOUT_FILENO) != -1;
-		e &= tun_redirct(exe->infile, exe->in_len, STDIN_FILENO);
-		e &= tun_redirct(exe->outfile, exe->out_len, STDOUT_FILENO);
-	}
-	tun_clean_child(exe);
+	n = exe->_pipes.n;
+	if (tun_init_box(box[i], exe) == 0)
+		tun_parent_exit(ENOMEM, exe, box, n);
+	tun_get_argv(box[i], exe);
+	e = tun_get_infile(box[i], exe);
 	if (e)
-	{
-		if (tun_builin_handler(exe->argv[0], exe->argv, exe->_info) == -1)
-			tun_execve(exe);
-	}
-	ft_clear_envp(exe->envp);
-	ft_tokenfree(&exe->_info->_token);
-	heap_purge(&exe->_info->_mem);
-	tun_child_exit(&exe->_info->_mem, errno);
+		e = tun_get_outfile(box[i], exe);
+	e = tun_heredoc(exe);
+	e = sb_redirect_pipe(exe, i, e);
+	e = tun_redirct(exe->infile, exe->in_len, STDIN_FILENO, e);
+	e = tun_redirct(exe->outfile, exe->out_len, STDIN_FILENO, e);
+	tun_close_pipe(&exe->_pipes);
+	if (tun_builin_handler(box, pid, exe, e) == -1)
+		tun_execve(exe, e);
+	free(pid);
+	tun_parent_exit(errno, exe, box, n);
 }

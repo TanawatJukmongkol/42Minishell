@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/08 23:01:13 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/12 01:29:51 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,12 @@ typedef struct sigaction	t_sigaction;
 /* token type enum */
 typedef enum e_token_type
 {
-	// Not defined
 	__none,
-	// Pipes
 	__pipe,
-	// C standard out file operations
 	__redirr_in,
 	__here_doc,
 	__redirr_trunc,
 	__redirr_append,
-	// cmd & argv
 	__cmd,
 	__argv
 }				t_token_type;
@@ -83,35 +79,37 @@ typedef struct s_envp
 /** main **/
 typedef struct s_main
 {
-	char			*_path;
 	char			*_home;
 	t_envp			_envp;
 	t_token_stream	_token;
-	// t_stackheap		_mem;
 	int				_ngong;
 }				t_main;
 
 /** main **/
 int		ft_init_main(t_main *info, char **envp);
+int		ft_clear_main(t_main *info, int status);
 
 /* misc */
 char	*ft_readline(const char *prompt);
 char	*ft_realpath(char *re_path, t_main *m);
-char	*ft_getcwd();
+char	*ft_getcwd(void);
 int		ft_chdir(char *path, t_main *info);
 char	*get_next_qoute(char *str, char *match, int single);
-void	ft_exit(int status);
+void	ft_exit(t_main *info, int status);
 
 /** env **/
 char	**ft_initenv(t_envp *_envp, char **envp);
-void	ft_clear_envp(void *env);
+void	ft_clear_envp(char **envs);
 char	*ft_getenv(t_envp *envp, char *key);
 void	*ft_setenv(char *member, t_envp *env);
 void	*ft_unsetenv(char *key, t_envp *env);
 void	*ft_editenv(char *key, char *value, t_envp *env);
 
+/** token **/
+void	ft_tokenfree(t_token_stream *s);
+
 /** signal **/
-int	ft_sig_init(t_sigaction *s, int flag, void (*hand)(int),\
+int		ft_sig_init(t_sigaction *s, int flag, void (*hand)(int), \
 				void (*sact)(int, siginfo_t *, void *));
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/08 23:27:59 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/14 21:53:49 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,14 @@ void	meta_redirr_out_trunc(t_token_stream *s, t_token *t, void *vars)
 
 void	stage2_tokenizer(t_token_stream *dst, t_token_stream *stage2)
 {
-	while(stage2->begin)
+	while (stage2->begin)
 		ft_token_consume(dst, stage2, meta_heredoc, NULL);
-	while(dst->begin)
+	while (dst->begin)
 		ft_token_consume(stage2, dst, meta_redirr_out_append, NULL);
-	while(stage2->begin)
+	while (stage2->begin)
 		ft_token_consume(dst, stage2, meta_pipe, NULL);
-	while(dst->begin)
+	while (dst->begin)
 		ft_token_consume(stage2, dst, meta_redirr_in, NULL);
-	while(stage2->begin)
+	while (stage2->begin)
 		ft_token_consume(dst, stage2, meta_redirr_out_trunc, NULL);
 }
-

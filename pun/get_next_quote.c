@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:54:46 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/12 22:26:09 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:42:30 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,3 @@ char	*get_next_qoute(char *str, char *match, int single)
 	}
 	return (str);
 }
-

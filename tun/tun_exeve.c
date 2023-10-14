@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/09/30 18:07:00 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:32:40 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,16 @@ static char	*sb_pathjoin(char *cmd, char *path)
 	return (full_cmd);
 }
 
-static char	*sb_find_cmd(char *cmd, t_main *info)
+static char	*sb_find_cmd(char *cmd, char *path)
 {
 	int		i;
-	char	*path;
 	char	*full_cmd;
 	char	**path_set;
 
 	i = 0;
-	path = ft_getenv(&info->_envp, "PATH");
-	if (path == NULL)
+	if (path == NULL || cmd[0] == '.' || cmd[0] == '/')
 		return (cmd);
-	path_set = ft_split_heap(path, ':', &info->_mem);
+	path_set = ft_split(path, ':');
 	if (path_set == NULL)
 		return (NULL);
 	while (path_set[i] != NULL)
@@ -54,24 +52,32 @@ static char	*sb_find_cmd(char *cmd, t_main *info)
 		full_cmd = sb_pathjoin(cmd, path_set[i]);
 		if (full_cmd == NULL)
 		{
-			heap_free(&info->_mem, path_set);
+			ft_free_split(path_set);
 			return (NULL);
 		}
 		if (full_cmd != cmd)
 			break ;
 		i++;
 	}
-	heap_free(&info->_mem, path_set);
+	ft_free_split(path_set);
 	return (full_cmd);
 }
 
-void	tun_execve(t_exec *exe)
+/*
+if path is set and not found -> command not found
+if path isn't set -> thrown it to access and check for x
+*/
+
+void	tun_execve(t_exec *exe, int e)
 {
-	// char	**argv;
 	char	*full_path;
+	char	*path;
 
 	// TODO : handle ~/ later na
-	full_path = sb_find_cmd(exe->argv[0], exe->_info);
+	if (e == 0 || exe->argv[0] == NULL)
+		return ;
+	path = ft_getenv(&exe->_info->_envp, "PATH");
+	full_path = sb_find_cmd(exe->argv[0], path);
 	if (full_path == NULL)
 		return ;
 	if (full_path != exe->argv[0])
@@ -79,6 +85,10 @@ void	tun_execve(t_exec *exe)
 		free(exe->argv[0]);
 		exe->argv[0] = full_path;
 	}
-	execve(exe->argv[0], exe->argv, exe->_info->_envp.env);
-	// TODO : put perror here
+	if (path != NULL && (exe->argv[0][0] != '.' && exe->argv[0][0] != '/'))
+		return (tun_cmd_perror(exe, ": command not found\n"));
+	if (access(exe->argv[0], X_OK) != -1)
+		execve(exe->argv[0], exe->argv, exe->_info->_envp.env);
+	else
+		tun_file_perror("minishell: ", exe->argv[0]);
 }

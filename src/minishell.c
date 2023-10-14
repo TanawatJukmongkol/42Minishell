@@ -3,103 +3,106 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 23:16:03 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/14 04:13:14 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	main(int ac, char **av, char **envp)
-// {
-// 	t_token_stream	lex;
-// 	t_main			info;
-// 	char			*line;
+int	main(int ac, char **av, char **envp)
+{
+	t_token_stream	lex;
+	t_token_stream	*box;
+	t_main			info;
+	size_t			pipe_n;
+	char			*line;
 
-// 	(void)av;
-// 	if (ac != 1)
-// 		return (0);
-// 	if (ft_init_main(&info, envp) == -1)
+	(void)av;
+	if (ac != 1)
+		return (0);
+	if (ft_init_main(&info, envp) == -1)
+		return (ENOMEM);
+	lex.begin = NULL;
+	lex.last = NULL;
+	line = ft_readline("minishell> ");
+	while (line != NULL)
+	{
+		if (line[0] != 0)
+		{
+			lexer(&lex, line);
+			parser(&info._token, &lex);
+			if (info._token.begin == NULL)
+				return (ft_clear_main(&info, 0));
+			box = tun_split_token(&info, &pipe_n);
+			tun_parent_process(&info, box, pipe_n);
+			tun_free_token_box(box, pipe_n);
+		}
+		else
+			free(line);
+		line = ft_readline("minishell> ");
+	}
+	printf("exit\n");
+	return (ft_clear_main(&info, 0));
+}
+
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_stackheap		mem;
+// 	char			*prompt;
+// 	char			*line;
+// 	t_token_stream	stream;
+// 	t_token_stream	output;
+
+// 	(void)(argc);
+// 	(void)(argv);
+// 	(void)(envp);
+// 	heap_init(&mem);
+// 	stream.begin = NULL;
+// 	output.begin = NULL;
+// 	while (1)
 // 	{
-// 		heap_purge(&info._mem);
-// 		return (ENOMEM);
-// 	}
-// 	lex.begin = NULL;
-// 	lex.last = NULL;
-// 	line = ft_readline("minishell>");	// use readkine
-// 	while (line != NULL)
-// 	{
-// 		lexer(&lex, line);
-// 		parser(&info._token, &lex);
-// 		while (info._token.begin != NULL)
+// 		char	*cwd = ft_getcwd(&mem);
+// 		prompt = ft_strjoin(cwd, "> ");
+// 		free(cwd);
+// 		line = ft_readline(prompt);
+// 		free(prompt);
+// 		if (!line || !*line)
+// 			continue ;
+// 		lexer(&stream, line);
+// 		parser(&output, &stream);
+
+// 		// output = stream;
+// 		for (t_token *i=output.begin; i; i = i->next)
 // 		{
-// 			printf("%d - %s\n", info._token.begin->type, info._token.begin->value);
-// 			info._token.begin = info._token.begin->next;
+// 			switch (i->type)
+// 			{
+// 				case __none:
+// 					printf("%-14s", "none"); break;
+// 				case __pipe:
+// 					printf("%-14s", "pipe"); break;
+// 				case __redirr_in:
+// 					printf("%-14s", "redirr_in"); break;
+// 				case __here_doc:
+// 					printf("%-14s", "here_doc"); break;
+// 				case __redirr_trunc:
+// 					printf("%-14s", "redirr_trunc"); break;
+// 				case __redirr_append:
+// 					printf("%-14s", "redirr_append"); break;
+// 				case __cmd:
+// 					printf("%-14s", "cmd"); break;
+// 				case __argv:
+// 					printf("%-14s", "argv"); break;
+// 			}
+// 			printf("-> %s\n", i->value);
 // 		}
-// 		// heap_free(&info._mem, line);
-// 		line = ft_readline("minishell>");	
+// 		// ft_tokenfree(&stream);
+// 		ft_tokenfree(&output);
 // 	}
-// 	heap_purge(&info._mem);
 // 	return (0);
 // }
-
-int	main(int argc, char **argv, char **envp)
-{
-	// t_stackheap		mem;
-	char			*prompt;
-	char			*line;
-	t_token_stream	stream;
-	t_token_stream	output;
-
-	(void)(argc);
-	(void)(argv);
-	(void)(envp);
-	// heap_init(&mem);
-	stream.begin = NULL;
-	output.begin = NULL;
-	while (1)
-	{
-		char	*cwd = ft_getcwd();
-		prompt = ft_strjoin(cwd, "> ");
-		free(cwd);
-		line = ft_readline(prompt);
-		free(prompt);
-		if (!line || !*line)
-			continue ;
-		lexer(&stream, line);
-		parser(&output, &stream);
-
-		// output = stream;
-		for (t_token *i=output.begin; i; i = i->next)
-		{
-			switch (i->type)
-			{
-				case __none:
-					printf("%-14s", "none"); break;
-				case __pipe:
-					printf("%-14s", "pipe"); break;
-				case __redirr_in:
-					printf("%-14s", "redirr_in"); break;
-				case __here_doc:
-					printf("%-14s", "here_doc"); break;
-				case __redirr_trunc:
-					printf("%-14s", "redirr_trunc"); break;
-				case __redirr_append:
-					printf("%-14s", "redirr_append"); break;
-				case __cmd:
-					printf("%-14s", "cmd"); break;
-				case __argv:
-					printf("%-14s", "argv"); break;
-			}
-			printf("-> %s\n", i->value);
-		}
-		// ft_tokenfree(&stream);
-		ft_tokenfree(&output);
-	}
-	return (0);
-}
 
 // OUTPUT EMULATOR
 

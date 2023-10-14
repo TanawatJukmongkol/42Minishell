@@ -6,14 +6,14 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 08:30:19 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 13:52:28 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/14 20:51:34 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pun.h"
 
 void	ft_token_consume(t_token_stream *dst, t_token_stream *src,
-	void (*fn)(t_token_stream *s,t_token *t, void *vars), void *vars)
+	void (*fn)(t_token_stream *s, t_token *t, void *vars), void *vars)
 {
 	t_token_stream	tmp;
 	t_token			*begin_next;

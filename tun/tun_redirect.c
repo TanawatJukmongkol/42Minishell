@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heap_pop.c                                         :+:      :+:    :+:   */
+/*   tun_redirect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/01 23:38:15 by tponutha         ###   ########.fr       */
+/*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
+/*   Updated: 2023/10/14 04:56:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "tun.h"
 
-void	heap_pop(t_stackheap *stack)
+int	tun_redirct(int *fdes, int len, int std, int isok)
 {
-	t_stacknode	*node;
-
-	if (!stack || ! stack->begin)
-		return ;
-	node = stack->last;
-	if (!node || !node->data)
-		return ;
-	if (node == stack->begin)
+	if (fdes == NULL)
+		return (len != -1);
+	if (isok == 0)
+		return (0);
+	len--;
+	while (len > 0 && fdes[len] != std)
 	{
-		stack->begin = NULL;
-		stack->last = NULL;
-		stack->id = 0;
+		if (tun_dup2(fdes[len], fdes[len - 1]) == -1)
+			return (0);
+		len--;
 	}
-	else
-	{
-		stack->last = stack->last->prev;
-		stack->last->next = NULL;
-		stack->id--;
-	}
-	node->destruct(node->data);
-	free(node);
+	return (1);
 }

@@ -4,6 +4,8 @@ NAME		= minishell
 # Shared sources
 SRCS		= minishell.c \
 				ft_clear_env.c \
+				ft_clear_main.c \
+				ft_tokenfree.c \
 				ft_editenv.c \
 				ft_exit.c \
 				ft_getcwd.c \
@@ -14,7 +16,7 @@ SRCS		= minishell.c \
 				ft_setenv.c \
 				ft_unsetenv.c \
 				ft_init_main.c \
-				ft_chdir.c
+				ft_chdir.c \
 
 HEADERS		= libminishell.h \
 				minishell.h
@@ -22,7 +24,6 @@ HEADERS		= libminishell.h \
 # Contributers (PUN)
 SRCS_PUN	= ft_token.c \
 				ft_token_consume.c \
-				ft_tokenfree.c \
 				get_next_quote.c \
 				lexer.c \
 				lexer_stage1.c \
@@ -30,26 +31,31 @@ SRCS_PUN	= ft_token.c \
 				lexer_stage2_2.c \
 				lexer_stage3.c \
 				lexer_stage4.c \
+				parser_utils.c \
 				parser.c
 
 HEADERS_PUN	= pun.h
 
 # Contributers (TUN)
-#SRCS_TUN	= tun_builtin.c \
+
+SRCS_TUN	= tun_builtin.c \
+		  	tun_echo.c \
 				tun_child.c \
-				tun_exit.c \
+				tun_builtin_exit.c \
+				tun_process_exit.c \
 				tun_file.c \
 				tun_fork.c \
-				tun_get_argv.c \
-				tun_get_file.c \
+				tun_translate.c \
 				tun_init.c \
 				tun_parent.c \
 				tun_pipe.c \
 				tun_split_token.c \
-				tun_exeve.c
+				tun_exeve.c \
+				tun_heredoc.c \
+				tun_perror.c \
+				tun_redirect.c
 
 #HEADERS_TUN	= tun.h
-
 
 SRC_DIR		= ./src
 SRC_DIR_PUN	= ./pun
@@ -82,9 +88,9 @@ INCLUDE_OBJ = $(INCLUDE_OBJ_OSX) $(INCLUDE_OBJ_SHARE)
 INCLUDE_SRC = $(INCLUDE_OBJ_OSX) $(INCLUDE_SRC_SHARE)
 endif
 
-SRC			= ${addprefix ${BUILD_DIR}/,${SRCS}} \
-				${addprefix ${BUILD_DIR}/,${SRCS_PUN}} \
-				${addprefix ${BUILD_DIR}/,${SRCS_TUN}}
+SRC			= ${addprefix ${SRC_DIR}/,${SRCS}} \
+				${addprefix ${SRC_DIR_PUN}/,${SRCS_PUN}} \
+				${addprefix ${SRC_DIR_TUN}/,${SRCS_TUN}}
 HEADER		= ${addprefix ${SRC_DIR}/,${HEADERS}} \
 				${addprefix ${SRC_DIR_PUN}/,${HEADERS_PUN}} \
 				${addprefix ${SRC_DIR_TUN}/,${HEADERS_TUN}}
@@ -124,7 +130,7 @@ lib-norm:
 	@make -C $(LIB_DIR) norm
 
 clean:	lib-clean
-	rm -rf $(BUILD_DIR)
+	rm -rf $(OBJ)
 
 fclean: clean lib-fclean
 	rm -f ${NAME}
@@ -135,4 +141,3 @@ norm:	lib-norm
 	@norminette -R CheckForbiddenSourceHeader $(SRC) $(HEADER)
 
 .PHONY: all lib clean fclean re
-

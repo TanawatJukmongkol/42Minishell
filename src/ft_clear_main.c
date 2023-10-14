@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.c                                        :+:      :+:    :+:   */
+/*   ft_clear_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/10 00:59:41 by tponutha         ###   ########.fr       */
+/*   Created: 2023/08/09 14:48:03 by tjukmong          #+#    #+#             */
+/*   Updated: 2023/10/09 01:07:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libminishell.h"
 
-void	*ft_malloc(size_t nmemb, size_t size, t_stackheap *stack, size_t *id)
+int	ft_clear_main(t_main *info, int status)
 {
-	void	*mem;
-	ssize_t	num;
-
-	mem = malloc(nmemb * size);
-	if (mem == NULL)
-		return (NULL);
-	num = heap_push(stack, mem, free);
-	if (num == -1)
-		return (NULL);
-	if (id != NULL)
-		*id = num;
-	return (mem);
+	free(info->_home);
+	ft_tokenfree(&info->_token);
+	ft_clear_envp(info->_envp.env);
+	return (status);
 }

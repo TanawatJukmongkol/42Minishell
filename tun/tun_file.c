@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/28 06:32:04 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:33:13 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	tun_open(const char *path, int oflag, mode_t mode)
 
 	fd = open(path, oflag, mode);
 	if (fd == -1)
-		perror(ERR_MSG);
+		tun_file_perror("minishell: ", path);
 	return (fd);
 }
 
@@ -30,7 +30,7 @@ void	tun_close(int fd)
 		return ;
 	err = close(fd);
 	if (err == -1)
-		perror(ERR_MSG);
+		perror("minishell: close");
 }
 
 int	tun_dup2(int fd1, int fd2)
@@ -39,7 +39,7 @@ int	tun_dup2(int fd1, int fd2)
 
 	err = dup2(fd1, fd2);
 	if (err == -1)
-		perror(ERR_MSG);
+		perror("minishell: dup2");
 	return (err);
 }
 
@@ -49,6 +49,22 @@ int	tun_pipe(int fdes[2])
 	
 	err = pipe(fdes);
 	if (err == -1)
-		perror(ERR_MSG);
+		perror("minishell: pipe");
 	return (err);
+}
+
+void	tun_close_files(int *fdes, int n)
+{
+	int	i;
+
+	i = 0;
+	if (fdes == NULL)
+		return ;
+	while (i < n)
+	{
+		if (fdes[i] > 2)
+			close(fdes[i]);
+		i++;
+	}
+	free(fdes);
 }

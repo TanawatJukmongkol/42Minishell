@@ -6,79 +6,47 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/27 23:25:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:35:55 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
 
-// static int	sb_chdir(char **av, t_main *info)
-// {
-// 	char	here[PATH_MAX];
-
-// 	if (getcwd(here, PATH_MAX) == NULL)
-// 	{
-// 		// perror("minishell: cd:");
-// 		return (1);
-// 	}
-// 	ft_strlcpy(info->_path, here, PATH_MAX);
-// 	// set $PWD
-// 	return (0);
-// }
-
-static int	sb_echo(char **av)
-{
-	size_t	len;
-	int		i;
-	int		flag;
-
-	if (av[1] == NULL)
-		return (0);
-	len = ft_strlen(av[1]);
-	flag = ft_strncmp(av[1], "-n", len + 1);
-	i = ft_ternary(flag, 2, 1);
-	while (av[i] != NULL)
-	{
-		printf("%s", av[i]);
-		if (av[i + 1] != NULL)
-			printf(" ");
-		i++;
-	}
-	if (flag != 0)
-		printf("\n");
-	return (0);
-}
+// WORk
 
 static int	sb_cd(char **av, t_main *info)
 {
 	int		err;
+	char	*err_str;
 	char	*home;
-	size_t	len;
 
-	len = 0;
-	while (av[len])
-		len++;
-	if (len > 2)
-		return (1);
-	if (len == 1)
+	if (av[1] == NULL)
 	{
 		home = ft_getenv(&info->_envp, "HOME");
 		if (home == NULL)
 		{
-			// TODO: print error
+			err_str = "minishell: cd: HOME not set";
+			write(STDERR_FILENO, err_str, ft_strlen(err_str));
 			return (1);
 		}
-		else
-			err = ft_chdir(home, info);
+		err = ft_chdir(home, info);
+		if (err != 0)
+			tun_file_perror("minishell: cd: ", home);
+		return (err);
 	}
-	else
-		err = ft_chdir(av[1], info);
+	else if (av[2] != NULL)
+	{
+		err_str = "minishell: cd: too many arguments";
+		write(STDERR_FILENO, err_str, ft_strlen(err_str));
+		return (1);
+	}
+	err = ft_chdir(av[1], info);
 	if (err != 0)
-		perror(""); // TODO : write here
+		tun_file_perror("minishell: cd: ", av[1]);
 	return (err);
 }
 
-// TODO: pwd kinda don't use getcwd & $PWD
+// WORK
 
 static int	sb_export(char **av, t_main *info)
 {
@@ -89,13 +57,18 @@ static int	sb_export(char **av, t_main *info)
 	{
 		if (ft_strchr(av[i], '=') != NULL)
 		{
-			if (ft_setenv(av[i], &info->_envp, &info->_mem) == NULL)
-				return (perror("minishell : export :"), 1); // TODO : write malloc perror here
+			if (ft_setenv(av[i], &info->_envp) == NULL)
+			{
+				perror("minishell : export :");
+				return (1);
+			}
 		}
 		i++;
 	}
 	return (0);
 }
+
+// WORK
 
 static int	sb_unset(char **av, t_main *info)
 {
@@ -104,10 +77,25 @@ static int	sb_unset(char **av, t_main *info)
 	i = 1;
 	while (av[i] != NULL)
 	{
-		if (ft_unsetenv(av[i], &info->_envp, &info->_mem) == NULL)
-			return (perror("minishell : export :"), 1); // TODO : write perror here
+		if (ft_unsetenv(av[i], &info->_envp) == NULL)
+		{
+			perror("minishell : unset :");
+			return (1);
+		}
 		i++;
 	}
+	return (0);
+}
+
+static int	sb_pwd(void)
+{
+	char	*curr;
+
+	curr = ft_getcwd();
+	if (curr == NULL)
+		return (ENOMEM);
+	printf("%s\n", curr);
+	free(curr);
 	return (0);
 }
 
@@ -118,24 +106,28 @@ RETURN VALUE
 positive	: error
 */
 
-int	tun_builin_handler(char *cmd, char **av, t_main *info)
+int	tun_builin_handler(t_token_stream *box, int *pid, t_exec *exe, int e)
 {
 	size_t	size;
 	int		err;
 
 	err = -1;
-	size = ft_strlen(cmd);
-	if (ft_strncmp(cmd, "echo", size) == 0)
-		err = sb_echo(av);
-	else if (ft_strncmp(cmd, "pwd", size) == 0)
-		err = 0 & printf("%s\n", info->_path);
-	else if (ft_strncmp(cmd, "cd", size) == 0)
-		err = sb_cd(av, info);
-	else if (ft_strncmp(cmd, "export", size) == 0)
-		err = sb_export(av, info);
-	else if (ft_strncmp(cmd, "unset", size) == 0)
-		err = sb_unset(av, info);
-	else if (ft_strncmp(cmd, "exit", size) == 0)
-		tun_builtin_exit(av, &info->_mem);
+	if (exe->argv[0] == NULL || e == 0)
+		return (0);
+	size = ft_strlen(exe->argv[0]);
+	if (ft_strncmp(exe->argv[0], "echo", size) == 0)
+		err = tun_echo(exe->argv, exe);
+	else if (ft_strncmp(exe->argv[0], "pwd", size) == 0)
+		err = sb_pwd();
+	else if (ft_strncmp(exe->argv[0], "cd", size) == 0)
+		err = sb_cd(exe->argv, exe->_info);
+	else if (ft_strncmp(exe->argv[0], "export", size) == 0)
+		err = sb_export(exe->argv, exe->_info);
+	else if (ft_strncmp(exe->argv[0], "unset", size) == 0)
+		err = sb_unset(exe->argv, exe->_info);
+	else if (ft_strncmp(exe->argv[0], "exit", size) == 0)
+		tun_builtin_exit(box, pid, exe);
+	if (err >= 0)
+		exe->_info->_ngong = err;
 	return (err);
 }

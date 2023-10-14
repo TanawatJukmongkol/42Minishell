@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 20:32:06 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/16 05:29:44 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:39:46 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,4 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	res[len] = NULL;
 	return (ft_put_table(res, str, c, len));
-}
-
-// TODO : Might be somewhat unstable, Can you check here?
-
-char	**ft_split_heap(char const *s, char c, t_stackheap *stack)
-{
-	char	**box;
-
-	box = ft_split(s, c);
-	if (box == NULL)
-		return (NULL);
-	if (heap_push(stack, box, ft_free_split) == -1)
-		return (NULL);
-	return (box);
 }

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 20:32:00 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/16 05:11:33 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/05 15:26:21 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,4 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 		return (NULL);
 	ft_strlcpy(res, s + start, len + 1);
 	return (res);
-}
-
-char	*ft_substr_heap(const char *s, t_uint start, size_t len, t_mem *stack)
-{
-	char	*str;
-
-	str = ft_substr(s, start, len);
-	if (str == NULL)
-		return (NULL);
-	if (heap_push(stack, str, free) == -1)
-		return (NULL);
-	return (str);
 }

@@ -6,44 +6,90 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/04 20:15:50 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 04:10:40 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
 
-int	tun_init_exec_parent(t_exec *exe, t_main *info)
+// int	tun_init_exec_parent(t_exec *exe, t_main *info)
+// {
+// 	exe->_info = info;
+// 	if (tun_alloc_pipe(info, &exe->_pipes, exe->_pipes.n) == -1)
+// 		return (0);
+// 	return (1);
+// }
+
+// int	tun_init_exec_child(t_exec *exe, t_token_stream *subset)
+// {
+// 	int	in;
+// 	int	out;
+
+// 	exe->argv = tun_get_argv(subset, exe->_info);
+// 	if (exe->argv == NULL)
+// 		return (0);
+// 	in = tun_get_infile(subset, exe);
+// 	out = tun_get_outfile(subset, exe);
+// 	return (in == 1 && out == 1);
+// }
+
+int	tun_init_exec_parent(t_exec *exe, t_main *info, size_t pipe_n)
 {
 	exe->_info = info;
-	if (tun_alloc_pipe(info, &exe->_pipes, exe->_pipes.n) == -1)
+	if (tun_alloc_pipe(&exe->_pipes, pipe_n) != 1)
 		return (0);
+	exe->argv = NULL;
+	exe->delimeter = NULL;
+	exe->in_len = 0;
+	exe->infile = NULL;
+	exe->out_len = 0;
+	exe->outfile = NULL;
 	return (1);
 }
 
-int	tun_init_exec_child(t_exec *exe, t_token_stream *subset)
+static int	sb_count_token(t_token_stream subset, t_exec *exe, int *del_len)
 {
-	int	in;
-	int	out;
-
-	exe->argv = tun_get_argv(subset, exe->_info);
-	if (exe->argv == NULL)
-		return (0);
-	in = tun_get_infile(subset, exe);
-	out = tun_get_outfile(subset, exe);
-	return (in == 1 && out == 1);
+	int		argv_len;
+	
+	argv_len = 0;
+	*del_len = 0;
+	exe->in_len = 1;
+	exe->out_len = 1;
+	while (subset.begin != NULL)
+	{
+		if (subset.begin->type == __redirr_in || subset.begin->type == __here_doc)
+		{
+			exe->in_len++;
+			*del_len += subset.begin->type == __here_doc;
+		}
+		else if (subset.begin->type == __redirr_trunc \
+				|| subset.begin->type == __redirr_append)
+			exe->out_len++;
+		else if (subset.begin->type == __argv || subset.begin->type == __cmd)
+			argv_len++;
+		subset.begin = subset.begin->next;
+	}
+	return (argv_len);
 }
 
-t_exec	tun_exec_init(void)
+int	tun_init_box(t_token_stream subset, t_exec *exe)
 {
-	t_exec	exe;
+	int	argv_len;
+	int	del_len;
 
-	exe._info = NULL;
-	exe.argv = NULL;
-	exe.delimeter = NULL;
-	exe.envp = NULL;
-	exe.in_len = 0;
-	exe.infile = NULL;
-	exe.out_len = 0;
-	exe.outfile = NULL;
-	return (exe);
+	argv_len = sb_count_token(subset, exe, &del_len);
+	exe->argv = malloc(sizeof(char *) * (argv_len + 1));
+	exe->infile = malloc(sizeof(int) * exe->in_len);
+	exe->outfile = malloc(sizeof(int) * exe->out_len);
+	exe->delimeter = ft_calloc(sizeof(char *), (del_len + 1));
+	if (exe->argv == NULL || exe->infile == NULL \
+		|| exe->outfile == NULL || exe->delimeter == NULL)
+	{
+		free(exe->argv);
+		free(exe->infile);
+		free(exe->outfile);
+		free(exe->delimeter);
+		return (0);
+	}
+	return (1);
 }

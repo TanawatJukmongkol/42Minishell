@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heap_get.c                                         :+:      :+:    :+:   */
+/*   ft_tokenfree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/10 00:53:25 by tponutha         ###   ########.fr       */
+/*   Created: 2023/08/09 14:48:03 by tjukmong          #+#    #+#             */
+/*   Updated: 2023/10/09 00:19:26 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libminishell.h"
 
-void	*heap_get(t_stackheap *stack, ssize_t id)
+void	ft_tokenfree(t_token_stream *s)
 {
-	t_stacknode	*tmp;
+	t_token	*tmp;
 
-	tmp = stack->last;
-	while (tmp && id >= tmp->id)
+	while (s->begin)
 	{
-		if (tmp->id == id)
-			return (tmp->data);
-		tmp = tmp->prev;
+		tmp = s->begin->next;
+		free(s->begin->value);
+		free(s->begin);
+		s->begin = tmp;
 	}
-	return (NULL);
 }

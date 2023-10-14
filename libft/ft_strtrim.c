@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 22:49:13 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/08/16 05:20:44 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/05 15:26:17 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,4 @@ char	*ft_strtrim(const char *s1, const char *set)
 		return (NULL);
 	ft_strlcpy(res, str, len + 1);
 	return (res);
-}
-
-char	*ft_strtrim_heap(char const *s1, char const *set, t_stackheap *stack)
-{
-	char	*str;
-
-	str = ft_strtrim(s1, set);
-	if (str == NULL)
-		return (NULL);
-	if (heap_push(stack, str, free) == -1)
-		return (NULL);
-	return (str);
 }
