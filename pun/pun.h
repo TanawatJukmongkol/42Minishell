@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 21:07:09 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:54:46 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct s_cmd_table
 	t_token_stream	infile;
 	t_token_stream	outfile;
 	t_token_stream	argv;
-	// size_t			indx;
 }				t_cmd_table;
 
 /** token **/
@@ -64,4 +63,3 @@ void	purge_table(t_cmd_table *table);
 void	parser(t_token_stream *output, t_token_stream *input);
 
 #endif
-

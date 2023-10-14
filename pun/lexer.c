@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:47 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 21:12:01 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:43:13 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,3 @@ void	lexer(t_token_stream *output, char *src)
 	stage3_tokenizer(&stage4, &stage3);
 	stage4_tokenizer(output, &stage4);
 }
-

@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:13 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 05:58:32 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:53:18 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	white_space(t_token_stream *s, t_token *t, void *vars)
 	}
 }
 
-void	stage1_tokenizer(t_token_stream *dst, t_token_stream *stage1, char *input)
+void	stage1_tokenizer(t_token_stream *dst,
+	t_token_stream *stage1, char *input)
 {
 	ft_token(stage1, __none)->value = input;
 	ft_token_consume(dst, stage1, white_space, NULL);
 }
-
