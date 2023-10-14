@@ -6,13 +6,13 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:47 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 21:43:13 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 23:31:04 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pun.h"
 
-void	lexer(t_token_stream *output, char *src)
+void	lexer(t_token_stream *output, char *src, t_main m)
 {
 	t_token_stream	stage1;
 	t_token_stream	stage2;
@@ -27,6 +27,6 @@ void	lexer(t_token_stream *output, char *src)
 	stage4.begin = NULL;
 	stage1_tokenizer(&stage2, &stage1, src);
 	stage2_tokenizer(&stage3, &stage2);
-	stage3_tokenizer(&stage4, &stage3);
+	stage3_tokenizer(&stage4, &stage3, m);
 	stage4_tokenizer(output, &stage4);
 }

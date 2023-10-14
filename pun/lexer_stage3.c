@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:34 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/13 05:59:15 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 23:29:58 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static char	*str_rejoin(char *dst, char *src)
 	return (tmp);
 }
 
-static void	replace_to_env(char **res, char **next_nonchar, char **next_match)
+static void	replace_to_env(char **res, t_envp *envp,
+	char **next_nonchar, char **next_match)
 {
 	char	*str;
 	char	*env;
@@ -35,9 +36,9 @@ static void	replace_to_env(char **res, char **next_nonchar, char **next_match)
 	{
 		env = ft_substr(*next_match, 1, str - *next_match - 1);
 		tmp = *res;
-		if (getenv(env))
+		if (ft_getenv(envp, env))
 		{
-			*res = ft_strjoin(tmp, getenv(env));
+			*res = ft_strjoin(tmp, ft_getenv(envp, env));
 			free(tmp);
 		}
 		free(env);
@@ -55,7 +56,6 @@ void	env_replace(t_token_stream *s, t_token *t, void *vars)
 	char	*res;
 	size_t	len;
 
-	(void)(vars);
 	ptr = t->value;
 	next_match = ptr;
 	res = ft_strdup("");
@@ -66,7 +66,7 @@ void	env_replace(t_token_stream *s, t_token *t, void *vars)
 		if (len)
 			res = str_rejoin(res, ft_substr(ptr, 0, len));
 		if (*next_match)
-			replace_to_env(&res, &next_nonchar, &next_match);
+			replace_to_env(&res, vars, &next_nonchar, &next_match);
 		if (!*next_match)
 			break ;
 		next_match += next_nonchar - next_match;
@@ -75,8 +75,8 @@ void	env_replace(t_token_stream *s, t_token *t, void *vars)
 	ft_token(s, t->type)->value = res;
 }
 
-void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3)
+void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3, t_main m)
 {
 	while (stage3->begin)
-		ft_token_consume(dst, stage3, env_replace, NULL);
+		ft_token_consume(dst, stage3, env_replace, &m._envp);
 }

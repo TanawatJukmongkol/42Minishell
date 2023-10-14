@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 04:13:14 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/14 23:31:53 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		if (line[0] != 0)
 		{
-			lexer(&lex, line);
+			lexer(&lex, line, info);
 			parser(&info._token, &lex);
 			if (info._token.begin == NULL)
 				return (ft_clear_main(&info, 0));
