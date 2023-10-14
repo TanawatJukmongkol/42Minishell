@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:46:42 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 13:39:21 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:09:50 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,14 @@ void	parser(t_token_stream *output, t_token_stream *input)
 
 	init_table(&cmd_table);
 	while (input->begin)
+	{
+		if (!input->begin->value)
+		{
+			ft_tokenfree(input);
+			ft_tokenfree(output);
+			purge_table(&cmd_table);
+			return ;
+		}
 		ft_token_consume(output, input, cmdtable_switch, &cmd_table);
+	}
 }

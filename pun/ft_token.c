@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:44:28 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/09/12 19:11:14 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:00:22 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_token	*ft_token(t_token_stream *stream, t_token_type type)
 {
 	t_token	*new_token;
 
+	if (!stream)
+		return (NULL);
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);

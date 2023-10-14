@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 13:15:28 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:32:49 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_realpath(char *re_path, t_main *m)
 		begin = ft_strdup(re_path);
 	else
 	{
-		begin = ft_strdup(getenv("PWD"));
+		begin = ft_getcwd();
 		if (!begin)
 			return (NULL);
 		begin = join_path(begin, re_path);

@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:36:20 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 13:36:22 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:36:30 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,13 @@ void	append_table(t_token_stream *dst, t_token_stream *src)
 	}
 	dst->last->next = src->begin;
 	dst->last = src->last;
+}
+
+void	purge_table(t_cmd_table *table)
+{
+	ft_tokenfree(&table->argv);
+	ft_tokenfree(&table->infile);
+	ft_tokenfree(&table->outfile);
+	if (table->cmd)
+		free(table->cmd);
 }
