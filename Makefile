@@ -37,8 +37,9 @@ SRCS_PUN	= ft_token.c \
 HEADERS_PUN	= pun.h
 
 # Contributers (TUN)
+
 SRCS_TUN	= tun_builtin.c \
-		  		tun_echo.c \
+		  	tun_echo.c \
 				tun_child.c \
 				tun_builtin_exit.c \
 				tun_process_exit.c \
@@ -54,7 +55,7 @@ SRCS_TUN	= tun_builtin.c \
 				tun_perror.c \
 				tun_redirect.c
 
-HEADERS_TUN	= tun.h
+#HEADERS_TUN	= tun.h
 
 SRC_DIR		= ./src
 SRC_DIR_PUN	= ./pun

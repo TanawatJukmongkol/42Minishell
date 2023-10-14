@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "pun.h"
+#include <threads.h>
 
 void	build_table(t_token_stream *s, t_cmd_table *table, int pipe)
 {
@@ -90,3 +91,4 @@ void	parser(t_token_stream *output, t_token_stream *input)
 		ft_token_consume(output, input, cmdtable_switch, &cmd_table);
 	}
 }
+
