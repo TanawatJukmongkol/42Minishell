@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 04:11:19 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 04:33:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	tun_parent_process(t_main *info, t_token_stream *box, size_t pipe_n)
 	int		wait;
 
 	e = 1;
+	wait = 1;
 	if (tun_init_exec_parent(&exe, info, pipe_n) == 0)
 		tun_process_exit(0, &exe, box, pipe_n);
 	pid_box = malloc(sizeof(int) * (pipe_n + 1));

@@ -39,7 +39,7 @@ HEADERS_PUN	= pun.h
 # Contributers (TUN)
 
 SRCS_TUN	= tun_builtin.c \
-		  	tun_echo.c \
+		  		tun_echo.c \
 				tun_child.c \
 				tun_builtin_exit.c \
 				tun_process_exit.c \
@@ -52,8 +52,10 @@ SRCS_TUN	= tun_builtin.c \
 				tun_split_token.c \
 				tun_exeve.c \
 				tun_heredoc.c \
+				tun_heredoc_utils.c \
 				tun_perror.c \
-				tun_redirect.c
+				tun_redirect.c \
+				tun_directory.c 
 
 #HEADERS_TUN	= tun.h
 
