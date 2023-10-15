@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/09 00:15:26 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:42:54 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-int		ft_init_main(t_main *info, char **envp)
+int	ft_init_main(t_main *info, char **envp)
 {
 	char	*ptr_home;
 

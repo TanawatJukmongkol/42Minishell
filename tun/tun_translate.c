@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tun_get_file.c                                     :+:      :+:    :+:   */
+/*   tun_translate.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/14 02:10:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:43:06 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	tun_get_argv(t_token_stream subset, t_exec *exe)
 	int		i;
 
 	i = 0;
-	while (subset.begin != NULL && exe->argv[i] != NULL)
-	{		
+	while (subset.begin != NULL)
+	{
 		if (subset.begin->type == __cmd || subset.begin->type == __argv)
 		{
 			exe->argv[i] = subset.begin->value;

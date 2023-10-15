@@ -6,19 +6,40 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 23:31:53 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/16 01:50:16 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	repl(t_token_stream *lex, t_main *info)
+{
+	t_token_stream	*box;
+	size_t			pipe_n;
+	char			*line;
+
+	line = ft_readline("minishell> ");
+	if (!line)
+		return (1);
+	if (line[0] != 0)
+	{
+		lexer(lex, line, *info);
+		parser(&info->_token, lex);
+		if (info->_token.begin == NULL)
+			exit(ft_clear_main(info, 0));
+		box = tun_split_token(info, &pipe_n);
+		tun_parent_process(info, box, pipe_n);
+		tun_free_token_box(box, pipe_n);
+	}
+	else
+		free(line);
+	return (0);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_token_stream	lex;
-	t_token_stream	*box;
 	t_main			info;
-	size_t			pipe_n;
-	char			*line;
 
 	(void)av;
 	if (ac != 1)
@@ -27,51 +48,45 @@ int	main(int ac, char **av, char **envp)
 		return (ENOMEM);
 	lex.begin = NULL;
 	lex.last = NULL;
-	line = ft_readline("minishell> ");
-	while (line != NULL)
-	{
-		if (line[0] != 0)
-		{
-			lexer(&lex, line, info);
-			parser(&info._token, &lex);
-			if (info._token.begin == NULL)
-				return (ft_clear_main(&info, 0));
-			box = tun_split_token(&info, &pipe_n);
-			tun_parent_process(&info, box, pipe_n);
-			tun_free_token_box(box, pipe_n);
-		}
-		else
-			free(line);
-		line = ft_readline("minishell> ");
-	}
+	while (!repl(&lex, &info))
+		;
 	printf("exit\n");
 	return (ft_clear_main(&info, 0));
 }
 
 // int	main(int argc, char **argv, char **envp)
 // {
-// 	t_stackheap		mem;
 // 	char			*prompt;
 // 	char			*line;
+// 	t_main			info;
+// 	t_envp			env;
 // 	t_token_stream	stream;
 // 	t_token_stream	output;
 
-// 	(void)(argc);
-// 	(void)(argv);
-// 	(void)(envp);
-// 	heap_init(&mem);
+// 	ft_initenv(&env, envp);
+// 	info._envp = env;
+// 	info._home = ft_getenv(&env, "HOME");
 // 	stream.begin = NULL;
 // 	output.begin = NULL;
 // 	while (1)
 // 	{
-// 		char	*cwd = ft_getcwd(&mem);
+// 		char	*cwd = ft_getcwd();
 // 		prompt = ft_strjoin(cwd, "> ");
 // 		free(cwd);
-// 		line = ft_readline(prompt);
+// 		line = argc == 2 ? ft_strdup(argv[1]): ft_readline(prompt);
 // 		free(prompt);
-// 		if (!line || !*line)
+// 		if (!line)
+// 		{
+// 			rl_clear_history();
+// 			ft_clear_envp(env.env);
+// 			return (0);
+// 		}
+// 		if (!*line)
+// 		{
+// 			free(line);
 // 			continue ;
-// 		lexer(&stream, line);
+// 		}
+// 		lexer(&stream, line, info);
 // 		parser(&output, &stream);
 
 // 		// output = stream;
@@ -100,8 +115,29 @@ int	main(int ac, char **av, char **envp)
 // 		}
 // 		// ft_tokenfree(&stream);
 // 		ft_tokenfree(&output);
+// 		if (argc == 2)
+// 			break ;
 // 	}
+// 	ft_clear_envp(env.env);
 // 	return (0);
+// }
+
+// int main(int argc, char **argv, char **envp)
+// {
+// 	t_main	m;
+// 	t_envp	env;
+
+// 	(void)(argc);
+// 	(void)(argv);
+// 	ft_initenv(&env, envp);
+// 	m._home = ft_strdup(getenv("HOME"));
+// 	m._envp = env;
+// 	char *path = ft_realpath("~", &m);
+// 	printf("%s\n", path);
+// 	free(path);
+// 	ft_clear_envp(m._envp.env);
+// 	free(m._home);
+// 	return 0;
 // }
 
 // OUTPUT EMULATOR

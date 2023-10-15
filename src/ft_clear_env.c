@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_clear_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:36 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/09 01:07:37 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:39:51 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_clear_envp(char **envs)
 // 	ft_clear_envp(envp->env);
 // 	envp->env = malloc(sizeof(char *) * (envp->len + 1));
 // 	if (envp->env == NULL)
-		
+//		
 // 	envp->cache[envp->len] = NULL;
 // 	tmp = envp->begin;
 // 	indx = 0;
