@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 03:13:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 03:55:21 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,13 @@ int	tun_get_outfile(t_token_stream subset, t_exec *exe)
 int	tun_get_argv(t_token_stream subset, t_exec *exe)
 {
 	int	i;
-	int	isbuiltin;
 
 	i = 0;
-	isbuiltin = 0;
 	while (subset.begin != NULL)
 	{
-		if (subset.begin->type == __cmd)
-			isbuiltin = tun_isbuiltin(subset.begin->value);
 		if (subset.begin->type == __cmd || subset.begin->type == __argv)
 		{
-			if (subset.begin->value[0] == '~' && isbuiltin == 0)
+			if (subset.begin->value[0] == '~')
 				exe->argv[i] = ft_realpath(subset.begin->value, exe->_info);
 			else
 				exe->argv[i] = ft_strdup(subset.begin->value);

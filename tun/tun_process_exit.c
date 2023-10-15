@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 02:05:18 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 03:59:35 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	sb_exit(int isexe)
 	exit(0);
 }
 
-void	tun_parent_exit(int status, t_exec *exe, t_token_stream *box, size_t n)
+void	tun_process_exit(int status, t_exec *exe, t_token_stream *box, size_t n)
 {
 	tun_close_pipe(&exe->_pipes);
 	tun_clear_process(exe);

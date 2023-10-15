@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 00:35:55 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 03:53:53 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	tun_execve(t_exec *exe, int e)
 	char	*path;
 
 	if (e == 0 || exe->argv[0] == NULL)
+		return ;
+	if (tun_builtin_child(exe) != -1)
 		return ;
 	path = ft_getenv(&exe->_info->_envp, "PATH");
 	full_path = sb_find_cmd(exe->argv[0], path, exe->_info);

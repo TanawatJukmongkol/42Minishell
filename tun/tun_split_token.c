@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 03:19:16 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 04:11:53 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	sb_token_manage(t_token_stream *out, t_token_stream *in)
 			in->begin = tmp;
 			return ;
 		}
-		sb_token_manage(out, in);
+		sb_token_join(out, in);
 		in->begin = tmp;
 	}
 }

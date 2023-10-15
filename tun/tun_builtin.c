@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 01:35:01 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 04:04:59 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ positive	: error
 
 // exit, export, unset, cd
 
-int	tun_builin_parent(t_token_stream *box, int *pid, t_exec *exe, size_t n)
+int	tun_builin_parent(t_token_stream *box, pid_t *pid, t_exec *exe, size_t n)
 {
 	size_t	size;
 	int		err;
@@ -120,7 +120,7 @@ int	tun_builin_parent(t_token_stream *box, int *pid, t_exec *exe, size_t n)
 
 // echo, pwd
 
-int	tun_builin_child(t_exec *exe)
+int	tun_builtin_child(t_exec *exe)
 {
 	size_t	size;
 	int		err;
@@ -133,25 +133,27 @@ int	tun_builin_child(t_exec *exe)
 		err = tun_echo(exe->argv, exe);
 	else if (ft_strncmp(exe->argv[0], "pwd", size) == 0)
 		err = tun_pwd();
+	if (err >= 0)
+		exe->_info->_ngong = err;
 	return (err);
 }
 
-int	tun_isbuiltin(char *cmd)
-{
-	size_t	size;
+// int	tun_isbuiltin(char *cmd)
+// {
+// 	size_t	size;
 
-	size = ft_strlen(cmd);
-	if (ft_strncmp("cd", cmd, size) == 0)
-		return (1);
-	else if (ft_strncmp("pwd", cmd, size) == 0)
-		return (1);
-	else if (ft_strncmp("echo", cmd, size) == 0)
-		return (1);
-	else if (ft_strncmp("export", cmd, size) == 0)
-		return (1);
-	else if (ft_strncmp("unset", cmd, size) == 0)
-		return (1);
-	else if (ft_strncmp("echo", cmd, size) == 0)
-		return (1);
-	return (0);
-}
+// 	size = ft_strlen(cmd);
+// 	if (ft_strncmp("cd", cmd, size) == 0)
+// 		return (1);
+// 	else if (ft_strncmp("pwd", cmd, size) == 0)
+// 		return (1);
+// 	else if (ft_strncmp("echo", cmd, size) == 0)
+// 		return (1);
+// 	else if (ft_strncmp("export", cmd, size) == 0)
+// 		return (1);
+// 	else if (ft_strncmp("unset", cmd, size) == 0)
+// 		return (1);
+// 	else if (ft_strncmp("echo", cmd, size) == 0)
+// 		return (1);
+// 	return (0);
+// }

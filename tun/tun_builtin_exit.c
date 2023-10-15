@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 01:36:21 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 04:04:49 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,6 @@
 126: cmd permission denied
 127: no such file or directory
 */
-
-void	tun_child_exit(t_exec *exec, int isexe)
-{
-	if (errno == ENOENT)
-		ft_exit(exec->_info, 127);
-	if (errno == EACCES)
-	{
-		if (isexe != -1)
-			ft_exit(exec->_info, 126);
-		ft_exit(exec->_info, 1);
-	}
-	ft_exit(exec->_info, 0);
-}
 
 static long	sb_atol(char *str, int *overflow)
 {
@@ -107,7 +94,7 @@ static void	sb_exit_error(char *str, t_exec *exe)
 
 // TODO : handle free too
 
-void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe, size_t n)
+void	tun_builtin_exit(t_token_stream *box, pid_t *pid, t_exec *exe, size_t n)
 {
 	size_t			len;
 	unsigned char	e;
@@ -123,10 +110,10 @@ void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe, size_t n)
 	{
 		free(pid);
 		printf("exit\n");
-		tun_parent_exit(0, exe, box, n);
+		tun_process_exit(0, exe, box, n);
 	}
 	if (sb_check_number(exe->argv[1], &e))
 		return (sb_exit_error(exe->argv[1], exe));
 	printf("exit\n");
-	tun_parent_exit(e, exe, box, n);
+	tun_process_exit(0, exe, box, n);
 }
