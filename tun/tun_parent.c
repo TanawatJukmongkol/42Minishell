@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/14 04:16:53 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/15 22:24:05 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	sb_dad_buy_milk(t_token_stream *box, t_exec *exe, int *pid, int e)
 	if (!e)
 		return ;
 	pid[0] = BUILTIN_PID;
-	if (tun_builin_handler(box, pid, exe, e) == -1)
+	if (tun_builin_parent(box, pid, exe, e) == -1)
 	{
 		pid[0] = tun_fork();
 		if (pid[0] != 0)

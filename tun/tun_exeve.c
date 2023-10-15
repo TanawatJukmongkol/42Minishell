@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/14 04:32:40 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/15 22:23:13 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*sb_pathjoin(char *cmd, char *path)
 	return (full_cmd);
 }
 
-static char	*sb_find_cmd(char *cmd, char *path)
+static char	*sb_find_cmd(char *cmd, char *path, t_main *info)
 {
 	int		i;
 	char	*full_cmd;
@@ -44,6 +44,8 @@ static char	*sb_find_cmd(char *cmd, char *path)
 	i = 0;
 	if (path == NULL || cmd[0] == '.' || cmd[0] == '/')
 		return (cmd);
+	else if (cmd[0] == '~')
+		return (ft_realpath(cmd, info));
 	path_set = ft_split(path, ':');
 	if (path_set == NULL)
 		return (NULL);
@@ -73,11 +75,10 @@ void	tun_execve(t_exec *exe, int e)
 	char	*full_path;
 	char	*path;
 
-	// TODO : handle ~/ later na
 	if (e == 0 || exe->argv[0] == NULL)
 		return ;
 	path = ft_getenv(&exe->_info->_envp, "PATH");
-	full_path = sb_find_cmd(exe->argv[0], path);
+	full_path = sb_find_cmd(exe->argv[0], path, exe->_info);
 	if (full_path == NULL)
 		return ;
 	if (full_path != exe->argv[0])

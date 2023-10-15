@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 04:28:41 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/15 21:45:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static void	sb_exit_error(char *str, t_exec *exe)
 
 // TODO : handle free too
 
-void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe)
+void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe, size_t n)
 {
 	size_t			len;
 	unsigned char	e;
@@ -123,10 +123,10 @@ void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe)
 	{
 		free(pid);
 		printf("exit\n");
-		tun_parent_exit(0, exe, box, exe->_pipes.n);
+		tun_parent_exit(0, exe, box, n);
 	}
 	if (sb_check_number(exe->argv[1], &e))
 		return (sb_exit_error(exe->argv[1], exe));
 	printf("exit\n");
-	tun_parent_exit(e, exe, box, exe->_pipes.n);
+	tun_parent_exit(e, exe, box, n);
 }

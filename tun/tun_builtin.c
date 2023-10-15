@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 04:35:55 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/15 22:21:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,28 +106,44 @@ RETURN VALUE
 positive	: error
 */
 
-int	tun_builin_handler(t_token_stream *box, int *pid, t_exec *exe, int e)
+// exit, export, unset, cd
+
+int	tun_builin_parent(t_token_stream *box, int *pid, t_exec *exe, size_t n)
 {
 	size_t	size;
 	int		err;
 
 	err = -1;
-	if (exe->argv[0] == NULL || e == 0)
-		return (0);
+	if (exe->argv[0] == NULL)
+		return (-1);
 	size = ft_strlen(exe->argv[0]);
-	if (ft_strncmp(exe->argv[0], "echo", size) == 0)
-		err = tun_echo(exe->argv, exe);
-	else if (ft_strncmp(exe->argv[0], "pwd", size) == 0)
-		err = sb_pwd();
-	else if (ft_strncmp(exe->argv[0], "cd", size) == 0)
+	if (ft_strncmp(exe->argv[0], "cd", size) == 0)
 		err = sb_cd(exe->argv, exe->_info);
 	else if (ft_strncmp(exe->argv[0], "export", size) == 0)
 		err = sb_export(exe->argv, exe->_info);
 	else if (ft_strncmp(exe->argv[0], "unset", size) == 0)
 		err = sb_unset(exe->argv, exe->_info);
 	else if (ft_strncmp(exe->argv[0], "exit", size) == 0)
-		tun_builtin_exit(box, pid, exe);
+		tun_builtin_exit(box, pid, exe, n);
 	if (err >= 0)
 		exe->_info->_ngong = err;
+	return (err);
+}
+
+// echo, pwd
+
+int	tun_builin_child(t_exec *exe)
+{
+	size_t	size;
+	int		err;
+
+	err = -1;
+	if (exe->argv[0] == NULL)
+		return (-1);
+	size = ft_strlen(exe->argv[0]);
+	if (ft_strncmp(exe->argv[0], "echo", size) == 0)
+		err = tun_echo(exe->argv, exe);
+	else if (ft_strncmp(exe->argv[0], "pwd", size) == 0)
+		err = sb_pwd();
 	return (err);
 }
