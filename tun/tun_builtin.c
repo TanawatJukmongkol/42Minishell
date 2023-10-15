@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/15 22:21:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 01:35:01 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,37 @@
 
 // WORk
 
-static int	sb_cd(char **av, t_main *info)
-{
-	int		err;
-	char	*err_str;
-	char	*home;
+// static int	sb_cd(char **av, t_main *info)
+// {
+// 	int		err;
+// 	char	*err_str;
+// 	char	*home;
 
-	if (av[1] == NULL)
-	{
-		home = ft_getenv(&info->_envp, "HOME");
-		if (home == NULL)
-		{
-			err_str = "minishell: cd: HOME not set";
-			write(STDERR_FILENO, err_str, ft_strlen(err_str));
-			return (1);
-		}
-		err = ft_chdir(home, info);
-		if (err != 0)
-			tun_file_perror("minishell: cd: ", home);
-		return (err);
-	}
-	else if (av[2] != NULL)
-	{
-		err_str = "minishell: cd: too many arguments";
-		write(STDERR_FILENO, err_str, ft_strlen(err_str));
-		return (1);
-	}
-	err = ft_chdir(av[1], info);
-	if (err != 0)
-		tun_file_perror("minishell: cd: ", av[1]);
-	return (err);
-}
+// 	if (av[1] == NULL)
+// 	{
+// 		home = ft_getenv(&info->_envp, "HOME");
+// 		if (home == NULL)
+// 		{
+// 			err_str = "minishell: cd: HOME not set";
+// 			write(STDERR_FILENO, err_str, ft_strlen(err_str));
+// 			return (1);
+// 		}
+// 		err = ft_chdir(home, info);
+// 		if (err != 0)
+// 			tun_file_perror("minishell: cd: ", home);
+// 		return (err);
+// 	}
+// 	else if (av[2] != NULL)
+// 	{
+// 		err_str = "minishell: cd: too many arguments";
+// 		write(STDERR_FILENO, err_str, ft_strlen(err_str));
+// 		return (1);
+// 	}
+// 	err = ft_chdir(av[1], info);
+// 	if (err != 0)
+// 		tun_file_perror("minishell: cd: ", av[1]);
+// 	return (err);
+// }
 
 // WORK
 
@@ -87,18 +87,6 @@ static int	sb_unset(char **av, t_main *info)
 	return (0);
 }
 
-static int	sb_pwd(void)
-{
-	char	*curr;
-
-	curr = ft_getcwd();
-	if (curr == NULL)
-		return (ENOMEM);
-	printf("%s\n", curr);
-	free(curr);
-	return (0);
-}
-
 /*
 RETURN VALUE
 -1			: cmd isn't built-in
@@ -118,7 +106,7 @@ int	tun_builin_parent(t_token_stream *box, int *pid, t_exec *exe, size_t n)
 		return (-1);
 	size = ft_strlen(exe->argv[0]);
 	if (ft_strncmp(exe->argv[0], "cd", size) == 0)
-		err = sb_cd(exe->argv, exe->_info);
+		err = tun_cd(exe->argv, exe->_info);
 	else if (ft_strncmp(exe->argv[0], "export", size) == 0)
 		err = sb_export(exe->argv, exe->_info);
 	else if (ft_strncmp(exe->argv[0], "unset", size) == 0)
@@ -144,6 +132,26 @@ int	tun_builin_child(t_exec *exe)
 	if (ft_strncmp(exe->argv[0], "echo", size) == 0)
 		err = tun_echo(exe->argv, exe);
 	else if (ft_strncmp(exe->argv[0], "pwd", size) == 0)
-		err = sb_pwd();
+		err = tun_pwd();
 	return (err);
+}
+
+int	tun_isbuiltin(char *cmd)
+{
+	size_t	size;
+
+	size = ft_strlen(cmd);
+	if (ft_strncmp("cd", cmd, size) == 0)
+		return (1);
+	else if (ft_strncmp("pwd", cmd, size) == 0)
+		return (1);
+	else if (ft_strncmp("echo", cmd, size) == 0)
+		return (1);
+	else if (ft_strncmp("export", cmd, size) == 0)
+		return (1);
+	else if (ft_strncmp("unset", cmd, size) == 0)
+		return (1);
+	else if (ft_strncmp("echo", cmd, size) == 0)
+		return (1);
+	return (0);
 }

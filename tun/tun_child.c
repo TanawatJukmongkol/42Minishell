@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/15 22:23:39 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 00:43:13 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ void	tun_child_process(t_exec *exe, t_token_stream *box, int *pid, size_t i)
 	n = exe->_pipes.n;
 	if (tun_init_box(box[i], exe) == 0)
 		tun_parent_exit(ENOMEM, exe, box, n);
-	tun_get_argv(box[i], exe);
-	e = tun_get_infile(box[i], exe);
+	e = tun_get_argv(box[i], exe);
+	if (e)
+		e = tun_get_infile(box[i], exe);
 	if (e)
 		e = tun_get_outfile(box[i], exe);
 	e = tun_heredoc(exe);

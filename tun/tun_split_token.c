@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/14 03:52:04 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 03:19:16 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	sb_count_pipe(t_token_stream run)
 {
 	int	pipe_n;
-	
+
 	pipe_n = 0;
 	while (run.begin != NULL)
 	{
@@ -40,6 +40,20 @@ void	tun_free_token_box(t_token_stream *box, size_t pipe_n)
 	free(box);
 }
 
+static void	sb_token_join(t_token_stream *out, t_token_stream *in)
+{
+	if (out->begin == NULL)
+	{
+		out->begin = in->begin;
+		out->last = in->begin;
+	}
+	else
+	{
+		out->last->next = in->begin;
+		out->last = out->last->next;
+	}
+}
+
 static void	sb_token_manage(t_token_stream *out, t_token_stream *in)
 {
 	t_token	*tmp;
@@ -52,21 +66,12 @@ static void	sb_token_manage(t_token_stream *out, t_token_stream *in)
 		in->begin->next = NULL;
 		if (in->begin->type == __pipe)
 		{
-			free(in->begin->value); 
+			free(in->begin->value);
 			free(in->begin);
 			in->begin = tmp;
 			return ;
 		}
-		if (out->begin == NULL)
-		{
-			out->begin = in->begin;
-			out->last = in->begin;
-		}
-		else
-		{
-			out->last->next = in->begin;
-			out->last = out->last->next;
-		}
+		sb_token_manage(out, in);
 		in->begin = tmp;
 	}
 }
@@ -79,7 +84,7 @@ t_token_stream	*tun_split_token(t_main *info, size_t *pipe_n)
 	i = 0;
 	*pipe_n = sb_count_pipe(info->_token);
 	box = malloc(sizeof(t_token_stream) * (*pipe_n + 1));
-	if (box  == NULL)
+	if (box == NULL)
 		return (NULL);
 	while (i < *pipe_n + 1)
 	{

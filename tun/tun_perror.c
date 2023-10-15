@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/14 04:32:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 03:47:09 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,3 @@ void	tun_file_perror(const char *msg, const char *path)
 		ft_putstr_fd(final, STDERR_FILENO);
 	free(final);
 }
-

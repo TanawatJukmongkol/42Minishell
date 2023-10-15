@@ -6,32 +6,11 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 04:10:40 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 03:14:10 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
-
-// int	tun_init_exec_parent(t_exec *exe, t_main *info)
-// {
-// 	exe->_info = info;
-// 	if (tun_alloc_pipe(info, &exe->_pipes, exe->_pipes.n) == -1)
-// 		return (0);
-// 	return (1);
-// }
-
-// int	tun_init_exec_child(t_exec *exe, t_token_stream *subset)
-// {
-// 	int	in;
-// 	int	out;
-
-// 	exe->argv = tun_get_argv(subset, exe->_info);
-// 	if (exe->argv == NULL)
-// 		return (0);
-// 	in = tun_get_infile(subset, exe);
-// 	out = tun_get_outfile(subset, exe);
-// 	return (in == 1 && out == 1);
-// }
 
 int	tun_init_exec_parent(t_exec *exe, t_main *info, size_t pipe_n)
 {
@@ -49,15 +28,16 @@ int	tun_init_exec_parent(t_exec *exe, t_main *info, size_t pipe_n)
 
 static int	sb_count_token(t_token_stream subset, t_exec *exe, int *del_len)
 {
-	int		argv_len;
-	
+	int	argv_len;
+
 	argv_len = 0;
 	*del_len = 0;
 	exe->in_len = 1;
 	exe->out_len = 1;
 	while (subset.begin != NULL)
 	{
-		if (subset.begin->type == __redirr_in || subset.begin->type == __here_doc)
+		if (subset.begin->type == __redirr_in \
+			|| subset.begin->type == __here_doc)
 		{
 			exe->in_len++;
 			*del_len += subset.begin->type == __here_doc;
@@ -65,7 +45,8 @@ static int	sb_count_token(t_token_stream subset, t_exec *exe, int *del_len)
 		else if (subset.begin->type == __redirr_trunc \
 				|| subset.begin->type == __redirr_append)
 			exe->out_len++;
-		else if (subset.begin->type == __argv || subset.begin->type == __cmd)
+		else if (subset.begin->type == __argv \
+				|| subset.begin->type == __cmd)
 			argv_len++;
 		subset.begin = subset.begin->next;
 	}
