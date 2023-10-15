@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 04:05:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 04:55:38 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static int	sb_redirect_pipe(t_exec *exe, size_t i, int e)
 	return (e);
 }
 
-void	tun_child_process(t_exec *exe, t_token_stream *box, pid_t *pid, size_t i)
+void	tun_child_process(t_exec *exe, t_token_stream *box, \
+							pid_t *pid, size_t i)
 {
 	int		e;
 	size_t	n;

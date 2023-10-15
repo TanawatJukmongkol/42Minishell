@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 04:06:32 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 04:55:07 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,20 @@ typedef t_token_stream	t_tks;
 
 /*		tun_builtin.c			*/
 int		tun_isbuiltin(char *cmd);
-int		tun_builin_parent(t_token_stream *box, pid_t *pid, t_exec *exe, size_t n);
+int		tun_builin_parent(t_token_stream *box, pid_t *pid, \
+							t_exec *exe, size_t n);
 int		tun_builtin_child(t_exec *exe);
 
 /*		tun_builtin_additional	*/
-void	tun_builtin_exit(t_token_stream *box, pid_t *pid, t_exec *exe, size_t n);
+void	tun_builtin_exit(t_token_stream *box, pid_t *pid, \
+							t_exec *exe, size_t n);
 int		tun_echo(char **av, t_exec *exe);
 int		tun_cd(char **av, t_main *info);
 int		tun_pwd(void);
 
 /*		tun_program_exit.c		*/
-void	tun_process_exit(int status, t_exec *exe, t_token_stream *box, size_t n);
+void	tun_process_exit(int status, t_exec *exe, \
+						t_token_stream *box, size_t n);
 void	tun_clear_process(t_exec *exe);
 
 /*		tun_init.c		*/
@@ -83,7 +86,8 @@ int		tun_get_infile(t_token_stream subset, t_exec *exe);
 int		tun_get_outfile(t_token_stream subset, t_exec *exe);
 
 /*		tun_child.c		*/
-void	tun_child_process(t_exec *exe, t_token_stream *box, pid_t *pid, size_t i);
+void	tun_child_process(t_exec *exe, t_token_stream *box, \
+							pid_t *pid, size_t i);
 int		tun_redirct(int *fdes, int len, int std, int isok);
 
 /*		tun_parent.c	*/

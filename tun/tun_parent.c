@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 04:33:50 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 04:53:27 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	sb_dad_buy_milk(t_token_stream *box, t_exec *exe, pid_t *pid, int e)
 	return (0);
 }
 
-static int	sb_single_mom(t_token_stream *box, t_exec *exe, pid_t *pid, int *wait)
+static int	sb_single_mom(t_token_stream *box, t_exec *exe, pid_t *pid, int *w)
 {
 	int	e;
 
@@ -70,7 +70,7 @@ static int	sb_single_mom(t_token_stream *box, t_exec *exe, pid_t *pid, int *wait
 		e = tun_get_outfile(box[0], exe);
 	if (errno == ENOMEM)
 		tun_process_exit(0, exe, box, exe->_pipes.n);
-	*wait = sb_dad_buy_milk(box, exe, pid, e);
+	*w = sb_dad_buy_milk(box, exe, pid, e);
 	tun_clear_process(exe);
 	return (e);
 }
