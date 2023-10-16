@@ -18,7 +18,7 @@ SRCS_COMMON		= minishell.c \
 				ft_init_main.c \
 				ft_chdir.c \
 
-SRCS_LINUX	=	ft_signal_linux.c
+SRCS_LINUX		=	ft_signal_linux.c
 SRCS_MAC		=	ft_signal_mac.c
 
 HEADERS		= libminishell.h \
@@ -70,7 +70,7 @@ LIB_DIR		= ./libft
 BUILD_DIR	= ./build
 
 CC			= cc
-CFLAGS		= -g -Wall -Werror -Wextra -fsanitize=address
+CFLAGS		= -g -Wall -Werror -Wextra# -fsanitize=address
 
 INCLUDE_OBJ_LINUX	= 
 INCLUDE_SRC_LINUX	= 
