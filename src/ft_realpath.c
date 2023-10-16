@@ -6,12 +6,11 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 01:25:30 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 00:40:01 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
-
 
 char	*join_path(char *dst, char *src)
 {
