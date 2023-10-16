@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 13:13:05 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:23:31 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,13 @@ static int	sb_check_number(char *num, unsigned char *e)
 	return (overflow);
 }
 
-static void	sb_exit_error(char *str, t_exec *exe)
+static void	sb_exit_error(char *str)
 {
 	char	*front;
 	char	*back;
 	char	*first;
 	char	*res;
 
-	(void)exe;
 	front = "minishell: exit: ";
 	back = ": numeric argument required\n";
 	first = ft_strjoin(front, str);
@@ -117,11 +116,12 @@ void	tun_builtin_exit(t_token_stream *box, pid_t *pid, t_exec *exe, size_t n)
 	if (len == 1)
 	{
 		free(pid);
-		printf("exit\n");
+		if (n == 0)
+			printf("exit\n");
 		sb_val_exit(0, exe, box, n);
 	}
 	if (sb_check_number(exe->argv[1], &e))
-		return (sb_exit_error(exe->argv[1], exe));
+		return (sb_exit_error(exe->argv[1]));
 	if (n == 0)
 		printf("exit\n");
 	sb_val_exit(e, exe, box, n);
