@@ -76,7 +76,7 @@ UNAME_S		= $(shell uname -s)
 
 INCLUDE_OBJ_SHARE	= ${addprefix -I,${LIB_DIR}}
 INCLUDE_SRC_SHARE	= ${addprefix -L,${LIB_DIR}} \
-						-l:libft.a \
+						-lft \
 						-lreadline
 
 ifeq ($(UNAME_S), Linux)

@@ -1,0 +1,15 @@
+total 200
+drwxr-xr-x  14 tjukmong  2022_bangkok    476 Oct 16 08:23 .
+drwxr-xr-x  14 tjukmong  2022_bangkok    476 Oct 16 08:12 ..
+drwxr-xr-x  14 tjukmong  2022_bangkok    476 Oct 16 08:16 .git
+-rw-r--r--   1 tjukmong  2022_bangkok    502 Oct 16 02:48 .gitignore
+-rw-r--r--   1 tjukmong  2022_bangkok   2830 Oct 16 08:15 Makefile
+drwxr-xr-x   2 tjukmong  2022_bangkok     68 Aug 14 14:36 build
+drwxr-xr-x   4 tjukmong  2022_bangkok    136 Oct 16 02:48 lib
+drwxr-xr-x  79 tjukmong  2022_bangkok   2686 Oct 16 08:15 libft
+-rwxr-xr-x   1 tjukmong  2022_bangkok  91776 Oct 16 08:15 minishell
+-rw-r--r--   1 tjukmong  2022_bangkok      0 Oct 16 08:23 out1
+-rw-r--r--   1 tjukmong  2022_bangkok      0 Oct 16 08:23 out2
+drwxr-xr-x  25 tjukmong  2022_bangkok    850 Oct 16 08:15 pun
+drwxr-xr-x  37 tjukmong  2022_bangkok   1258 Oct 16 08:15 src
+drwxr-xr-x  35 tjukmong  2022_bangkok   1190 Oct 16 08:15 tun

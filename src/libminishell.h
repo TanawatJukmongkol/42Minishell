@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libminishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/12 01:29:51 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 02:52:12 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 #  ifndef OPEN_MAX
 #   define OPEN_MAX 10420
 #  endif
+# else
+#  include <string.h>
 # endif
 
 typedef struct sigaction	t_sigaction;
