@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libminishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 08:36:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 09:04:38 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <string.h>
 
 // Universal Marco
 # ifndef ERR_MSG
@@ -109,6 +110,7 @@ void	*ft_editenv(char *key, char *value, t_envp *env);
 void	ft_tokenfree(t_token_stream *s);
 
 /** signal **/
-int		ft_signal(void);
+int		ft_sig_init(t_sigaction *s, int flag, void (*hand)(int), \
+				void (*sact)(int, siginfo_t *, void *));
 
 #endif

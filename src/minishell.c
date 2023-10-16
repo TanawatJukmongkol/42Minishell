@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 08:36:37 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 09:13:54 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (0);
-	if (ft_signal() == 0)
-		return (0);
+	// if (ft_signal() == 0)
+	// 	return (0);
 	if (ft_init_main(&info, envp) == -1)
 		return (ENOMEM);
 	lex.begin = NULL;

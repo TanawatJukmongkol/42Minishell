@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tun_parent.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 08:22:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 09:07:46 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static void	sb_big_wait(t_exec *exe, pid_t *pid, size_t n, int ok)
 		{
 			e = tun_waitpid(pid[i], &stat, WUNTRACED);
 			if (e != -1)
-				errno = WEXITSTATUS(stat) % 255;
+				exe->_info->_ngong = WEXITSTATUS(stat) % 255;
 		}
 		i++;
 	}
-	exe->_info->_ngong = errno;
+	// exe->_info->_ngong = errno;
 }
 
 /*

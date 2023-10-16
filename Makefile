@@ -30,7 +30,8 @@ SRCS_PUN	= ft_token.c \
 				lexer_stage1.c \
 				lexer_stage2_1.c \
 				lexer_stage2_2.c \
-				lexer_stage3.c \
+				lexer_stage3_1.c \
+				lexer_stage3_2.c \
 				lexer_stage4.c \
 				parser_utils.c \
 				parser.c
@@ -79,7 +80,7 @@ UNAME_S		= $(shell uname -s)
 
 INCLUDE_OBJ_SHARE	= ${addprefix -I,${LIB_DIR}}
 INCLUDE_SRC_SHARE	= ${addprefix -L,${LIB_DIR}} \
-						-l:libft.a \
+						-lft \
 						-lreadline
 
 ifeq ($(UNAME_S), Linux)
