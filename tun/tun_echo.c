@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 09:09:05 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/16 21:08:04 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ int	tun_echo(char **av, t_exec *exe)
 	i = ft_ternary(flag == 0, 2, 1);
 	while (av[i] != NULL)
 	{
-		// if (ft_strnstr(av[i], "$?", ft_strlen(av[i])) != NULL)
-		// 	sb_print_ngong(av[i], exe->_info->_ngong);
-		// else
 		printf("%s", av[i]);
 		if (av[i + 1] != NULL)
 			printf(" ");
