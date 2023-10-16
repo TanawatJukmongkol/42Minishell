@@ -2,7 +2,7 @@
 NAME		= minishell
 
 # Shared sources
-SRCS		= minishell.c \
+SRCS_COMMON		= minishell.c \
 				ft_clear_env.c \
 				ft_clear_main.c \
 				ft_tokenfree.c \
@@ -17,7 +17,9 @@ SRCS		= minishell.c \
 				ft_unsetenv.c \
 				ft_init_main.c \
 				ft_chdir.c \
-				ft_signal_mac.c 
+
+SRCS_LINUX	=	ft_signal_linux.c
+SRCS_MAC		=	ft_signal_mac.c
 
 HEADERS		= libminishell.h \
 				minishell.h
@@ -86,10 +88,12 @@ INCLUDE_SRC_SHARE	= ${addprefix -L,${LIB_DIR}} \
 ifeq ($(UNAME_S), Linux)
 INCLUDE_OBJ = $(INCLUDE_OBJ_LINUX) $(INCLUDE_OBJ_SHARE)
 INCLUDE_SRC = $(INCLUDE_OBJ_LINUX) $(INCLUDE_SRC_SHARE)
+SRCS = ${addprefix ${SRCS_COMMON}, ${SRCS_LINUX}}
 
 else
 INCLUDE_OBJ = $(INCLUDE_OBJ_OSX) $(INCLUDE_OBJ_SHARE)
 INCLUDE_SRC = $(INCLUDE_OBJ_OSX) $(INCLUDE_SRC_SHARE)
+SRCS = ${addprefix ${SRCS_COMMON}, ${SRCS_MAC}}
 endif
 
 SRC			= ${addprefix ${SRC_DIR}/,${SRCS}} \
