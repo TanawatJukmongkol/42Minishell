@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 04:55:07 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:21:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef t_token_stream	t_tks;
 
 /*		tun_builtin.c			*/
 int		tun_isbuiltin(char *cmd);
-int		tun_builin_parent(t_token_stream *box, pid_t *pid, \
+int		tun_builtin_parent(t_token_stream *box, pid_t *pid, \
 							t_exec *exe, size_t n);
 int		tun_builtin_child(t_exec *exe);
 
