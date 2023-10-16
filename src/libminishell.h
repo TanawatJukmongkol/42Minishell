@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/12 01:29:51 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:36:22 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void	*ft_editenv(char *key, char *value, t_envp *env);
 void	ft_tokenfree(t_token_stream *s);
 
 /** signal **/
-int		ft_sig_init(t_sigaction *s, int flag, void (*hand)(int), \
-				void (*sact)(int, siginfo_t *, void *));
+int		ft_signal(void);
 
 #endif
