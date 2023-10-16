@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 08:22:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:48:26 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	sb_big_wait(t_exec *exe, pid_t *pid, size_t n, int ok)
 		{
 			e = tun_waitpid(pid[i], &stat, WUNTRACED);
 			if (e != -1)
-				errno = WEXITSTATUS(stat) % 255;
+				errno = WEXITSTATUS(stat);
 		}
 		i++;
 	}

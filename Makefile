@@ -2,7 +2,7 @@
 NAME		= minishell
 
 # Shared sources
-SRCS		= minishell.c \
+SRCS_COMMON		= minishell.c \
 				ft_clear_env.c \
 				ft_clear_main.c \
 				ft_tokenfree.c \
@@ -17,7 +17,9 @@ SRCS		= minishell.c \
 				ft_unsetenv.c \
 				ft_init_main.c \
 				ft_chdir.c \
-				ft_signal_linux.c 
+
+SRCS_LINUX		=	ft_signal_linux.c
+SRCS_MAC		=	ft_signal_mac.c
 
 HEADERS		= libminishell.h \
 				minishell.h
@@ -30,7 +32,8 @@ SRCS_PUN	= ft_token.c \
 				lexer_stage1.c \
 				lexer_stage2_1.c \
 				lexer_stage2_2.c \
-				lexer_stage3.c \
+				lexer_stage3_1.c \
+				lexer_stage3_2.c \
 				lexer_stage4.c \
 				parser_utils.c \
 				parser.c
@@ -59,6 +62,7 @@ SRCS_TUN	= tun_builtin.c \
 				tun_directory.c 
 
 #HEADERS_TUN	= tun.h
+# add  to define
 
 SRC_DIR		= ./src
 SRC_DIR_PUN	= ./pun
@@ -67,28 +71,31 @@ LIB_DIR		= ./libft
 BUILD_DIR	= ./build
 
 CC			= cc
-CFLAGS		= -g -Wall -Werror -Wextra# -fsanitize=address
+CFLAGS		= -g -Wall -Werror -Wextra -D READLINE_LIBRARY=1# -fsanitize=address
 
 INCLUDE_OBJ_LINUX	= 
 INCLUDE_SRC_LINUX	= 
 
-INCLUDE_OBJ_OSX		= -I/usr/local/opt/readline/include
-INCLUDE_SRC_OSX		= -L/usr/local/opt/readline/lib
+INCLUDE_OBJ_OSX		= -I/usr/local/Cellar/readline/8.2.1/include
+INCLUDE_SRC_OSX		= -L/usr/local/Cellar/readline/8.2.1/lib
 
 UNAME_S		= $(shell uname -s)
 
 INCLUDE_OBJ_SHARE	= ${addprefix -I,${LIB_DIR}}
-INCLUDE_SRC_SHARE	= ${addprefix -L,${LIB_DIR}} \
-						-l:libft.a \
+INCLUDE_SRC_SHARE	= ${INCLUDE_SRC_OSX} \
+						${addprefix -L,${LIB_DIR}} \
+						-lft \
 						-lreadline
 
 ifeq ($(UNAME_S), Linux)
 INCLUDE_OBJ = $(INCLUDE_OBJ_LINUX) $(INCLUDE_OBJ_SHARE)
 INCLUDE_SRC = $(INCLUDE_OBJ_LINUX) $(INCLUDE_SRC_SHARE)
+SRCS = ${addprefix ${SRCS_COMMON}, ${SRCS_LINUX}}
 
 else
 INCLUDE_OBJ = $(INCLUDE_OBJ_OSX) $(INCLUDE_OBJ_SHARE)
 INCLUDE_SRC = $(INCLUDE_OBJ_OSX) $(INCLUDE_SRC_SHARE)
+SRCS = ${addprefix ${SRCS_COMMON}, ${SRCS_MAC}}
 endif
 
 SRC			= ${addprefix ${SRC_DIR}/,${SRCS}} \

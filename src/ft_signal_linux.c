@@ -11,48 +11,63 @@
 /* ************************************************************************** */
 
 #include "libminishell.h"
-
-int	ft_sig_init(t_sigaction *s, int flag, void (*hand)(int),\
-				 void (*sact)(int, siginfo_t *, void *))
-{
-	s->sa_flags = flag;
-	if (sigemptyset(&s->sa_mask) == -1)
-		return (perror(ERR_MSG), -1);
-	s->sa_handler = hand;
-	s->sa_sigaction = sact;
-	return (0);
-}
+#include <readline/readline.h>
 
 void	sig_quit(int signum)
 {
 	if (signum == SIGQUIT)
-		return ;
+	{
+		rl_redisplay();
+	}
 }
 
 void	sig_int(int signum)
 {
-	(void)signum;
-	rl_redisplay();
+	if (signum == SIGINT)
+	{
+		ft_putendl_fd("", STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
+void	sig_chld(int signum)
+{
+	if (signum == SIGCHLD)
+		printf("\33[2K\r\b");
+}
+
+int	init_mask(t_sigaction *sig1, t_sigaction *sig2, t_sigaction *sig3)
+{
+	if (sigemptyset(&sig1->sa_mask) == -1)
+		return (0);
+	if (sigemptyset(&sig2->sa_mask) == -1)
+		return (0);
+	if (sigemptyset(&sig3->sa_mask) == -1)
+		return (0);
+	sig1->sa_flags = SA_RESTART;
+	sig1->sa_handler = sig_int;
+	sig2->sa_flags = SA_RESTART;
+	sig2->sa_handler = sig_quit;
+	sig3->sa_flags = SA_RESTART | SA_NOCLDSTOP;
+	sig3->sa_handler = sig_chld;
+	return (1);
 }
 
 int	ft_signal(void)
 {
 	t_sigaction	sig1;
 	t_sigaction	sig2;
+	t_sigaction	sig3;
 
-	if (sigemptyset(&sig1.sa_mask) == -1)
+	if (!init_mask(&sig1, &sig2, &sig3))
 		return (0);
-	if (sigemptyset(&sig2.sa_mask) == -1)
-		return (0);
-	sig1.sa_flags = SA_NOCLDWAIT;
-	sig1.sa_handler = sig_int;
-	sig1.sa_sigaction = NULL;
-	sig2.sa_flags = SA_NOCLDWAIT;
-	sig2.sa_handler = sig_quit;
-	sig2.sa_sigaction = NULL;
 	if (sigaction(SIGINT, &sig1, NULL) == -1)
 		return (0);
 	if (sigaction(SIGQUIT, &sig2, NULL) == -1)
+		return (0);
+	if (sigaction(SIGCHLD, &sig3, NULL) == -1)
 		return (0);
 	return (1);
 }

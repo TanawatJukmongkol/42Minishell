@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libminishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 08:36:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 22:36:14 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,26 @@
 # include <fcntl.h>
 # include <sys/errno.h>
 # include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include <string.h>
 
 // Universal Marco
 # ifndef ERR_MSG
 #  define ERR_MSG "minishell"
 # endif
 
-// Linux's Marco
+// Linux's Marco / include
 # ifdef __linux
+#  include <readline/readline.h>
+#  include <readline/history.h>
 #  ifndef _POSIX_C_SOURCE
 #   define _POSIX_C_SOURCE 200809L
 #  endif
 #  ifndef OPEN_MAX
 #   define OPEN_MAX 10420
 #  endif
+# else
+#  include "/usr/local/Cellar/readline/8.2.1/include/readline/readline.h"
+#  include "/usr/local/Cellar/readline/8.2.1/include/readline/history.h"
 # endif
 
 typedef struct sigaction	t_sigaction;
@@ -109,6 +113,8 @@ void	*ft_editenv(char *key, char *value, t_envp *env);
 void	ft_tokenfree(t_token_stream *s);
 
 /** signal **/
+int		ft_sig_init(t_sigaction *s, int flag, void (*hand)(int), \
+				void (*sact)(int, siginfo_t *, void *));
 int		ft_signal(void);
 
 #endif

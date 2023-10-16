@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_stage3.c                                     :+:      :+:    :+:   */
+/*   lexer_stage3_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:34 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 23:29:58 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/16 09:21:59 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ void	env_replace(t_token_stream *s, t_token *t, void *vars)
 
 void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3, t_main m)
 {
+	t_token_stream	tmp;
+
+	tmp.begin = NULL;
 	while (stage3->begin)
-		ft_token_consume(dst, stage3, env_replace, &m._envp);
+		ft_token_consume(&tmp, stage3, return_replace, &m);
+	while (tmp.begin)
+		ft_token_consume(dst, &tmp, env_replace, &m._envp);
 }
