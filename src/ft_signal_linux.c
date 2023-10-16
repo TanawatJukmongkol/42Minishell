@@ -6,11 +6,12 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 21:43:17 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/16 21:57:07 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
+#include <readline/readline.h>
 
 void	sig_quit(int signum)
 {
@@ -34,13 +35,10 @@ void	sig_int(int signum)
 void	sig_chld(int signum)
 {
 	if (signum == SIGCHLD)
-	{
-		printf("\33[2K\r");
-		printf("\b");
-	}
+		printf("\33[2K\r\b");
 }
 
-int	set_mask(t_sigaction *sig1, t_sigaction *sig2, t_sigaction *sig3)
+int	init_mask(t_sigaction *sig1, t_sigaction *sig2, t_sigaction *sig3)
 {
 	if (sigemptyset(&sig1->sa_mask) == -1)
 		return (0);
@@ -63,7 +61,7 @@ int	ft_signal(void)
 	t_sigaction	sig2;
 	t_sigaction	sig3;
 
-	if (!set_mask(&sig1, &sig2, &sig3))
+	if (!init_mask(&sig1, &sig2, &sig3))
 		return (0);
 	if (sigaction(SIGINT, &sig1, NULL) == -1)
 		return (0);
