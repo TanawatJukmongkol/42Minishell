@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/15 12:53:43 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 00:31:16 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ void	tun_free_token_box(t_token_stream *box, size_t pipe_n)
 	free(box);
 }
 
+static void	sb_token_join(t_token_stream *out, t_token_stream *in)
+{
+	if (out->begin == NULL)
+	{
+		out->begin = in->begin;
+		out->last = in->begin;
+	}
+	else
+	{
+		out->last->next = in->begin;
+		out->last = out->last->next;
+	}
+}
+
 static void	sb_token_manage(t_token_stream *out, t_token_stream *in)
 {
 	t_token	*tmp;
@@ -52,21 +66,12 @@ static void	sb_token_manage(t_token_stream *out, t_token_stream *in)
 		in->begin->next = NULL;
 		if (in->begin->type == __pipe)
 		{
-			free(in->begin->value); 
+			free(in->begin->value);
 			free(in->begin);
 			in->begin = tmp;
 			return ;
 		}
-		if (out->begin == NULL)
-		{
-			out->begin = in->begin;
-			out->last = in->begin;
-		}
-		else
-		{
-			out->last->next = in->begin;
-			out->last = out->last->next;
-		}
+		sb_token_join(out, in);
 		in->begin = tmp;
 	}
 }

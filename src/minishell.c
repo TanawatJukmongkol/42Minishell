@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 01:50:16 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 00:22:45 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	main(int ac, char **av, char **envp)
 
 	(void)av;
 	if (ac != 1)
+		return (0);
+	if (ft_signal() == 0)
 		return (0);
 	if (ft_init_main(&info, envp) == -1)
 		return (ENOMEM);

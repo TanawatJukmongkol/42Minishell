@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/15 21:45:50 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:23:31 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,6 @@
 126: cmd permission denied
 127: no such file or directory
 */
-
-void	tun_child_exit(t_exec *exec, int isexe)
-{
-	if (errno == ENOENT)
-		ft_exit(exec->_info, 127);
-	if (errno == EACCES)
-	{
-		if (isexe != -1)
-			ft_exit(exec->_info, 126);
-		ft_exit(exec->_info, 1);
-	}
-	ft_exit(exec->_info, 0);
-}
 
 static long	sb_atol(char *str, int *overflow)
 {
@@ -82,14 +69,13 @@ static int	sb_check_number(char *num, unsigned char *e)
 	return (overflow);
 }
 
-static void	sb_exit_error(char *str, t_exec *exe)
+static void	sb_exit_error(char *str)
 {
 	char	*front;
 	char	*back;
 	char	*first;
 	char	*res;
 
-	(void)exe;
 	front = "minishell: exit: ";
 	back = ": numeric argument required\n";
 	first = ft_strjoin(front, str);
@@ -105,9 +91,17 @@ static void	sb_exit_error(char *str, t_exec *exe)
 		perror("minishell: exit:");
 }
 
+static void	sb_val_exit(int val, t_exec *exe, t_token_stream *box, size_t n)
+{
+	tun_close_pipe(&exe->_pipes);
+	tun_clear_process(exe);
+	tun_free_token_box(box, n);
+	exit(val);
+}
+
 // TODO : handle free too
 
-void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe, size_t n)
+void	tun_builtin_exit(t_token_stream *box, pid_t *pid, t_exec *exe, size_t n)
 {
 	size_t			len;
 	unsigned char	e;
@@ -118,15 +112,17 @@ void	tun_builtin_exit(t_token_stream *box, int *pid, t_exec *exe, size_t n)
 	while (exe->argv[len] != NULL && len <= 2)
 		len++;
 	if (len > 2)
-		return (void)write(2, msg, ft_strlen(msg)); // TODO : write perror here
+		return ((void)write(2, msg, ft_strlen(msg)));
 	if (len == 1)
 	{
 		free(pid);
-		printf("exit\n");
-		tun_parent_exit(0, exe, box, n);
+		if (n == 0)
+			printf("exit\n");
+		sb_val_exit(0, exe, box, n);
 	}
 	if (sb_check_number(exe->argv[1], &e))
-		return (sb_exit_error(exe->argv[1], exe));
-	printf("exit\n");
-	tun_parent_exit(e, exe, box, n);
+		return (sb_exit_error(exe->argv[1]));
+	if (n == 0)
+		printf("exit\n");
+	sb_val_exit(e, exe, box, n);
 }

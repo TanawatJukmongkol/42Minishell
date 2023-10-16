@@ -6,21 +6,11 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/15 22:13:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 03:06:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
-
-static int	sb_delimeter(char *del, char *line, size_t del_len, size_t len)
-{
-	if (del_len != len)
-		return (0);
-	if (ft_strncmp(del, line, len) != 0)
-		return (0);
-	// free(line);
-	return (1);
-}
 
 static int	sb_heredoc_ignore(t_exec *exe, size_t del_len, int j)
 {
@@ -32,7 +22,7 @@ static int	sb_heredoc_ignore(t_exec *exe, size_t del_len, int j)
 	while (line != NULL && errno != ENOMEM)
 	{
 		len = ft_strclen(line, '\n');
-		if (sb_delimeter(exe->delimeter[j], line, del_len, len))
+		if (tun_delimeter(exe->delimeter[j], line, del_len, len))
 		{
 			free(line);
 			return (1);
@@ -42,6 +32,16 @@ static int	sb_heredoc_ignore(t_exec *exe, size_t del_len, int j)
 		line = get_next_line(STDIN_FILENO);
 	}
 	return (errno != ENOMEM);
+}
+
+static int	sb_close_heredoc(char *line, int e, int pipes[2])
+{
+	free(line);
+	if (errno != ENOMEM)
+		e = tun_dup2(pipes[0], STDIN_FILENO) != 1;
+	close(pipes[0]);
+	close(pipes[1]);
+	return (e);
 }
 
 static int	sb_heredoc(t_exec *exe, size_t del_len, int j)
@@ -59,39 +59,15 @@ static int	sb_heredoc(t_exec *exe, size_t del_len, int j)
 	while (line != NULL && errno != ENOMEM)
 	{
 		len = ft_strclen(line, '\n');
-		if (sb_delimeter(exe->delimeter[j], line, del_len, len))
+		if (tun_delimeter(exe->delimeter[j], line, del_len, len))
 			break ;
 		ft_putstr_fd(line, fd_pipe[1]);
 		free(line);
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO);
 	}
-	free(line);
-	if (errno != ENOMEM)
-	{
-		e = tun_dup2(fd_pipe[0], STDIN_FILENO) != -1;
-	}
-	close(fd_pipe[0]);
-	close(fd_pipe[1]);
-	return (e);
+	return (sb_close_heredoc(line, e, fd_pipe));
 }
-
-static int	sb_find_last_heredoc(int *infile, int in_len)
-{
-	int	i;
-	int	pos;
-
-	i = 0;
-	pos = 0;
-	while (i < in_len)
-	{
-		if (infile[i] == STDIN_FILENO)
-			pos = i;
-		i++;
-	}
-	return (pos);
-}
-
 
 /*
 0 = fail
@@ -107,7 +83,7 @@ int	tun_heredoc(t_exec *exe)
 
 	i = 1;
 	j = 0;
-	pos = sb_find_last_heredoc(exe->infile, exe->in_len);
+	pos = tun_find_last_heredoc(exe->infile, exe->in_len);
 	if (pos == 0)
 		return (1);
 	while (i <= pos)

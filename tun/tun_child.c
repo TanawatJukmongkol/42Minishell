@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/15 22:23:39 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 21:39:57 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,18 @@ static int	sb_redirect_pipe(t_exec *exe, size_t i, int e)
 	return (e);
 }
 
-void	tun_child_process(t_exec *exe, t_token_stream *box, int *pid, size_t i)
+void	tun_child_process(t_exec *exe, t_token_stream *box, \
+							pid_t *pid, size_t i)
 {
 	int		e;
 	size_t	n;
 
 	n = exe->_pipes.n;
 	if (tun_init_box(box[i], exe) == 0)
-		tun_parent_exit(ENOMEM, exe, box, n);
-	tun_get_argv(box[i], exe);
-	e = tun_get_infile(box[i], exe);
+		tun_process_exit(0, exe, box, n);
+	e = tun_get_argv(box[i], exe);
+	if (e)
+		e = tun_get_infile(box[i], exe);
 	if (e)
 		e = tun_get_outfile(box[i], exe);
 	e = tun_heredoc(exe);
@@ -47,8 +49,8 @@ void	tun_child_process(t_exec *exe, t_token_stream *box, int *pid, size_t i)
 	e = tun_redirct(exe->infile, exe->in_len, STDIN_FILENO, e);
 	e = tun_redirct(exe->outfile, exe->out_len, STDIN_FILENO, e);
 	tun_close_pipe(&exe->_pipes);
-	if (tun_builin_parent(box, pid, exe, n) == -1)
+	if (tun_builtin_parent(box, pid, exe, n) == -1)
 		tun_execve(exe, e);
 	free(pid);
-	tun_parent_exit(errno, exe, box, n);
+	tun_process_exit(1, exe, box, n);
 }
