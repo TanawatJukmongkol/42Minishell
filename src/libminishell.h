@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libminishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 21:40:20 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/16 22:36:14 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <fcntl.h>
 # include <sys/errno.h>
 # include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <string.h>
 
 // Universal Marco
@@ -28,14 +26,19 @@
 #  define ERR_MSG "minishell"
 # endif
 
-// Linux's Marco
+// Linux's Marco / include
 # ifdef __linux
+#  include <readline/readline.h>
+#  include <readline/history.h>
 #  ifndef _POSIX_C_SOURCE
 #   define _POSIX_C_SOURCE 200809L
 #  endif
 #  ifndef OPEN_MAX
 #   define OPEN_MAX 10420
 #  endif
+# else
+#  include "/usr/local/Cellar/readline/8.2.1/include/readline/readline.h"
+#  include "/usr/local/Cellar/readline/8.2.1/include/readline/history.h"
 # endif
 
 typedef struct sigaction	t_sigaction;

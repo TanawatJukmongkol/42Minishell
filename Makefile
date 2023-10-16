@@ -62,6 +62,7 @@ SRCS_TUN	= tun_builtin.c \
 				tun_directory.c 
 
 #HEADERS_TUN	= tun.h
+# add  to define
 
 SRC_DIR		= ./src
 SRC_DIR_PUN	= ./pun
@@ -70,18 +71,19 @@ LIB_DIR		= ./libft
 BUILD_DIR	= ./build
 
 CC			= cc
-CFLAGS		= -g -Wall -Werror -Wextra# -fsanitize=address
+CFLAGS		= -g -Wall -Werror -Wextra -D READLINE_LIBRARY=1# -fsanitize=address
 
 INCLUDE_OBJ_LINUX	= 
 INCLUDE_SRC_LINUX	= 
 
-INCLUDE_OBJ_OSX		= -I/usr/local/opt/readline/include
-INCLUDE_SRC_OSX		= -L/usr/local/opt/readline/lib
+INCLUDE_OBJ_OSX		= -I/usr/local/Cellar/readline/8.2.1/include
+INCLUDE_SRC_OSX		= -L/usr/local/Cellar/readline/8.2.1/lib
 
 UNAME_S		= $(shell uname -s)
 
 INCLUDE_OBJ_SHARE	= ${addprefix -I,${LIB_DIR}}
-INCLUDE_SRC_SHARE	= ${addprefix -L,${LIB_DIR}} \
+INCLUDE_SRC_SHARE	= ${INCLUDE_SRC_OSX} \
+						${addprefix -L,${LIB_DIR}} \
 						-lft \
 						-lreadline
 
