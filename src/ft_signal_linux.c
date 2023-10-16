@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 08:49:13 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:09:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ void	sig_quit(int signum)
 
 void	sig_int(int signum)
 {
-	(void)signum;
-	rl_redisplay();
+	if (signum == SIGINT)
+	{
+		rl_redisplay();
+	}
 }
 
 int	ft_signal(void)
@@ -40,15 +42,14 @@ int	ft_signal(void)
 	t_sigaction	sig1;
 	t_sigaction	sig2;
 
-	printf("WORK\n");
 	if (sigemptyset(&sig1.sa_mask) == -1)
 		return (0);
 	if (sigemptyset(&sig2.sa_mask) == -1)
 		return (0);
-	sig1.sa_flags = SA_NOCLDWAIT;
+	sig1.sa_flags = SA_RESTART;
 	sig1.sa_handler = sig_int;
 	sig1.sa_sigaction = NULL;
-	sig2.sa_flags = SA_NOCLDWAIT;
+	sig2.sa_flags = SA_RESTART;
 	sig2.sa_handler = sig_quit;
 	sig2.sa_sigaction = NULL;
 	if (sigaction(SIGINT, &sig1, NULL) == -1)

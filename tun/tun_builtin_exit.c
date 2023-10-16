@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 04:04:49 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:13:05 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,14 @@ static void	sb_exit_error(char *str, t_exec *exe)
 		perror("minishell: exit:");
 }
 
+static void	sb_val_exit(int val, t_exec *exe, t_token_stream *box, size_t n)
+{
+	tun_close_pipe(&exe->_pipes);
+	tun_clear_process(exe);
+	tun_free_token_box(box, n);
+	exit(val);
+}
+
 // TODO : handle free too
 
 void	tun_builtin_exit(t_token_stream *box, pid_t *pid, t_exec *exe, size_t n)
@@ -110,10 +118,11 @@ void	tun_builtin_exit(t_token_stream *box, pid_t *pid, t_exec *exe, size_t n)
 	{
 		free(pid);
 		printf("exit\n");
-		tun_process_exit(0, exe, box, n);
+		sb_val_exit(0, exe, box, n);
 	}
 	if (sb_check_number(exe->argv[1], &e))
 		return (sb_exit_error(exe->argv[1], exe));
-	printf("exit\n");
-	tun_process_exit(0, exe, box, n);
+	if (n == 0)
+		printf("exit\n");
+	sb_val_exit(e, exe, box, n);
 }

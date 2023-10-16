@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 04:33:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:47:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ void	tun_execve(t_exec *exe, int e)
 		execve(full_path, exe->argv, exe->_info->_envp.env);
 	else
 		tun_file_perror("minishell: ", exe->argv[0]);
-	free(full_path);
+	if (full_path != exe->argv[0])
+		free(full_path);
 }

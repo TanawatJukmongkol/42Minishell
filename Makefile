@@ -17,7 +17,7 @@ SRCS		= minishell.c \
 				ft_unsetenv.c \
 				ft_init_main.c \
 				ft_chdir.c \
-				ft_signal_linux.c 
+				ft_signal_mac.c 
 
 HEADERS		= libminishell.h \
 				minishell.h

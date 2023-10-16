@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 09:13:54 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:09:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (0);
-	// if (ft_signal() == 0)
-	// 	return (0);
+	if (ft_signal() == 0)
+		return (0);
 	if (ft_init_main(&info, envp) == -1)
 		return (ENOMEM);
 	lex.begin = NULL;
@@ -46,7 +46,7 @@ int	main(int ac, char **av, char **envp)
 			free(line);
 		line = ft_readline("minishell> ");
 	}
-	printf("exit\n");
+	printf("\nexit\n");
 	return (ft_clear_main(&info, 0));
 }
 
