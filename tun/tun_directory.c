@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tun_directory.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 03:46:56 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:20:03 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	tun_pwd(void)
 
 	curr = ft_getcwd();
 	if (curr == NULL)
-		return (ENOMEM);
+		return (1);
 	printf("%s\n", curr);
 	free(curr);
 	return (0);

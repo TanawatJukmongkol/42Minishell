@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 00:30:27 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:23:34 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ void	ft_tokenfree(t_token_stream *s);
 /** signal **/
 int		ft_sig_init(t_sigaction *s, int flag, void (*hand)(int), \
 				void (*sact)(int, siginfo_t *, void *));
+void	sig_quit(int signum);
+void	sig_int(int signum);
 int		ft_signal(void);
 
 #endif

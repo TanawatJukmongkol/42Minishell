@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tun_process_exit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 13:19:37 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:28:16 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static void	sb_exit(int isexe)
 			exit(126);
 		exit(1);
 	}
-	if (errno != 0)
-		exit(1);
 	exit(0);
 }
 

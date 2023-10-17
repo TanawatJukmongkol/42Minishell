@@ -7,7 +7,6 @@ SRCS_COMMON		= minishell.c \
 				ft_clear_main.c \
 				ft_tokenfree.c \
 				ft_editenv.c \
-				ft_exit.c \
 				ft_getcwd.c \
 				ft_getenv.c \
 				ft_initenv.c \

@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:34 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 00:26:45 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:29:22 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,13 @@ void	env_replace(t_token_stream *s, t_token *t, void *vars)
 	ft_token(s, t->type)->value = res;
 }
 
-void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3, t_main m)
+void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3, t_main *m)
 {
+	t_token_stream	tmp;
+
+	tmp.begin = NULL;
 	while (stage3->begin)
-		ft_token_consume(dst, stage3, env_replace, &m._envp);
+		ft_token_consume(&tmp, stage3, return_replace, m);
+	while (tmp.begin)
+		ft_token_consume(dst, &tmp, env_replace, &m->_envp);
 }
