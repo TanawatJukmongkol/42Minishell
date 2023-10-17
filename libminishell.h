@@ -6,13 +6,13 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/18 00:15:42 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 04:34:50 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBMINISHELL_H
 # define LIBMINISHELL_H
-# include "../libft/libft.h"
+# include "libft/libft.h"
 # include <stdio.h>
 # include <limits.h>
 # include <signal.h>

@@ -6,13 +6,13 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 22:22:35 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 04:35:34 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUN_H
 # define PUN_H
-# include "../src/libminishell.h"
+# include "libminishell.h"
 
 typedef struct s_cmd_table
 {

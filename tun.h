@@ -6,14 +6,14 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/18 03:49:52 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 04:35:25 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TUN_H
 # define TUN_H
-# include "../src/libminishell.h"
-# include "../pun/pun.h"
+# include "libminishell.h"
+# include "pun.h"
 
 typedef struct s_pipe
 {

@@ -64,13 +64,14 @@ SRCS_TUN	= tun_builtin.c \
 #HEADERS_TUN	= tun.h
 # add  to define
 
-SRC_DIR		= ./src
-SRC_DIR_PUN	= ./pun
-SRC_DIR_TUN	= ./tun
+SRC_DIR		= .
+SRC_DIR_PUN	= .
+SRC_DIR_TUN	= .
 LIB_DIR		= ./libft
+BUILD_DIR	= ./build
 
 CC			= cc
-CFLAGS		= -g -Wall -Werror -Wextra -D READLINE_LIBRARY=1 -fsanitize=address
+CFLAGS		= -g -Wall -Werror -Wextra -D READLINE_LIBRARY=1# -fsanitize=address
 
 
 INCLUDE_OBJ_LINUX	= 
@@ -104,9 +105,20 @@ SRC			= ${addprefix ${SRC_DIR}/,${SRCS}} \
 HEADER		= ${addprefix ${SRC_DIR}/,${HEADERS}} \
 				${addprefix ${SRC_DIR_PUN}/,${HEADERS_PUN}} \
 				${addprefix ${SRC_DIR_TUN}/,${HEADERS_TUN}}
-OBJ			= ${SRC:.c=.o}
+OBJS		= ${addprefix ${BUILD_DIR}/,${SRCS}} \
+				${addprefix ${BUILD_DIR}/,${SRCS_PUN}} \
+				${addprefix ${BUILD_DIR}/,${SRCS_TUN}}
+OBJ			= ${OBJS:.c=.o}
 
-all: lib ${BUILD_DIR} ${NAME}
+all: ${NAME}
+
+build-create:
+	mkdir -p ${BUILD_DIR}
+
+${NAME}: lib build-create ${OBJ} ${HEADER} ${BUILD_DIR}
+
+${BUILD_DIR}:
+	$(CC) $(CFLAGS) ${OBJ} ${INCLUDE_SRC} -o ${NAME}
 
 ${BUILD_DIR}/%.o:${SRC_DIR}/%.c
 	$(CC) $(CFLAGS) ${INCLUDE_OBJ} -c -o $@ $^
@@ -116,9 +128,6 @@ ${BUILD_DIR}/%.o:${SRC_DIR_PUN}/%.c
 
 ${BUILD_DIR}/%.o:${SRC_DIR_TUN}/%.c
 	$(CC) $(CFLAGS) ${INCLUDE_OBJ} -c -o $@ $^
-
-${NAME}:	${OBJ} ${HEADER}
-	$(CC) $(CFLAGS) ${OBJ} ${INCLUDE_SRC} -o ${NAME}
 
 lib:
 	@make -C $(LIB_DIR)
@@ -136,7 +145,7 @@ lib-norm:
 	@make -C $(LIB_DIR) norm
 
 clean:	lib-clean
-	rm -rf $(OBJ)
+	rm -rf ${BUILD_DIR}
 
 fclean: clean lib-fclean
 	rm -f ${NAME}
@@ -146,4 +155,4 @@ re: fclean all
 norm:	lib-norm
 	@norminette -R CheckForbiddenSourceHeader $(SRC) $(HEADER)
 
-.PHONY: all lib lib-clean lib-fclean lib-re lib-norm clean fclean re
+.PHONY: ${NAME} all lib lib-clean lib-fclean lib-re lib-norm build-create clean fclean re
