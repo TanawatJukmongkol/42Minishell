@@ -6,11 +6,12 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:46:42 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/15 23:35:29 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:09:50 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pun.h"
+#include <threads.h>
 
 void	build_table(t_token_stream *s, t_cmd_table *table, int pipe)
 {
@@ -90,3 +91,4 @@ void	parser(t_token_stream *output, t_token_stream *input)
 		ft_token_consume(output, input, cmdtable_switch, &cmd_table);
 	}
 }
+

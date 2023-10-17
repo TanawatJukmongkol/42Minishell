@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:34 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 20:44:51 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 21:49:53 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static char	*str_rejoin(char *dst, char *src)
 	return (tmp);
 }
 
-static void	replace_to_env(char **res, t_envp *envp,
-	char **next_nonchar, char **next_match)
+static void	replace_to_env(char **res, char **next_nonchar, char **next_match)
 {
 	char	*str;
 	char	*env;
@@ -36,9 +35,9 @@ static void	replace_to_env(char **res, t_envp *envp,
 	{
 		env = ft_substr(*next_match, 1, str - *next_match - 1);
 		tmp = *res;
-		if (ft_getenv(envp, env))
+		if (getenv(env))
 		{
-			*res = ft_strjoin(tmp, ft_getenv(envp, env));
+			*res = ft_strjoin(tmp, getenv(env));
 			free(tmp);
 		}
 		free(env);
@@ -56,6 +55,7 @@ void	env_replace(t_token_stream *s, t_token *t, void *vars)
 	char	*res;
 	size_t	len;
 
+	(void)(vars);
 	ptr = t->value;
 	next_match = ptr;
 	res = ft_strdup("");
@@ -66,7 +66,7 @@ void	env_replace(t_token_stream *s, t_token *t, void *vars)
 		if (len)
 			res = str_rejoin(res, ft_substr(ptr, 0, len));
 		if (*next_match)
-			replace_to_env(&res, vars, &next_nonchar, &next_match);
+			replace_to_env(&res, &next_nonchar, &next_match);
 		if (!*next_match)
 			break ;
 		next_match += next_nonchar - next_match;
