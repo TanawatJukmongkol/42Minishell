@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tun_builtin_exit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 13:23:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/18 04:00:49 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,9 @@ void	tun_builtin_exit(t_token_stream *box, pid_t *pid, t_exec *exe, size_t n)
 			printf("exit\n");
 		sb_val_exit(0, exe, box, n);
 	}
-	if (sb_check_number(exe->argv[1], &e))
-		return (sb_exit_error(exe->argv[1]));
 	if (n == 0)
 		printf("exit\n");
+	if (sb_check_number(exe->argv[1], &e))
+		sb_exit_error(exe->argv[1]);
 	sb_val_exit(e, exe, box, n);
 }

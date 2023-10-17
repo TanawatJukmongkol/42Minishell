@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 13:15:15 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 02:58:13 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_chdir(char *path, t_main *info)
 	if (chdir(real) == -1)
 	{
 		free(real);
-		return (errno);
+		return (1);
 	}
 	old = ft_getenv(&info->_envp, "PWD");
 	if (old == NULL)

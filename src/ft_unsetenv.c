@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:54:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 01:38:26 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 03:24:20 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // TODO : handle SHLVL
 
-char	*init_value(char *key, t_envp *env, size_t *i, size_t *j)
+static char	*init_value(char *key, t_envp *env, size_t *i, size_t *j)
 {
 	char	*val;
 

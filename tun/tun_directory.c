@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 18:20:03 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 03:51:52 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	tun_cd(char **av, t_main *info)
 		return (sb_no_arg(info));
 	else if (av[2] != NULL)
 	{
-		err_str = "minishell: cd: too many arguments";
+		err_str = "minishell: cd: too many arguments\n";
 		write(STDERR_FILENO, err_str, ft_strlen(err_str));
 		return (1);
 	}
@@ -59,5 +59,25 @@ int	tun_pwd(void)
 		return (1);
 	printf("%s\n", curr);
 	free(curr);
+	return (0);
+}
+
+int	tun_env(char **argv, t_envp *env)
+{
+	char	*msg;
+	size_t	i;
+
+	msg = "minishell: env: too many arguments\n";
+	if (argv[1])
+	{
+		ft_putstr_fd(msg, STDERR_FILENO);
+		return (1);
+	}
+	i = 0;
+	while (i < env->len)
+	{
+		printf("%s\n", env->env[i]);
+		i++;
+	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tun.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/18 01:55:42 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/18 03:49:52 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	tun_builtin_exit(t_token_stream *box, pid_t *pid, \
 int		tun_echo(char **av, t_exec *exe);
 int		tun_cd(char **av, t_main *info);
 int		tun_pwd(void);
+int		tun_env(char **argv, t_envp *env);
 
 /*		tun_program_exit.c		*/
 void	tun_process_exit(int status, t_exec *exe, \

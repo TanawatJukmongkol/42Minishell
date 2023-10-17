@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/18 02:37:11 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 03:50:21 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 
 // WORK
 
-static int	sb_export(char **av, t_main *info)
+static int	sb_export_no_arg(char **av, t_main *info)
 {
 	size_t	i;
 
@@ -62,17 +62,27 @@ static int	sb_export(char **av, t_main *info)
 			i++;
 		}
 	}
+	return (0);
+}
+
+static int	sb_export(char **av, t_main *info)
+{
+	size_t	i;
+
+	if (av[1] == NULL)
+		return (sb_export_no_arg(av, info));
 	i = 1;
 	while (av[i] != NULL)
 	{
 		if (ft_strchr(av[i], '=') != NULL)
 		{
-			if (ft_setenv(av[i++], &info->_envp) == NULL)
+			if (ft_setenv(av[i], &info->_envp) == NULL)
 			{
 				perror("minishell : export :");
 				return (1);
 			}
 		}
+		i++;
 	}
 	return (0);
 }
@@ -142,6 +152,8 @@ int	tun_builtin_child(t_exec *exe)
 		err = tun_echo(exe->argv, exe);
 	else if (ft_strncmp(exe->argv[0], "pwd", size) == 0)
 		err = tun_pwd();
+	else if (ft_strncmp(exe->argv[0], "env", size) == 0)
+		err = tun_env(exe->argv, &exe->_info->_envp);
 	if (err >= 0)
 		exe->_info->_ngong = err;
 	return (err);

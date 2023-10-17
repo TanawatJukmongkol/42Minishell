@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
+#    By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 21:14:32 by tjukmong          #+#    #+#              #
-#    Updated: 2023/10/11 21:14:29 by tponutha         ###   ########.fr        #
+#    Updated: 2023/10/18 03:18:53 by tjukmong         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
