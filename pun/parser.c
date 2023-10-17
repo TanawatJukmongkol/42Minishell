@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:46:42 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/14 21:09:50 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 22:05:05 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,3 @@ void	parser(t_token_stream *output, t_token_stream *input)
 		ft_token_consume(output, input, cmdtable_switch, &cmd_table);
 	}
 }
-
