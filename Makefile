@@ -115,9 +115,7 @@ all: ${NAME}
 build-create:
 	mkdir -p ${BUILD_DIR}
 
-${NAME}: lib build-create ${OBJ} ${HEADER} ${BUILD_DIR}
-
-${BUILD_DIR}:
+${NAME}: lib build-create ${BUILD_DIR} ${HEADER} ${OBJ}
 	$(CC) $(CFLAGS) ${OBJ} ${INCLUDE_SRC} -o ${NAME}
 
 ${BUILD_DIR}/%.o:${SRC_DIR}/%.c
@@ -155,4 +153,4 @@ re: fclean all
 norm:	lib-norm
 	@norminette -R CheckForbiddenSourceHeader $(SRC) $(HEADER)
 
-.PHONY: ${NAME} all lib lib-clean lib-fclean lib-re lib-norm build-create clean fclean re
+.PHONY: all lib lib-clean lib-fclean lib-re lib-norm build-create clean fclean re
