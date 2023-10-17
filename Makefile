@@ -68,7 +68,6 @@ SRC_DIR		= ./src
 SRC_DIR_PUN	= ./pun
 SRC_DIR_TUN	= ./tun
 LIB_DIR		= ./libft
-BUILD_DIR	= ./build
 
 CC			= cc
 CFLAGS		= -g -Wall -Werror -Wextra -D READLINE_LIBRARY=1 -fsanitize=address
@@ -106,12 +105,8 @@ HEADER		= ${addprefix ${SRC_DIR}/,${HEADERS}} \
 				${addprefix ${SRC_DIR_PUN}/,${HEADERS_PUN}} \
 				${addprefix ${SRC_DIR_TUN}/,${HEADERS_TUN}}
 OBJ			= ${SRC:.c=.o}
-UNAME_S		= $(shell uname -s)
 
 all: lib ${BUILD_DIR} ${NAME}
-
-${BUILD_DIR}:
-	mkdir -p ${BUILD_DIR}
 
 ${BUILD_DIR}/%.o:${SRC_DIR}/%.c
 	$(CC) $(CFLAGS) ${INCLUDE_OBJ} -c -o $@ $^
@@ -151,4 +146,4 @@ re: fclean all
 norm:	lib-norm
 	@norminette -R CheckForbiddenSourceHeader $(SRC) $(HEADER)
 
-.PHONY: all lib clean fclean re
+.PHONY: all lib lib-clean lib-fclean lib-re lib-norm clean fclean re
