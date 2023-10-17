@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tun_translate.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/17 12:03:23 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 01:30:58 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tun.h"
 
-static int	sb_infile(t_token *node, t_exec *exe, int *i, int *j)
+static int	sb_infile(t_token *node, t_exec *exe, int *i)
 {
 	int	err;
 
@@ -23,11 +23,7 @@ static int	sb_infile(t_token *node, t_exec *exe, int *i, int *j)
 		err = exe->infile[*i] != -1;
 	}
 	else if (node->type == __here_doc)
-	{
 		exe->infile[*i] = STDIN_FILENO;
-		exe->delimeter[*j] = node->value;
-		(*j)++;
-	}
 	*i += node->type == __redirr_in || node->type == __here_doc;
 	return (err);
 }
@@ -35,11 +31,9 @@ static int	sb_infile(t_token *node, t_exec *exe, int *i, int *j)
 int	tun_get_infile(t_token_stream subset, t_exec *exe)
 {
 	int	i;
-	int	j;
 	int	err;
 
 	i = 1;
-	j = 0;
 	err = 1;
 	if (exe->in_len == 0)
 		return (err);
@@ -49,10 +43,9 @@ int	tun_get_infile(t_token_stream subset, t_exec *exe)
 	{
 		if (subset.begin->type == __redirr_in \
 			|| subset.begin->type == __here_doc)
-			err = sb_infile(subset.begin, exe, &i, &j);
+			err = sb_infile(subset.begin, exe, &i);
 		subset.begin = subset.begin->next;
 	}
-	exe->delimeter[j] = NULL;
 	return (err);
 }
 

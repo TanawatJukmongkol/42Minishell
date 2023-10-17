@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 03:07:05 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/18 01:55:28 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,28 @@ int	tun_delimeter(char *del, char *line, size_t del_len, size_t len)
 	return (1);
 }
 
-int	tun_find_last_heredoc(int *infile, int in_len)
-{
-	int	i;
-	int	pos;
+// get pointer of last delimeter for finding it
 
-	i = 0;
-	pos = 0;
-	while (i < in_len)
+char	*tun_last_delimeter(t_token_stream subset)
+{
+	char	*str;
+
+	str = NULL;
+	while (subset.begin != NULL)
 	{
-		if (infile[i] == STDIN_FILENO)
-			pos = i;
-		i++;
+		if (subset.begin->type == __here_doc)
+			str = subset.begin->value;
+		subset.begin = subset.begin->next;
 	}
-	return (pos);
+	return (str);
+}
+
+int	tun_dup_heredoc(int fd1, int fd2)
+{
+	int	err;
+
+	if (fd1 < 0 || fd2 < 0)
+		return (0);
+	err = tun_dup2(fd1, fd2);
+	return (err);
 }
