@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 15:23:34 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 23:41:09 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*ft_realpath(char *re_path, t_main *m);
 char	*ft_getcwd(void);
 int		ft_chdir(char *path, t_main *info);
 char	*get_next_qoute(char *str, char *match, int single);
-void	ft_exit(t_main *info, int status);
+void	ft_sorttable(char **tab);
 
 /** env **/
 char	**ft_initenv(t_envp *_envp, char **envp);

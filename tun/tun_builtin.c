@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 18:33:48 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 23:53:24 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,17 @@ static int	sb_export(char **av, t_main *info)
 {
 	size_t	i;
 
-	i = 1;
-	while (av[i] != NULL)
+	i = 0;
+	if (av[1] == NULL)
+	{
+		ft_sorttable(info->_envp.env);
+		while (info->_envp.env[i])
+		{
+			printf("declare -x %s\n", info->_envp.env[i]);
+			i++;
+		}
+	}
+	while (av[++i] != NULL)
 	{
 		if (ft_strchr(av[i], '=') != NULL)
 		{
@@ -63,7 +72,6 @@ static int	sb_export(char **av, t_main *info)
 				return (1);
 			}
 		}
-		i++;
 	}
 	return (0);
 }
