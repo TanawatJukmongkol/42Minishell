@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 21:51:29 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 00:06:32 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ int	repl(t_token_stream *lex, t_main *info)
 {
 	t_token_stream	*box;
 	size_t			pipe_n;
+	char			*prompt;
 	char			*line;
 
-	line = ft_readline("minishell> ");
-	if (!line)
+	prompt = ft_dynamic_prompt(info);
+	line = ft_readline(prompt);
+	free(prompt);
+	if (!prompt || !line)
 		return (1);
 	if (line[0] != 0)
 	{

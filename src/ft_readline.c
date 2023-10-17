@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:04:49 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/12 14:40:49 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/18 00:05:26 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*ft_readline(const char *prompt)
 {
 	char	*ln;
 
+	if (!prompt)
+		return (NULL);
 	ln = readline(prompt);
 	if (ln == NULL)
 		return (NULL);

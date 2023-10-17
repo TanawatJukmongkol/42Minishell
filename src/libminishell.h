@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 23:41:09 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 00:15:42 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ typedef struct s_main
 	t_token_stream	_token;
 	int				_ngong;
 }				t_main;
+
+/** repl **/
+char	*ft_dynamic_prompt(t_main *m);
 
 /** main **/
 int		ft_init_main(t_main *info, char **envp);

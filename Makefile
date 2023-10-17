@@ -8,6 +8,7 @@ SRCS_COMMON		= minishell.c \
 				ft_tokenfree.c \
 				ft_editenv.c \
 				ft_sorttable.c \
+				ft_dynamic_prompt.c \
 				ft_getcwd.c \
 				ft_getenv.c \
 				ft_initenv.c \
