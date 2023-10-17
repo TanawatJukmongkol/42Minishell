@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 23:53:24 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 02:37:11 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,12 @@ static int	sb_export(char **av, t_main *info)
 			i++;
 		}
 	}
-	while (av[++i] != NULL)
+	i = 1;
+	while (av[i] != NULL)
 	{
 		if (ft_strchr(av[i], '=') != NULL)
 		{
-			if (ft_setenv(av[i], &info->_envp) == NULL)
+			if (ft_setenv(av[i++], &info->_envp) == NULL)
 			{
 				perror("minishell : export :");
 				return (1);
