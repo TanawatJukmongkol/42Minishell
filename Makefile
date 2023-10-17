@@ -83,19 +83,18 @@ INCLUDE_SRC_OSX		= -L/usr/local/Cellar/readline/8.2.1/lib
 UNAME_S		= $(shell uname -s)
 
 INCLUDE_OBJ_SHARE	= ${addprefix -I,${LIB_DIR}}
-INCLUDE_SRC_SHARE	= ${INCLUDE_SRC_OSX} \
-						${addprefix -L,${LIB_DIR}} \
+INCLUDE_SRC_SHARE	= ${addprefix -L,${LIB_DIR}} \
 						-lft \
 						-lreadline
 
 ifeq ($(UNAME_S), Linux)
 INCLUDE_OBJ = $(INCLUDE_OBJ_LINUX) $(INCLUDE_OBJ_SHARE)
-INCLUDE_SRC = $(INCLUDE_OBJ_LINUX) $(INCLUDE_SRC_SHARE)
+INCLUDE_SRC = $(INCLUDE_SRC_LINUX) $(INCLUDE_SRC_SHARE)
 SRCS = ${addprefix ${SRCS_COMMON}, ${SRCS_LINUX}}
 
 else
 INCLUDE_OBJ = $(INCLUDE_OBJ_OSX) $(INCLUDE_OBJ_SHARE)
-INCLUDE_SRC = $(INCLUDE_OBJ_OSX) $(INCLUDE_SRC_SHARE)
+INCLUDE_SRC = $(INCLUDE_SRC_OSX) $(INCLUDE_SRC_SHARE)
 SRCS = ${addprefix ${SRCS_COMMON}, ${SRCS_MAC}}
 endif
 
@@ -118,13 +117,13 @@ build-create:
 ${NAME}: lib build-create ${BUILD_DIR} ${HEADER} ${OBJ}
 	$(CC) $(CFLAGS) ${OBJ} ${INCLUDE_SRC} -o ${NAME}
 
-${BUILD_DIR}/%.o:${SRC_DIR}/%.c
+${BUILD_DIR}/%.o: ${SRC_DIR}/%.c
 	$(CC) $(CFLAGS) ${INCLUDE_OBJ} -c -o $@ $^
 
-${BUILD_DIR}/%.o:${SRC_DIR_PUN}/%.c
+${BUILD_DIR}/%.o: ${SRC_DIR_PUN}/%.c
 	$(CC) $(CFLAGS) ${INCLUDE_OBJ} -c -o $@ $^
 
-${BUILD_DIR}/%.o:${SRC_DIR_TUN}/%.c
+${BUILD_DIR}/%.o: ${SRC_DIR_TUN}/%.c
 	$(CC) $(CFLAGS) ${INCLUDE_OBJ} -c -o $@ $^
 
 lib:
