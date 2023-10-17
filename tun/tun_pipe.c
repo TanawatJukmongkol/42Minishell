@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/16 20:10:02 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/17 23:53:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	sb_failsafe_pipe(t_pipe *pipes, size_t err_i)
 	perror(ERR_MSG);
 	while (i < err_i && pipes->box[i] != NULL)
 	{
-		close(pipes->box[i][0]);
-		close(pipes->box[i][1]);
+		tun_close(pipes->box[i][0]);
+		tun_close(pipes->box[i][1]);
 		free(pipes->box[i]);
 		i++;
 	}
@@ -39,8 +39,8 @@ void	tun_close_pipe(t_pipe *pipes)
 		return ;
 	while (i < pipes->n)
 	{
-		close(pipes->box[i][0]);
-		close(pipes->box[i][1]);
+		tun_close(pipes->box[i][0]);
+		tun_close(pipes->box[i][1]);
 		free(pipes->box[i]);
 		i++;
 	}
@@ -55,13 +55,14 @@ int	tun_alloc_pipe(t_pipe *pipes, size_t n)
 	int		err;
 
 	i = 0;
+	err = 0;
 	pipes->n = n;
 	pipes->box = NULL;
 	if (n == 0)
 		return (1);
 	pipes->box = malloc(sizeof(int *) * n);
 	if (pipes->box == NULL)
-		return (perror(ERR_MSG), -1);
+		return (-1);
 	while (i < n)
 	{
 		pipes->box[i] = malloc(sizeof(int) * 2);

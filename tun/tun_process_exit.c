@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tun_process_exit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/17 19:28:16 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 00:40:19 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	tun_clear_process(t_exec *exe)
 	tun_close_files(exe->outfile, exe->out_len);
 	if (exe->argv)
 		ft_free_split(exe->argv);
-	if (exe->delimeter)
-		free(exe->delimeter);
 }
 
 static void	sb_exit(int isexe)
@@ -38,6 +36,7 @@ static void	sb_exit(int isexe)
 void	tun_process_exit(int status, t_exec *exe, t_token_stream *box, size_t n)
 {
 	tun_close_pipe(&exe->_pipes);
+	tun_close_pipe(&exe->_heredoc);
 	tun_clear_process(exe);
 	tun_free_token_box(box, n);
 	sb_exit(status);

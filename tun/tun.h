@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 08:21:56 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/18 01:55:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ typedef struct s_exec
 {
 	t_main	*_info;
 	t_pipe	_pipes;
+	t_pipe	_heredoc;
 	int		*infile;
 	int		*outfile;
 	int		in_len;
 	int		out_len;
-	char	**delimeter;
 	char	**argv;
 }				t_exec;
 
@@ -97,9 +97,10 @@ void	tun_parent_process(t_main *info, t_token_stream *box, size_t pipe_n);
 void	tun_execve(t_exec *exe, int e);
 
 /*		tun_heredoc.c	*/
-int		tun_heredoc(t_exec *exe);
+int		tun_heredoc(t_token_stream *box, size_t pipe_n, t_exec *exe);
 int		tun_delimeter(char *del, char *line, size_t del_len, size_t len);
-int		tun_find_last_heredoc(int *infile, int in_len);
+char	*tun_last_delimeter(t_token_stream subset);
+int		tun_dup_heredoc(int fd1, int fd2);
 
 /*		tun_perror.c	*/
 void	tun_cmd_perror(t_exec *exe, char *err);

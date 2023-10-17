@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 21:39:57 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/10/18 02:14:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@ void	tun_child_process(t_exec *exe, t_token_stream *box, \
 		e = tun_get_infile(box[i], exe);
 	if (e)
 		e = tun_get_outfile(box[i], exe);
-	e = tun_heredoc(exe);
 	e = sb_redirect_pipe(exe, i, e);
+	e = tun_dup_heredoc(exe->_heredoc.box[i][0], STDIN_FILENO) != -1;
 	e = tun_redirct(exe->infile, exe->in_len, STDIN_FILENO, e);
 	e = tun_redirct(exe->outfile, exe->out_len, STDIN_FILENO, e);
 	tun_close_pipe(&exe->_pipes);
+	tun_close_pipe(&exe->_heredoc);
 	if (tun_builtin_parent(box, pid, exe, n) == -1)
 		tun_execve(exe, e);
 	free(pid);
