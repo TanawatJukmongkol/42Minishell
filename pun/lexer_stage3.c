@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:34 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 21:58:16 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 22:20:31 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,24 @@ static char	*str_rejoin(char *dst, char *src)
 	return (tmp);
 }
 
+static void	replace_to_return(char **str, char **res, char **next_nonchar,
+		t_main *m)
+{
+	char	*tmp;
+	char	*nums;
+
+	(*str)++;
+	tmp = *res;
+	nums = ft_itoa(m->_ngong);
+	*res = ft_strjoin(tmp, nums);
+	free(nums);
+	free(tmp);
+	*next_nonchar = *str;
+	return ;
+}
+
 static void	replace_to_env(char **res, char **next_nonchar, char **next_match,
-	t_main *m)
+		t_main *m)
 {
 	char	*str;
 	char	*env;
@@ -31,6 +47,8 @@ static void	replace_to_env(char **res, char **next_nonchar, char **next_match,
 	char	*get_env;
 
 	str = (*next_match) + 1;
+	if (*str == '?')
+		return (replace_to_return(&str, res, next_nonchar, m));
 	while (*str && (ft_isalnum(*str) || *str == '_'))
 		str++;
 	if (str > (*next_match) + 1)
@@ -80,11 +98,6 @@ void	env_replace(t_token_stream *s, t_token *t, void *vars)
 
 void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3, t_main *m)
 {
-	t_token_stream	tmp;
-
-	tmp.begin = NULL;
 	while (stage3->begin)
-		ft_token_consume(&tmp, stage3, return_replace, m);
-	while (tmp.begin)
-		ft_token_consume(dst, &tmp, env_replace, m);
+		ft_token_consume(dst, stage3, env_replace, m);
 }

@@ -31,8 +31,7 @@ SRCS_PUN	= ft_token.c \
 				lexer_stage1.c \
 				lexer_stage2_1.c \
 				lexer_stage2_2.c \
-				lexer_stage3_1.c \
-				lexer_stage3_2.c \
+				lexer_stage3.c \
 				lexer_stage4.c \
 				parser_utils.c \
 				parser.c
