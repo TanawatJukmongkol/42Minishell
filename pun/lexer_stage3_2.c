@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 17:44:34 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 20:37:54 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:44:51 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	env_replace(t_token_stream *s, t_token *t, void *vars)
 		next_match += next_nonchar - next_match;
 		ptr = next_match;
 	}
-	printf("tok:%s\n", res);
 	ft_token(s, t->type)->value = res;
 }
 
