@@ -111,11 +111,11 @@ OBJ			= ${OBJS:.c=.o}
 
 all: ${NAME}
 
-build-create:
-	mkdir -p ${BUILD_DIR}
-
-${NAME}: lib build-create ${BUILD_DIR} ${HEADER} ${OBJ}
+${NAME}: ${BUILD_DIR} ${HEADER} ${OBJ}
 	$(CC) $(CFLAGS) ${OBJ} ${INCLUDE_SRC} -o ${NAME}
+
+${BUILD_DIR}: lib
+	mkdir -p ${BUILD_DIR}
 
 ${BUILD_DIR}/%.o: ${SRC_DIR}/%.c
 	$(CC) $(CFLAGS) ${INCLUDE_OBJ} -c -o $@ $^
@@ -152,4 +152,4 @@ re: fclean all
 norm:	lib-norm
 	@norminette -R CheckForbiddenSourceHeader $(SRC) $(HEADER)
 
-.PHONY: all lib lib-clean lib-fclean lib-re lib-norm build-create clean fclean re
+.PHONY: all lib lib-clean lib-fclean lib-re lib-norm clean fclean re
