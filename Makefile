@@ -8,6 +8,7 @@ SRCS_COMMON		= minishell.c \
 				ft_tokenfree.c \
 				ft_editenv.c \
 				ft_sorttable.c \
+				ft_dynamic_prompt.c \
 				ft_getcwd.c \
 				ft_getenv.c \
 				ft_initenv.c \
@@ -71,6 +72,7 @@ BUILD_DIR	= ./build
 
 CC			= cc
 CFLAGS		= -g -Wall -Werror -Wextra -D READLINE_LIBRARY=1 -fsanitize=address
+
 
 INCLUDE_OBJ_LINUX	= 
 INCLUDE_SRC_LINUX	= 
