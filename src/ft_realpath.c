@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:38:07 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 00:40:01 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 02:31:02 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,22 @@ int	init_begin_path(char *re_path, char **begin, char **path, t_main *m)
 	return (!*path || !*begin);
 }
 
-void	climb_path(char **trim, char **path)
+void	climb_path(char *trim, char **path)
 {
-	if (!ft_strncmp(*trim, "..", ft_strlen(*trim)))
+	if (!ft_strncmp(trim, "..", ft_strlen(trim)))
 	{
 		*ft_strrchr(*path, '/') = '\0';
-		if (!*path[0])
+		if (!(*path)[0])
 		{
-			*path[0] = '/';
-			*path[1] = '\0';
+			(*path)[0] = '/';
+			(*path)[1] = '\0';
 		}
 	}
 	else
 	{
-		if (!*path[1])
-			*path[0] = '\0';
-		*path = join_path(*path, *trim);
+		if (!(*path)[1])
+			(*path)[0] = '\0';
+		*path = join_path(*path, trim);
 	}
 }
 
@@ -91,7 +91,7 @@ char	*ft_realpath(char *re_path, t_main *m)
 		if (!trim)
 			return (NULL);
 		if (*trim && ft_strncmp(trim, ".", ft_strlen(trim)))
-			climb_path(&trim, &path);
+			climb_path(trim, &path);
 		re_path = ft_strdup(next_slash + (*next_slash != 0));
 		free_begin(re_path, &begin, &trim);
 	}

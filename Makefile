@@ -71,7 +71,7 @@ LIB_DIR		= ./libft
 BUILD_DIR	= ./build
 
 CC			= cc
-CFLAGS		= -g -Wall -Werror -Wextra -D READLINE_LIBRARY=1# -fsanitize=address
+CFLAGS		= -g -Wall -Werror -Wextra -D READLINE_LIBRARY=1s -fsanitize=address
 
 INCLUDE_OBJ_LINUX	= 
 INCLUDE_SRC_LINUX	= 

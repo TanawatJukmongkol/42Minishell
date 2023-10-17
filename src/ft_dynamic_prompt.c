@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:07:08 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/18 01:00:20 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 01:58:45 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char	*ft_dynamic_prompt(t_main *m)
 	char	*tmp1;
 	char	*tmp2;
 
-	base = "\x1b[33m\x1b[32m";
+	base = "\x1b[33m";
 	exit_stat = "\x1b[36m?";
-	head = "\x1b[33m $\x1b[0m ";
+	head = "\x1b[32m $\x1b[0m ";
 	tmp1 = ft_getcwd();
 	base = ft_strjoin(base, tmp1);
 	free(tmp1);
