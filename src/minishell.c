@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 18:52:41 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:28:41 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	repl(t_token_stream *lex, t_main *info)
 	}
 	else
 		free(line);
-	errno = 0;
 	return (0);
 }
 

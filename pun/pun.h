@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:31:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 18:28:31 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:34:25 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	stage2_tokenizer(t_token_stream *dst, t_token_stream *stage2);
 // Stage 3
 void	env_replace(t_token_stream *s, t_token *t, void *vars);
 void	return_replace(t_token_stream *s, t_token *t, void *vars);
-void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3, t_main *m);
+void	stage3_tokenizer(t_token_stream *dst, t_token_stream *stage3,
+			t_main *m);
 
 // Stage 4
 void	quote_remove(t_token_stream *s, t_token *t, void *vars);

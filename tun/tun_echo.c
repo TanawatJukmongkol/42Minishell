@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/17 18:56:15 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:19:33 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	tun_echo(char **av, t_exec *exe)
 
 	(void)exe;
 	if (av[1] == NULL)
-		return (0);
+		return (printf("\n"), 0);
 	len = ft_strlen(av[1]);
 	flag = ft_strncmp(av[1], "-n", len + 1);
 	i = ft_ternary(flag == 0, 2, 1);

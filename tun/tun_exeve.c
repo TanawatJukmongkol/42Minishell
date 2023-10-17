@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/17 12:00:28 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:30:32 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ void	tun_execve(t_exec *exe, int e)
 	if (full_path == NULL)
 		return ;
 	if (path != NULL && !sb_relative(full_path, path))
+	{
+		errno = ENOENT;
 		return (tun_cmd_perror(exe, ": command not found\n"));
+	}
 	if (access(full_path, X_OK) != -1)
 		execve(full_path, exe->argv, exe->_info->_envp.env);
 	else
