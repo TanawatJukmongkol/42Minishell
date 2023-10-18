@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:00:31 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/18 00:06:32 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 19:55:41 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	g_is_child_running;
 
 void	sig_quit(int signum)
 {
-	if (signum == SIGQUIT)
+	if (signum == SIGQUIT && g_is_child_running == 0)
 	{
 		rl_redisplay();
 	}
