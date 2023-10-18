@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/18 17:21:16 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:27:16 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ static int	sb_export(char **av, t_main *info)
 			sub = ft_strdup(av[i]);
 		else
 			sub = ft_substr(av[i], 0, ft_strchr(av[i], '=') - av[i]);
-		if (!is_valid_export(sub))
+		if (sub && !is_valid_export(sub))
 			return (printf("minishell: export: %s: not a valid identifier\n",
-					sub), 1);
-		else if (ft_strchr(av[i], '=') != NULL)
-			if (ft_setenv(av[i], &info->_envp) == NULL)
-				return (perror("minishell : export :"), 1);
+					sub), free(sub), 1);
+		else if (!sub || ft_strchr(av[i], '=') != NULL)
+			if (!sub || ft_setenv(av[i], &info->_envp) == NULL)
+				return (perror("minishell : export :"), free(sub), 1);
 		free(sub);
 		i++;
 	}
