@@ -18,6 +18,7 @@ SRCS_COMMON		= minishell.c \
 				ft_unsetenv.c \
 				ft_init_main.c \
 				ft_chdir.c \
+				is_valid_export.c \
 
 SRCS_LINUX		=	ft_signal_linux.c
 SRCS_MAC		=	ft_signal_mac.c

@@ -6,11 +6,13 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/18 03:50:21 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:17:42 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "tun.h"
+#include <string.h>
 
 // WORk
 
@@ -67,6 +69,7 @@ static int	sb_export_no_arg(char **av, t_main *info)
 
 static int	sb_export(char **av, t_main *info)
 {
+	char	*sub;
 	size_t	i;
 
 	if (av[1] == NULL)
@@ -74,14 +77,16 @@ static int	sb_export(char **av, t_main *info)
 	i = 1;
 	while (av[i] != NULL)
 	{
-		if (ft_strchr(av[i], '=') != NULL)
-		{
+		if (ft_strchr(av[i], '=') == NULL)
+			sub = ft_strdup(av[i]);
+		else
+			sub = ft_substr(av[i], 0, ft_strchr(av[i], '=') - av[i]);
+		if (!is_valid_export(sub))
+			printf("minishell: export: %s: not a valid identifier\n", sub);
+		else if (ft_strchr(av[i], '=') != NULL)
 			if (ft_setenv(av[i], &info->_envp) == NULL)
-			{
-				perror("minishell : export :");
-				return (1);
-			}
-		}
+				return (perror("minishell : export :"), 1);
+		free(sub);
 		i++;
 	}
 	return (0);
