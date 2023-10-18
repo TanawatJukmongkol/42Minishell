@@ -6,10 +6,11 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/17 20:30:32 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:03:48 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "tun.h"
 
 static char	*sb_pathjoin(char *cmd, char *path)
@@ -42,7 +43,7 @@ static int	sb_relative(char *cmd, char *path)
 	err = errno;
 	if (path == NULL)
 		return (1);
-	if (cmd[0] == '.' || cmd[0] == '/')
+	if (cmd[0] == '.' || ft_strchr(cmd, '/'))
 		return (1);
 	if (access(cmd, F_OK) != -1)
 		return (1);
