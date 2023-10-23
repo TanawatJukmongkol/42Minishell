@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 02:08:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/10/18 02:10:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:41:05 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static int	sb_single_mom(t_token_stream *box, t_exec *exe, pid_t *pid, int *w)
 	*w = sb_dad_buy_milk(box, exe, pid, e);
 	tun_close_pipe(&exe->_heredoc);
 	tun_clear_process(exe);
+	exe->_info->_ngong = errno != 0;
 	return (e);
 }
 

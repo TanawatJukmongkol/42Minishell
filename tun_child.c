@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/18 02:14:54 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/18 22:01:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ void	tun_child_process(t_exec *exe, t_token_stream *box, \
 	if (tun_builtin_parent(box, pid, exe, n) == -1)
 		tun_execve(exe, e);
 	free(pid);
-	tun_process_exit(1, exe, box, n);
+	tun_process_exit(e, exe, box, n);
 }

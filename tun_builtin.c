@@ -3,50 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tun_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/18 17:27:16 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:35:22 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "tun.h"
-#include <string.h>
-
-// WORk
-
-// static int	sb_cd(char **av, t_main *info)
-// {
-// 	int		err;
-// 	char	*err_str;
-// 	char	*home;
-
-// 	if (av[1] == NULL)
-// 	{
-// 		home = ft_getenv(&info->_envp, "HOME");
-// 		if (home == NULL)
-// 		{
-// 			err_str = "minishell: cd: HOME not set";
-// 			write(STDERR_FILENO, err_str, ft_strlen(err_str));
-// 			return (1);
-// 		}
-// 		err = ft_chdir(home, info);
-// 		if (err != 0)
-// 			tun_file_perror("minishell: cd: ", home);
-// 		return (err);
-// 	}
-// 	else if (av[2] != NULL)
-// 	{
-// 		err_str = "minishell: cd: too many arguments";
-// 		write(STDERR_FILENO, err_str, ft_strlen(err_str));
-// 		return (1);
-// 	}
-// 	err = ft_chdir(av[1], info);
-// 	if (err != 0)
-// 		tun_file_perror("minishell: cd: ", av[1]);
-// 	return (err);
-// }
 
 // WORK
 

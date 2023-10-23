@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:06:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/10/16 01:54:35 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:47:46 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	tun_dup2(int fd1, int fd2)
 {
 	int	err;
 
+	if (fd1 == -1 || fd2 == -1)
+		return (-1);
 	err = dup2(fd1, fd2);
 	if (err == -1)
 		perror("minishell: dup2");
